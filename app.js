@@ -36,12 +36,12 @@ app.database = new Database();
 
 // routes
 app.get('/', routes.index);
-app.get('/login', routes.login);
-app.get('/login/:signupEmail', routes.loginPrepop);
+app.get('/login/:signupEmail', routes.index);
 app.post('/login', app.database.loginAttempt, routes.loginAttempt);
 app.get('/signup', routes.signup);
 app.post('/signup', app.database.createAccount, routes.createdAccount);
 app.get('/logout', routes.logout);
+app.get('/user/:id', app.database.getCharacterList, routes.user);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

@@ -108,7 +108,7 @@ var Homeland = mongoose.model('Homeland', new Schema( {
 }));
 
 var Character = mongoose.model('Character', new Schema( {
-    name:       String,
+    name:       {type: String, index: true},
     humanity:   Number,
     credits:    Number,
     nous:       ObjectId,   // CharStat
@@ -117,12 +117,16 @@ var Character = mongoose.model('Character', new Schema( {
     profession: ObjectId,   // Profression
     history:    Array,      // array of History
     belongings: Array,      // array of Belonging
-    owner:      ObjectId    // User
+    owner:      { type: ObjectId, index: true}    // User
 }));
 
 
+var connected = false;
 function Database () {
-    mongoose.connect('mongodb://127.0.0.1/transhuman-0');
+    if( !connected)
+        mongoose.connect('mongodb://127.0.0.1/transhuman-0');
+    connected = true;
+    
     return this;
 };
 
@@ -159,5 +163,22 @@ Database.prototype.authMiddleware = function( req, res, next) {
     } else {
         res.locals.authenticated = false;
         next();
+    }
+};
+
+Database.prototype.getCharacterList = function( req, res, next) {
+    // logged in id must equal params id
+    if( req.session.loggedIn == req.params.id) {
+        // load the list of characters
+        Character.find( {owner: req.session.loggedIn},
+                        'name racialType',
+                        function(err,docs) {
+            res.locals.characters = docs;
+            console.log(docs);
+        });
+    
+        next();
+    } else {
+        res.redirect('/');
     }
 };

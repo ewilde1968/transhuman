@@ -6,6 +6,20 @@ block content
     a(href="/logout") Logout
   else
     p Welcome new visitor!
-    ul
-      li: a(href="/login") Login
-      li: a(href="/signup") Signup
+    
+    form( action="/login", method="POST")
+      fieldset
+        legend Log in
+        p
+          lable Email
+          if( signupEmail)
+            input( name="user[email]", type="text", value=signupEmail)
+          else
+            input( name="user[email]", type="text")
+        p
+          label Password
+          input( name="user[password]", type="password")
+        p
+          button Submit
+      p No account?
+      a( href="/signup") Signup

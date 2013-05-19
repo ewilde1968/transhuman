@@ -42,6 +42,8 @@ app.get('/signup', routes.signup);
 app.post('/signup', app.database.createAccount, routes.createdAccount);
 app.get('/logout', routes.logout);
 app.get('/user/:id', app.database.getCharacterList, routes.user);
+app.get('/createwizhome', app.database.createChar, routes.createWizHome);
+app.post('/createwizhome', routes.createWizHomeNext);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

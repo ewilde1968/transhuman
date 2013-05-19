@@ -182,3 +182,8 @@ Database.prototype.getCharacterList = function( req, res, next) {
         res.redirect('/');
     }
 };
+
+Database.prototype.createChar = function( req, res, next) {
+    res.locals.char = new Character();
+    next();
+};

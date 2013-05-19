@@ -30,4 +30,26 @@ exports.createdAccount = function( req, res, next) {
 
 exports.user = function( req, res, next) {
     res.render('user');
-}
+};
+
+var homelands = [ {body: "Mercury", locales: ["US Orbital Station", "Quebec South Pole Research"]},
+                 { body: "Venus", locales: ["China Orbital Station", "European Orbital Station"]},
+                 { body: "Earth", locales: ["US", "Europe", "China"]},
+                 { body: "Mars", locales: ["Pheobus", "New Beijing"]}
+                ];
+var worldArr = new Array( homelands.length);
+for( var i=0;i<homelands.length;i++) worldArr[i] = homelands[i].body;
+var localeArr = new Array( homelands.length);
+for( i=0;i<homelands.length;i++) localeArr[i] = '["' + homelands[i].locales.join('","') + '"]';
+
+exports.createWizHome = function( req, res, next) {
+    res.render('createwizhome', {worldSrc: worldArr,
+                                 defaultWorld: 'Earth',
+                                 localeSrc: localeArr,
+                                 homelands: homelands
+                                });
+};
+
+exports.createWizHomeNext = function( req, res, next) {
+    
+};

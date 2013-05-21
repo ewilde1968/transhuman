@@ -87,8 +87,6 @@ ModSchema.defaultData = [
     }
 ];
 
-ModSchema.statics.getTypes = function() {return ModSchema.typeArray;};
-
 ModSchema.statics.initializeDB = function() {
     Mod.findOne( {}, function(err,doc) {
         ModSchema.defaultData.forEach( function(mod) {
@@ -108,15 +106,22 @@ ModSchema.statics.initializeDB = function() {
     });
 };
 
-ModSchema.statics.getListByType = function( typeName, callback) {
-    if( ModSchema.typeArray.indexOf(typeName) == -1)
-        throw 'ModSchema:getListByType typeName out of range';
+ModSchema.statics.generateListByType = function(callback) {
+    var result = new Array();
     
-    Mod.find( {type:typeName}, function(err,docs) {
-        if(err) return next(err);
+    ModSchema.typeArray.forEach( function(elem, index, arr) {
+        Mod.find({type:elem},
+                 {name:1, type:1, creditCost:1, humanCost:1},
+                 {type:1, humanCost:1, creditCost:1},
+                 function(err,docs) {
+                     if(err) return next(err);
 
-        if(callback)
-            callback( docs);
+                     result.push( docs);
+                     
+                     // if done, call callback
+                     if( (index+1) == arr.length)
+                         callback( result);
+                 });
     });
 };
 

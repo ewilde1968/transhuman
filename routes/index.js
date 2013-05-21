@@ -90,11 +90,13 @@ exports.wizardChooseMods = function( req, res, next) {
 
     Character.findById(req.session.newCharacter, function(err,character) {
         if(err) return next(err);
-
-        res.render('wizardchoosemods', {
-            humanity: character.humanity,
-            credits: 10000,
-            types: Mod.getTypes()
+        
+        Mod.generateListByType( function(docs) {
+            res.render('wizardchoosemods', {
+                humanity: character.humanity,
+                credits: 10000,
+                mods: docs
+            });
         });
     });
 };

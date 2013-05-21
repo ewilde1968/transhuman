@@ -70,5 +70,4 @@ io.sockets.on('connection', function(socket) {
     socket.emit('connected');
     socket.on('worlds', function(callback) {World.getArray(callback);});
     socket.on('locales', function(world,callback) {Homeland.getArrayOfWorld(world,callback);});
-    socket.on('mods', function(type, callback) {Mod.getListByType(type,callback);});
 });

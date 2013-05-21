@@ -69,7 +69,6 @@ var popTypes = [
 ];
 
 
-ProfessionSchema.statics.initializeDB
 ProfessionSchema.statics.getAvailableProfessions = function(populationType) {
     for(var i=0;i<ProfessionSchema.defaultData.length;i++) {
         if( populationType == popTypes[i].populationType) {

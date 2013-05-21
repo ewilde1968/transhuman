@@ -11,6 +11,7 @@ var express = require('express'),
     User = require('./model/user'),
     World = require('./model/world'),
     Homeland = require('./model/homeland'),
+    Mod = require('./model/mod'),
     Character = require('./model/character');
 
 var app = express();
@@ -69,4 +70,5 @@ io.sockets.on('connection', function(socket) {
     socket.emit('connected');
     socket.on('worlds', function(callback) {World.getArray(callback);});
     socket.on('locales', function(world,callback) {Homeland.getArrayOfWorld(world,callback);});
+    socket.on('mods', function(type, callback) {Mod.getListByType(type,callback);});
 });

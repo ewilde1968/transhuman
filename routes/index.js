@@ -5,7 +5,8 @@
 
 var mongoose = require('mongoose'),
     Character = require('./../model/character'),
-    Homeland = require('./../model/homeland');
+    Homeland = require('./../model/homeland'),
+    Mod = require('./../model/mod');
 
 exports.index = function(req, res){
     if( res.locals.authenticated) {
@@ -89,10 +90,11 @@ exports.wizardChooseMods = function( req, res, next) {
 
     Character.findById(req.session.newCharacter, function(err,character) {
         if(err) return next(err);
-        
+
         res.render('wizardchoosemods', {
             humanity: character.humanity,
-            credits: 10000
+            credits: 10000,
+            types: Mod.getTypes()
         });
     });
 };

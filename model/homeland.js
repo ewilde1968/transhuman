@@ -6,17 +6,16 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
-    Profession = require('./profession');
+    Profession = require('./profession'),
+    TechLevel = require('./techlevel');
 
 var HomelandSchema = new Schema( {
     name:       { type: String, index: true},
     desc:       String,
     world:      { type: String, index: true},   // World by name
-    techLevel:  Array,      // TechLevel
+    techLevel:  [TechLevel],      // TechLevel
     profs:      Array,      // array of Professions
-    controls:   Array,      // array of CulturalStat
-    memes:      Array,      // array of CulturalStat
-    legals:     Array       // array of CulturalStat
+    culture:    Array,      // array of CulturalStat (meme, controls, legals)
 });
 
 HomelandSchema.defaultData = [

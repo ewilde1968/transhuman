@@ -14,5 +14,30 @@ block content
         #credits
           p #{credits}
             | Credits
+        #mainMenu
+          each type in types
+            div(id=type, class="modType")
         p
           button Next
+
+  script
+    $(document).ready( function() {
+        var socket = io.connect('http://localhost');
+        socket.on('connected', function (type) {
+            $('.modType').each( function(index) {
+                var divID = this.id;
+                $('ul').remove();
+                
+                socket.emit( 'mods', divID, function (modArray) {
+                    var ulItem = $('<ul></ul>');
+                    modArray.forEach( function(mod) {
+                        var liItem = $('<li></li>')
+                            .html(mod.name);
+                        ulItem.append(liItem);
+                    });
+                    
+                    $('#' + divID).append(ulItem);
+                });
+            });
+        });
+    });

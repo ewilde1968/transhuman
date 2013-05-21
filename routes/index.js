@@ -78,3 +78,25 @@ exports.wizardChooseStats = function( req, res, next) {
 
     res.render('wizardchoosestats');    
 };
+
+exports.wizardSetStats = function( req, res, next) {
+    res.redirect('/wizard/choosemods');
+};
+
+exports.wizardChooseMods = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+
+    Character.findById(req.session.newCharacter, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('wizardchoosemods', {
+            humanity: character.humanity,
+            credits: 10000
+        });
+    });
+};
+
+exports.wizardSetMods = function( req, res, next) {
+    res.redirect('/wizard/chooseitems');
+};

@@ -7,14 +7,15 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
     Profession = require('./profession'),
-    Homeland = require('./homeland');
+    Homeland = require('./homeland'),
+    CharStat = require('./charstat');
 
 var CharacterSchema = new Schema( {
     name:       {type: String, index: true},
     humanity:   Number,
     credits:    Number,
-    nous:       ObjectId,   // CharStat
-    soma:       ObjectId,   // CharStat
+    nous:       [CharStat],   // CharStat
+    soma:       [CharStat],   // CharStat
     racialType: ObjectId,   // Basic
     profession: [Profession],   // Profression
     history:    Array,      // array of History
@@ -65,6 +66,43 @@ CharacterSchema.statics.setProfession = function( req, res, next) {
         character.profession.desc = Profession.getProfessionDescription( req.body.prof);
         character.profession.level = -1;
         character.profession.specialty = req.body.specialty;
+        character.save( function(err) {
+            if(err) return next(err);
+
+            next();
+        });
+    });
+};
+
+CharacterSchema.statics.setStats = function( req, res, next) {
+    Character.findById( req.session.newCharacter, function(err, character) {
+        if(err) return next(err);
+
+        character.soma.name = 'Soma'
+        character.soma.desc = CharStat.getDescriptionFromName( character.soma.name);
+        character.soma.maxLevel = req.body.soma;
+        character.soma.currentLvl = req.body.soma;
+        
+        character.nous.name = 'Nous'
+        character.nous.desc = CharStat.getDescriptionFromName( character.nous.name);
+        character.nous.maxLevel = 10 - req.body.soma;
+        character.nous.currentLvl = 10 - req.body.soma;
+        
+        character.humanity = (req.body.soma > 5) ? req.body.soma : (10 - req.body.soma);
+        character.profession.level = character.humanity;
+
+        character.save( function(err) {
+            if(err) return next(err);
+
+            next();
+        });
+    });
+};
+
+CharacterSchema.statics.setMods = function( req, res, next) {
+    Character.findById( req.session.newCharacter, function(err, character) {
+        if(err) return next(err);
+
         character.save( function(err) {
             if(err) return next(err);
 

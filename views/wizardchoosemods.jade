@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  p
+    | Genetic modifications and technological augmentations
+    | provide superhuman powers.
+
+    form(action="/wizard/choosemods", method="POST")
+      fieldset
+        legend Choose Mods
+        #humanity
+          p #{humanity}
+            | Humanity
+        #credits
+          p #{credits}
+            | Credits
+        p
+          button Next

@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  p
+    | What is the balance of Soma and Nous?
+    | The more extreme the higher your humanity.
+
+    form(action="/wizard/choosestats", method="POST")
+      fieldset
+        legend Choose Stats
+        p
+          #score
+            p 5/5
+          input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
+          #statNames
+          p#somaLabel Soma
+          p#nousLabel Nous
+        p
+          button Next
+  p
+    | Humanity measures how much of your mortal coil
+    | remains after cybernetic or genetic augmentation.
+    #humanityScore
+      p 5
+    input(type="range", name="humanity", min="1", max="9", value="5", readonly="readonly", id="humanitySlider")
+
+  script
+    $(document).ready( function() {
+        function updateHumanity() {
+            // set humanity score
+            var s = parseInt( $('#soma').val());
+            var n = 10 - s;
+            var v = (s>n)?s:n;
+            
+            $('#humanitySlider').val(v);
+            $('#humanityScore').replaceWith("<div id='humanityScore'><p>" + v + "</p></div>");
+
+            // set stat score
+            var str = s.toString() + '/' + n.toString();
+            $('#score').replaceWith("<div id='score'><p>" + str + "</p><div>");
+        }
+        
+        $('#soma').change(function() {updateHumanity();});
+    });

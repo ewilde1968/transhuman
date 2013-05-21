@@ -53,6 +53,9 @@ app.post('/wizard/choosehomeland', User.secure, Character.setHomeland, routes.wi
 app.get('/wizard/chooseprofession', User.secure, routes.wizardChooseProfession);
 app.post('/wizard/chooseprofession', User.secure, Character.setProfession, routes.wizardSetProfession);
 app.get('/wizard/choosestats', User.secure, routes.wizardChooseStats);
+app.post('/wizard/choosestats', User.secure, Character.setStats, routes.wizardSetStats);
+app.get('/wizard/choosemods', User.secure, routes.wizardChooseMods);
+app.post('/wizard/choosemods', User.secure, Character.setMods, routes.wizardSetMods);
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);

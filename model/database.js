@@ -15,13 +15,6 @@ var mongoose = require('mongoose'),
  * Define models
  **/
 
-var CharStat = mongoose.model('CharStat', new Schema( {
-    name:       String,
-    desc:       String,
-    currentLvl: Number,
-    maxLevel:   Number
-}));
-
 var Basic = mongoose.model('Basic', new Schema( {
     name:       String,
     desc:       String

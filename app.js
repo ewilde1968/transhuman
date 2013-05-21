@@ -51,7 +51,7 @@ app.get('/user/:id', routes.user);
 app.get('/wizard/choosehomeland', User.secure, Character.createCharacter, routes.wizardChooseHomeland);
 app.post('/wizard/choosehomeland', User.secure, Character.setHomeland, routes.wizardSetHomeland);
 app.get('/wizard/chooseprofession', User.secure, routes.wizardChooseProfession);
-app.post('/wizard/chooseprofession', User.secure, routes.wizardSaveProfession);
+app.post('/wizard/chooseprofession', User.secure, Character.setProfession, routes.wizardSetProfession);
 app.get('/wizard/choosestats', User.secure, routes.wizardChooseStats);
 
 var server = http.createServer(app);

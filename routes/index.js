@@ -50,8 +50,7 @@ exports.wizardChooseHomeland = function( req, res, next) {
 };
 
 exports.wizardSetHomeland = function( req, res, next) {
-    next();
-    //res.redirect('/wizard/chooseprofession');
+    res.redirect('/wizard/chooseprofession');
 };
 
 exports.wizardChooseProfession = function( req, res, next) {
@@ -63,24 +62,19 @@ exports.wizardChooseProfession = function( req, res, next) {
         
         Homeland.findById(character.homeland, function(err,homeland) {
             if(err) return next(err);
-        
+
             res.render('wizardchooseprofession', {professions:homeland.profs});
         });
     });
 };
 
-exports.wizardSaveProfession = function( req, res, next) {
-    req.session.newCharacter.setProfession(req.body.prof);
-    
+exports.wizardSetProfession = function( req, res, next) {
     res.redirect('/wizard/choosestats');
 };
 
 exports.wizardChooseStats = function( req, res, next) {
     if( !req.session.newCharacter)
         res.redirect('/');
-    else {
-        req.session.newCharacter.humanity = 5.0;
-    }
 
     res.render('wizardchoosestats');    
 };

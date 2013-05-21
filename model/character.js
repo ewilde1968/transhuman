@@ -57,5 +57,21 @@ CharacterSchema.statics.setHomeland = function( req, res, next) {
     });
 };
 
+CharacterSchema.statics.setProfession = function( req, res, next) {
+    Character.findById( req.session.newCharacter, function(err, character) {
+        if(err) return next(err);
+
+        character.profession.name = req.body.prof;
+        character.profession.desc = Profession.getProfessionDescription( req.body.prof);
+        character.profession.level = -1;
+        character.profession.specialty = req.body.specialty;
+        character.save( function(err) {
+            if(err) return next(err);
+
+            next();
+        });
+    });
+};
+
 var Character = mongoose.model('Character', CharacterSchema);
 module.exports = Character;

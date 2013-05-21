@@ -3,12 +3,20 @@
  * GET home page.
  */
 
+var mongoose = require('mongoose'),
+    Character = require('./../model/character'),
+    Homeland = require('./../model/homeland');
+
 exports.index = function(req, res){
-    res.render('index', { signupEmail: req.params.signupEmail || false });
+    if( res.locals.authenticated) {
+        res.redirect('/user/' + req.session.loggedIn);
+    } else {
+        res.render('index', { signupEmail: req.params.signupEmail || false });
+    }
 };
 
 exports.loginAttempt = function(req, res) {
-    if( req.session.loggedIn) {
+    if( res.locals.authenticated) {
         res.redirect('/user/' + req.session.loggedIn);
     } else {
         res.send( '<p>User not found. Go back and try again</p>');
@@ -29,27 +37,50 @@ exports.createdAccount = function( req, res, next) {
 };
 
 exports.user = function( req, res, next) {
-    res.render('user');
+    if( req.session.loggedIn == req.params.id) {
+        res.render('user');
+    } else {
+        res.redirect('/');
+    }
 };
 
-var homelands = [ {body: "Mercury", locales: ["US Orbital Station", "Quebec South Pole Research"]},
-                 { body: "Venus", locales: ["China Orbital Station", "European Orbital Station"]},
-                 { body: "Earth", locales: ["US", "Europe", "China"]},
-                 { body: "Mars", locales: ["Pheobus", "New Beijing"]}
-                ];
-var worldArr = new Array( homelands.length);
-for( var i=0;i<homelands.length;i++) worldArr[i] = homelands[i].body;
-var localeArr = new Array( homelands.length);
-for( i=0;i<homelands.length;i++) localeArr[i] = '["' + homelands[i].locales.join('","') + '"]';
-
-exports.createWizHome = function( req, res, next) {
-    res.render('createwizhome', {worldSrc: worldArr,
-                                 defaultWorld: 'Earth',
-                                 localeSrc: localeArr,
-                                 homelands: homelands
-                                });
+exports.wizardChooseHomeland = function( req, res, next) {
+    res.render('wizardchoosehomeland', {defaultWorld:"'Earth'",
+                                        defaultHomeland:"'US'"});
 };
 
-exports.createWizHomeNext = function( req, res, next) {
+exports.wizardSetHomeland = function( req, res, next) {
+    next();
+    //res.redirect('/wizard/chooseprofession');
+};
+
+exports.wizardChooseProfession = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+
+    Character.findById(req.session.newCharacter, function(err,character) {
+        if(err) return next(err);
+        
+        Homeland.findById(character.homeland, function(err,homeland) {
+            if(err) return next(err);
+        
+            res.render('wizardchooseprofession', {professions:homeland.profs});
+        });
+    });
+};
+
+exports.wizardSaveProfession = function( req, res, next) {
+    req.session.newCharacter.setProfession(req.body.prof);
     
+    res.redirect('/wizard/choosestats');
+};
+
+exports.wizardChooseStats = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        req.session.newCharacter.humanity = 5.0;
+    }
+
+    res.render('wizardchoosestats');    
 };

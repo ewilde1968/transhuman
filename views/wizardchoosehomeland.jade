@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  p
+    | Choose the location of your character's birth. Birth location determines
+    | possible genetic and cybernetic modification available.
+
+    form(action="/wizard/choosehomeland", method="POST")
+      fieldset
+        legend Choose Homeland
+        p
+          label(for="world") World
+          select(name="world", id="world")
+        p
+          label(for="locale") Locale
+          select(name="locale", id="locale")
+        p
+          button Next
+
+  script
+    $(document).ready( function() {
+        function updateLocales() {
+            $("#world option:selected").each(function() {
+                // only one should be here
+                $('#locale').empty();
+                socket.emit('locales', this.value, function(data) {
+                    for( i=0;i<data.length;i++) {
+                        opt = $("<option></option>")
+                        .attr("value",data[i].name)
+                        .text(data[i].name)
+                        .attr("selected",data[i].name==#{defaultHomeland});
+                        $('#locale').append(opt);
+                    }
+                });
+            });
+        }
+        
+        var socket = io.connect('http://localhost');
+        socket.on('connected', function () {
+            socket.emit('worlds', function (data) {
+                for( var i=0;i<data.length;i++) {
+                    var opt = $("<option></option>")
+                        .attr("value",data[i].name)
+                        .text(data[i].name)
+                        .attr("selected",data[i].name==#{defaultWorld});
+                    $('#world').append(opt);
+                }
+
+                updateLocales();
+            });
+        });
+        
+        $('#world').change(function() {updateLocales();});
+    });

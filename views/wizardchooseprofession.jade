@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  form(action="/chooseprofession", method="POST")
+    fieldset
+      legend Choose Profession
+      p
+        label(for="prof") Profession
+        select(name="prof", id="prof")
+          each profession in professions
+            option(name=profession.name) #{profession.name}
+      p
+        label Specialty
+        input(name="specialty", type="text")
+      p
+        button Next

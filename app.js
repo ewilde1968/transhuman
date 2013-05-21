@@ -3,11 +3,15 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , Database = require('./database')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'),
+    routes = require('./routes'),
+    http = require('http'),
+    path = require('path'),
+    Database = require('./model/database'),
+    User = require('./model/user'),
+    World = require('./model/world'),
+    Homeland = require('./model/homeland'),
+    Character = require('./model/character');
 
 var app = express();
 
@@ -22,7 +26,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('transhumanCookieSecret'));
 app.use(express.session({ secret: 'transhumanSessionSecret'}));
 app.use( function(q,r,n) {r.locals.title = "Transhuman";n();});
-app.use( function(q,r,n) {app.database.authMiddleware(q,r,n);});
+app.use( function(q,r,n) {User.authMiddleware(q,r,n);});
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,18 +37,33 @@ if ('development' == app.get('env')) {
 
 // setup DB
 app.database = new Database();
+if( process.argv.length > 2 && process.argv.indexOf('--setup' > 0))
+    app.database.initialize();
 
 // routes
 app.get('/', routes.index);
 app.get('/login/:signupEmail', routes.index);
-app.post('/login', app.database.loginAttempt, routes.loginAttempt);
+app.post('/login', User.loginAttempt, routes.loginAttempt);
 app.get('/signup', routes.signup);
-app.post('/signup', app.database.createAccount, routes.createdAccount);
+app.post('/signup', User.createAccount, routes.createdAccount);
 app.get('/logout', routes.logout);
-app.get('/user/:id', app.database.getCharacterList, routes.user);
-app.get('/createwizhome', app.database.createChar, routes.createWizHome);
-app.post('/createwizhome', routes.createWizHomeNext);
+app.get('/user/:id', routes.user);
+app.get('/wizard/choosehomeland', User.secure, Character.createCharacter, routes.wizardChooseHomeland);
+app.post('/wizard/choosehomeland', User.secure, Character.setHomeland, routes.wizardSetHomeland);
+app.get('/wizard/chooseprofession', User.secure, routes.wizardChooseProfession);
+app.post('/wizard/chooseprofession', User.secure, routes.wizardSaveProfession);
+app.get('/wizard/choosestats', User.secure, routes.wizardChooseStats);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
+});
+
+io.sockets.on('connection', function(socket) {
+    console.log('Socket.IO connected');
+    
+    socket.emit('connected');
+    socket.on('worlds', function(callback) {World.getArray(callback);});
+    socket.on('locales', function(world,callback) {Homeland.getArrayOfWorld(world,callback);});
 });

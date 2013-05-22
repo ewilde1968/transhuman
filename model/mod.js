@@ -111,7 +111,7 @@ ModSchema.statics.generateListByType = function(callback) {
     
     ModSchema.typeArray.forEach( function(elem, index, arr) {
         Mod.find({type:elem},
-                 {name:1, type:1, creditCost:1, humanCost:1},
+                 {name:1, type:1, creditCost:1, humanCost:1, prohibited:1},
                  {type:1, humanCost:1, creditCost:1},
                  function(err,docs) {
                      if(err) return next(err);

@@ -1,6 +1,17 @@
 extends layout
 
 block content
+  script
+    var modDict = {};
+    var hum = #{humanity};
+    var cr = #{credits};
+    
+    var checkEligibility = function(m) {
+        if( m.humanCost > hum || m.creditCost > cr)
+            return false;
+        return true;
+    };
+
   p
     | Genetic modifications and technological augmentations
     | provide superhuman powers.
@@ -8,17 +19,81 @@ block content
     form(action="/wizard/choosemods", method="POST")
       fieldset
         legend Choose Mods
-        #humanity
-          p #{humanity}
-            | Humanity
-        #credits
-          p #{credits}
-            | Credits
+        p#humanity Humanity #{humanity}
+        p#credits Credits #{credits}
         #mainMenu
+          input#result(name='result', type="text", hidden="hidden")
           each modType in mods
             p #{modType[0].type}
-            ul
+            ul.modMenu
               each mod in modType
-                li: a(href="#") #{mod.name}
+                li.modItem: label #{mod.name}
+                script
+                  modDict["#{mod.name}"] = {lock:0,
+                                            selected:false,
+                                            name:"#{mod.name}",
+                                            humanCost:#{mod.humanCost},
+                                            creditCost:#{mod.creditCost},
+                                            };
+                  
         p
-          button Next
+          button#next Next
+
+  script
+    $(document).ready( function() {
+        // initialize each item
+        $(".modItem").each( function() {
+            var m = modDict[$(this).text()];
+            if( !checkEligibility(m))
+              $(this).addClass('expensiveMod');
+        });
+        
+        $(".modItem").click( function() {
+            var o = modDict[$(this).text()];
+            
+            // check to see if the item is not locked and affordable
+            if( o.lock < 1 && o.humanCost <= hum && o.creditCost <= cr) {
+                // not locked, let's do it
+                o.selected = true;
+                $(this).addClass('selectedMod');
+
+                // update humanity and credits
+                hum -= o.humanCost;
+                $('#humanity').html('Humanity ' + hum);
+                cr -= o.creditCost;
+                $('#credits').html('Credits ' + cr);
+
+                // apply changes to the rest of the items
+                $(".modItem").each( function() {
+                    if( $(this).text() != o.name) {
+                        var o2 = modDict[$(this).text()];
+                        if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
+                            // its on the prohibited list
+                            if( $(this).hasClass('selectedMod'))
+                                throw 'modItem:onClick selected item already has prohibited item selected';
+
+                            o2.lock++;
+                            $(this).addClass('prohibitedMod');
+                        }
+                    
+                        if( !checkEligibility(o2))
+                            $(this).addClass('expensiveMod');
+                    }
+                });
+            }
+        });
+        
+        $('#next').click( function() {
+            var arr = new Array();
+            $(".modItem").each( function() {
+                var o = modDict[$(this).text()];
+                if( o.selected)
+                    arr.push(o.name);
+            });
+            
+            var result = '';
+            if( arr.length > 0)
+                result = "['" + arr.join("','") + "']";
+            $('#result').attr('value',result);
+        });
+    });

@@ -94,7 +94,7 @@ exports.wizardChooseMods = function( req, res, next) {
         Mod.generateListByType( function(docs) {
             res.render('wizardchoosemods', {
                 humanity: character.humanity,
-                credits: 10000,
+                credits: character.credits,
                 mods: docs
             });
         });

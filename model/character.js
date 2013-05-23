@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId,
     Profession = require('./profession'),
     Homeland = require('./homeland'),
+    Mod = require('./mod'),
     CharStat = require('./charstat');
 
 var CharacterSchema = new Schema( {
@@ -18,6 +19,7 @@ var CharacterSchema = new Schema( {
     soma:       [CharStat],   // CharStat
     racialType: ObjectId,   // Basic
     profession: [Profession],   // Profression
+    mods:       Array,      // Array of Mods
     history:    Array,      // array of History
     belongings: Array,      // array of Belonging
     homeland:   ObjectId,   // Homeland
@@ -90,6 +92,7 @@ CharacterSchema.statics.setStats = function( req, res, next) {
         
         character.humanity = (req.body.soma > 5) ? req.body.soma : (10 - req.body.soma);
         character.profession.level = character.humanity;
+        character.credits = 10000;
 
         character.save( function(err) {
             if(err) return next(err);
@@ -102,11 +105,28 @@ CharacterSchema.statics.setStats = function( req, res, next) {
 CharacterSchema.statics.setMods = function( req, res, next) {
     Character.findById( req.session.newCharacter, function(err, character) {
         if(err) return next(err);
+        
+        // reconstruct the mod objects and save the ids
+        req.body.result.split(',').forEach( function(elem, index, arr) {
+            // get the mod by name and add it to the character
+            Mod.findOne({name:elem}, function(err,mod) {
+                if(err) return next(err);
+                if( !character.mods)
+                    character.mods = new Array();
+                character.mods.push(mod);   // push the whole object
+                
+                // reduce the humanity and credits appropriately
+                character.humanity -= mod.humanCost;
+                character.credits -= mod.creditCost;
 
-        character.save( function(err) {
-            if(err) return next(err);
-
-            next();
+                // if this is the last element, save the character
+                if( index == arr.length - 1) {
+                    character.save( function(err) {
+                        if(err) return next(err);
+                        next();
+                    });
+                }
+            });
         });
     });
 };

@@ -3,14 +3,6 @@ extends layout
 block content
   script
     var modDict = {};
-    var hum = #{humanity};
-    var cr = #{credits};
-    
-    var checkEligibility = function(m) {
-        if( m.humanCost > hum || m.creditCost > cr)
-            return false;
-        return true;
-    };
 
   p
     | Genetic modifications and technological augmentations
@@ -29,33 +21,45 @@ block content
               each mod in modType
                 li.modItem: label #{mod.name}
                 script
-                  modDict["#{mod.name}"] = {lock:0,
-                                            selected:false,
-                                            name:"#{mod.name}",
-                                            humanCost:#{mod.humanCost},
-                                            creditCost:#{mod.creditCost},
-                                            };
-                  
+                  var newObj = {lock:0,
+                                selected:false,
+                                name:"#{mod.name}",
+                                prohibited:[],
+                                humanCost:#{mod.humanCost},
+                                creditCost:#{mod.creditCost}
+                                };
+                each pObj in mod.prohibited
+                  script
+                    newObj.prohibited.push("#{pObj}");
+                script
+                  modDict["#{mod.name}"] = newObj;
         p
           button#next Next
 
   script
     $(document).ready( function() {
+        var hum = #{humanity};
+        var cr = #{credits};
+    
+        var checkEligibility = function(m) {
+            if( m.humanCost > hum || m.creditCost > cr)
+                return false;
+            return true;
+        };
+
         // initialize each item
         $(".modItem").each( function() {
             var m = modDict[$(this).text()];
             if( !checkEligibility(m))
               $(this).addClass('expensiveMod');
         });
-        
-        $(".modItem").click( function() {
-            var o = modDict[$(this).text()];
-            
+
+        var select = function(o, jqModItem) {
             // check to see if the item is not locked and affordable
             if( o.lock < 1 && o.humanCost <= hum && o.creditCost <= cr) {
                 // not locked, let's do it
                 o.selected = true;
-                $(this).addClass('selectedMod');
+                jqModItem.addClass('selectedMod');
 
                 // update humanity and credits
                 hum -= o.humanCost;
@@ -68,32 +72,74 @@ block content
                     if( $(this).text() != o.name) {
                         var o2 = modDict[$(this).text()];
                         if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
-                            // its on the prohibited list
+                            // its on the prohib list
                             if( $(this).hasClass('selectedMod'))
                                 throw 'modItem:onClick selected item already has prohibited item selected';
 
                             o2.lock++;
-                            $(this).addClass('prohibitedMod');
+                            if( !o2.selected)
+                                $(this).addClass('prohibitedMod');
                         }
                     
-                        if( !checkEligibility(o2))
+                        if( !checkEligibility(o2) && !o2.selected)
                             $(this).addClass('expensiveMod');
                     }
                 });
             }
+        };
+        
+        var deselect = function(o, jqModItem) {
+            // not locked, let's do it
+            o.selected = false;
+            jqModItem.removeClass('selectedMod');
+
+            // update humanity and credits
+            hum += o.humanCost;
+            $('#humanity').html('Humanity ' + hum);
+            cr += o.creditCost;
+            $('#credits').html('Credits ' + cr);
+
+            // apply changes to the rest of the items
+            $(".modItem").each( function() {
+                if( $(this).text() != o.name) {
+                    var o2 = modDict[$(this).text()];
+                    if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
+                        // its on the prohibited list
+                        o2.lock--;
+                        if( 0 == o2.lock)
+                            $(this).removeClass('prohibitedMod');
+                    }
+                    
+                    if( checkEligibility(o2))
+                        $(this).removeClass('expensiveMod');
+                }
+            });
+        };
+        
+        $(".modItem").click( function() {
+            var o = modDict[$(this).text()];
+
+            if( o.selected)
+              deselect(o, $(this));
+            else
+              select(o, $(this));
         });
         
         $('#next').click( function() {
-            var arr = new Array();
+            var result = '';
+            var virginStr = false;
             $(".modItem").each( function() {
                 var o = modDict[$(this).text()];
-                if( o.selected)
-                    arr.push(o.name);
+                if( o.selected) {
+                    if( !virginStr) {
+                        virginStr = true;
+                    } else {
+                        result += ',';
+                    }
+                    result += o.name;
+                }
             });
             
-            var result = '';
-            if( arr.length > 0)
-                result = "['" + arr.join("','") + "']";
             $('#result').attr('value',result);
         });
     });

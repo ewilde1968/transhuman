@@ -9,16 +9,17 @@ var mongoose = require('mongoose'),
     Profession = require('./profession'),
     Homeland = require('./homeland'),
     Mod = require('./mod'),
-    CharStat = require('./charstat');
+    Item = require('./item'),
+    Belonging = require('./belonging');
 
 var CharacterSchema = new Schema( {
     name:       {type: String, index: true},
     humanity:   Number,
     credits:    Number,
-    nous:       [CharStat],   // CharStat
-    soma:       [CharStat],   // CharStat
+    nous:       { currentLevel:Number, maxLevel:Number},
+    soma:       { currentLevel:Number, maxLevel:Number},
     racialType: ObjectId,   // Basic
-    profession: [Profession],   // Profression
+    profession: { name:String, desc:String, level:Number, specialty:String},
     mods:       Array,      // Array of Mods
     history:    Array,      // array of History
     belongings: Array,      // array of Belonging
@@ -80,15 +81,11 @@ CharacterSchema.statics.setStats = function( req, res, next) {
     Character.findById( req.session.newCharacter, function(err, character) {
         if(err) return next(err);
 
-        character.soma.name = 'Soma'
-        character.soma.desc = CharStat.getDescriptionFromName( character.soma.name);
         character.soma.maxLevel = req.body.soma;
-        character.soma.currentLvl = req.body.soma;
+        character.soma.currentLevel = req.body.soma;
         
-        character.nous.name = 'Nous'
-        character.nous.desc = CharStat.getDescriptionFromName( character.nous.name);
         character.nous.maxLevel = 10 - req.body.soma;
-        character.nous.currentLvl = 10 - req.body.soma;
+        character.nous.currentLevel = 10 - req.body.soma;
         
         character.humanity = (req.body.soma > 5) ? req.body.soma : (10 - req.body.soma);
         character.profession.level = character.humanity;
@@ -109,26 +106,80 @@ CharacterSchema.statics.setMods = function( req, res, next) {
         // reconstruct the mod objects and save the ids
         req.body.result.split(',').forEach( function(elem, index, arr) {
             // get the mod by name and add it to the character
-            Mod.findOne({name:elem}, function(err,mod) {
-                if(err) return next(err);
-                if( !character.mods)
-                    character.mods = new Array();
-                character.mods.push(mod);   // push the whole object
+            if( elem.length) {
+                Mod.findOne({name:elem}, function(err,mod) {
+                    if(err) return next(err);
+                    if( !character.mods)
+                        character.mods = new Array();
+                    character.mods.push(mod);   // push the whole object
                 
-                // reduce the humanity and credits appropriately
-                character.humanity -= mod.humanCost;
-                character.credits -= mod.creditCost;
+                    // reduce the humanity and credits appropriately
+                    character.humanity -= mod.humanCost;
+                    character.credits -= mod.creditCost;
 
-                // if this is the last element, save the character
-                if( index == arr.length - 1) {
-                    character.save( function(err) {
-                        if(err) return next(err);
-                        next();
-                    });
-                }
-            });
+                    // if this is the last element, save the character
+                    if( index == arr.length - 1) {
+                        character.save( function(err) {
+                            if(err) return next(err);
+                            next();
+                        });
+                    }
+                });
+            } else
+                next();
         });
     });
+};
+
+CharacterSchema.statics.setItems = function( req, res, next) {
+    Character.findById( req.session.newCharacter, function(err, character) {
+        if(err) return next(err);
+        
+        // reconstruct the mod objects and save the ids
+        req.body.result.split(',').forEach( function(elem, index, arr) {
+            if( elem.length) {
+                // get the mod by name and add it to the character
+                Item.findOne({name:elem}, function(err,itemObj) {
+                    if(err) return next(err);
+                
+                    character.addBelonging( itemObj);
+                    character.credits -= itemObj.cost;
+
+                    // if this is the last element, save the character
+                    if( index == arr.length - 1) {
+                        character.save( function(err) {
+                            if(err) return next(err);
+                            next();
+                        });
+                    }
+                });
+            } else
+                next();
+        });
+    });
+};
+
+CharacterSchema.methods.getBelonging = function( itemObj) {
+    if( this.belongings) {
+        this.belongings.forEach( function(elem) {
+            if( itemObj.isEqual( elem.item))
+                return elem;
+        });
+    }
+    
+    return null;
+}
+
+CharacterSchema.methods.addBelonging = function(itemObj) {
+    var b = this.getBelonging(itemObj);
+    if( null == b) {
+        b = Belonging.create( itemObj);
+        if( !this.belongings)
+            this.belongings = new Array();
+        this.belongings.push( b);
+    } else {
+        b.amount++;
+    }
 };
 
 var Character = mongoose.model('Character', CharacterSchema);

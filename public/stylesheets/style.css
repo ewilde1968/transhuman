@@ -10,11 +10,15 @@ a {
 .expensiveMod {
   color: #CCCCCC;
 }
-
+.expensiveItem {
+  color: #CCCCCC;
+}
 .prohibitedMod {
   color: #FF3300;
 }
-
 .selectedMod {
+  color: #FFB700;
+}
+.selectedItem {
   color: #FFB700;
 }

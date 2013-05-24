@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId,
     World = require('./world'),
     Homeland = require('./homeland'),
-    Mod = require( './mod'),
+    Mod = require('./mod'),
+    Item = require('./item'),
     User = require('./user');
 
 var connected = false;
@@ -22,9 +23,7 @@ function Database () {
 };
 
 Database.prototype.initialize = function() {
-    // Reset all the default data in the database.
-    //mongoose.connection.db.dropDatabase('transhuman');
-
     World.initializeDB();
     Mod.initializeDB();
+    Item.initializeDB();
 };

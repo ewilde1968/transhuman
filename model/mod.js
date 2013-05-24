@@ -119,7 +119,7 @@ ModSchema.statics.generateListByType = function(callback) {
                      result.push( docs);
                      
                      // if done, call callback
-                     if( (index+1) == arr.length)
+                     if( index == (arr.length-1))
                          callback( result);
                  });
     });

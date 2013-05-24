@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
     Character = require('./../model/character'),
     Homeland = require('./../model/homeland'),
-    Mod = require('./../model/mod');
+    Mod = require('./../model/mod'),
+    Item = require('./../model/item');
 
 exports.index = function(req, res){
     if( res.locals.authenticated) {
@@ -103,4 +104,24 @@ exports.wizardChooseMods = function( req, res, next) {
 
 exports.wizardSetMods = function( req, res, next) {
     res.redirect('/wizard/chooseitems');
+};
+
+exports.wizardChooseItems = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+
+    Character.findById(req.session.newCharacter, function(err,character) {
+        if(err) return next(err);
+        
+        Item.generateListByType( function(docs) {
+            res.render('wizardchooseitems', {
+                credits: character.credits,
+                mods: docs
+            });
+        });
+    });
+};
+
+exports.wizardSetItems = function( req, res, next) {
+    res.redirect('/wizard/choosedetails');
 };

@@ -1,0 +1,115 @@
+extends layout
+
+block content
+  script
+    var itemDict = {};
+
+  p
+    | Genetic modifications and technological augmentations
+    | provide superhuman powers.
+
+    form(action="/wizard/chooseitems", method="POST")
+      fieldset
+        legend Choose Items
+        p#credits Credits #{credits}
+        #mainMenu
+          input#result(name='result', type="text", hidden="hidden")
+          each itemType in mods
+            p #{itemType[0].category}
+            ul.itemMenu
+              each itemObj in itemType
+                li.itemItem: label #{itemObj.name}
+                script
+                  var newObj = {selected:false,
+                                name:"#{itemObj.name}",
+                                cost:#{itemObj.cost}
+                                };
+                  itemDict["#{itemObj.name}"] = newObj;
+        p
+          button#next Next
+
+  script
+    $(document).ready( function() {
+        var cr = #{credits};
+    
+        var checkEligibility = function(m) {
+            if( m.cost > cr)
+                return false;
+            return true;
+        };
+
+        // initialize each item
+        $(".itemItem").each( function() {
+            var i = itemDict[$(this).text()];
+            if( !checkEligibility(i))
+              $(this).addClass('expensiveItem');
+        });
+
+        var select = function(o, jqItemItem) {
+            // check to see if the item is not locked and affordable
+            if( o.cost <= cr) {
+                o.selected = true;
+                jqItemItem.addClass('selectedItem');
+
+                // update credits
+                cr -= o.cost;
+                $('#credits').html('Credits ' + cr);
+
+                // apply changes to the rest of the items
+                $(".itemItem").each( function() {
+                    if( $(this).text() != o.name) {
+                        var o2 = itemDict[$(this).text()];
+                    
+                        if( !checkEligibility(o2) && !o2.selected)
+                            $(this).addClass('expensiveItem');
+                    }
+                });
+            }
+        };
+        
+        var deselect = function(o, jqItemItem) {
+            o.selected = false;
+            jqItemItem.removeClass('selectedItem');
+
+            // update credits
+            cr += o.cost;
+            $('#credits').html('Credits ' + cr);
+
+            // apply changes to the rest of the items
+            $(".itemItem").each( function() {
+                if( $(this).text() != o.name) {
+                    var o2 = itemDict[$(this).text()];
+                    
+                    if( checkEligibility(o2))
+                        $(this).removeClass('expensiveItem');
+                }
+            });
+        };
+        
+        $(".itemItem").click( function() {
+            var o = itemDict[$(this).text()];
+
+            if( o.selected)
+              deselect(o, $(this));
+            else
+              select(o, $(this));
+        });
+        
+        $('#next').click( function() {
+            var result = '';
+            var virginStr = false;
+            $(".itemItem").each( function() {
+                var o = itemDict[$(this).text()];
+                if( o.selected) {
+                    if( !virginStr) {
+                        virginStr = true;
+                    } else {
+                        result += ',';
+                    }
+                    result += o.name;
+                }
+            });
+            
+            $('#result').attr('value',result);
+        });
+    });

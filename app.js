@@ -38,9 +38,7 @@ if ('development' == app.get('env')) {
 
 // setup DB
 app.database = new Database();
-if( process.argv.length > 2 && process.argv.indexOf('--setup' > 0))
-    app.database.initialize();
-
+app.database.initialize();
 // routes
 app.get('/', routes.index);
 app.get('/login/:signupEmail', routes.index);
@@ -57,6 +55,8 @@ app.get('/wizard/choosestats', User.secure, routes.wizardChooseStats);
 app.post('/wizard/choosestats', User.secure, Character.setStats, routes.wizardSetStats);
 app.get('/wizard/choosemods', User.secure, routes.wizardChooseMods);
 app.post('/wizard/choosemods', User.secure, Character.setMods, routes.wizardSetMods);
+app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
+app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);

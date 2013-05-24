@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  form(action="/wizard/choosedetails", method="POST")
+    fieldset
+      legend Choose details
+      p
+        input(name="characterName", type="text", value="Name")
+      p
+        label Nous #{nous}
+        input(name="nous", type="text", value="Descriptive Word")
+      p
+        label Soma #{soma}
+        input(name="soma", type="text", value="Descriptive Word")
+      p
+        button Next

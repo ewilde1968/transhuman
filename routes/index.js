@@ -40,7 +40,9 @@ exports.createdAccount = function( req, res, next) {
 
 exports.user = function( req, res, next) {
     if( req.session.loggedIn == req.params.id) {
-        res.render('user');
+        Character.getByOwnerId( req.session.loggedIn, function(cList) {
+            res.render('user', {characters:cList});
+        });
     } else {
         res.redirect('/');
     }
@@ -58,16 +60,17 @@ exports.wizardSetHomeland = function( req, res, next) {
 exports.wizardChooseProfession = function( req, res, next) {
     if( !req.session.newCharacter)
         res.redirect('/');
-
-    Character.findById(req.session.newCharacter, function(err,character) {
-        if(err) return next(err);
-        
-        Homeland.findById(character.homeland, function(err,homeland) {
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
             if(err) return next(err);
+        
+            Homeland.findById(character.homeland, function(err,homeland) {
+                if(err) return next(err);
 
-            res.render('wizardchooseprofession', {professions:homeland.profs});
+                res.render('wizardchooseprofession', {professions:homeland.profs});
+            });
         });
-    });
+    }
 };
 
 exports.wizardSetProfession = function( req, res, next) {
@@ -77,8 +80,8 @@ exports.wizardSetProfession = function( req, res, next) {
 exports.wizardChooseStats = function( req, res, next) {
     if( !req.session.newCharacter)
         res.redirect('/');
-
-    res.render('wizardchoosestats');    
+    else
+        res.render('wizardchoosestats');    
 };
 
 exports.wizardSetStats = function( req, res, next) {
@@ -88,18 +91,19 @@ exports.wizardSetStats = function( req, res, next) {
 exports.wizardChooseMods = function( req, res, next) {
     if( !req.session.newCharacter)
         res.redirect('/');
-
-    Character.findById(req.session.newCharacter, function(err,character) {
-        if(err) return next(err);
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
         
-        Mod.generateListByType( function(docs) {
-            res.render('wizardchoosemods', {
-                humanity: character.humanity,
-                credits: character.credits,
-                mods: docs
+            Mod.generateListByType( function(docs) {
+                res.render('wizardchoosemods', {
+                    humanity: character.humanity,
+                    credits: character.credits,
+                    mods: docs
+                });
             });
         });
-    });
+    }
 };
 
 exports.wizardSetMods = function( req, res, next) {
@@ -109,19 +113,39 @@ exports.wizardSetMods = function( req, res, next) {
 exports.wizardChooseItems = function( req, res, next) {
     if( !req.session.newCharacter)
         res.redirect('/');
-
-    Character.findById(req.session.newCharacter, function(err,character) {
-        if(err) return next(err);
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
         
-        Item.generateListByType( function(docs) {
-            res.render('wizardchooseitems', {
-                credits: character.credits,
-                mods: docs
+            Item.generateListByType( function(docs) {
+                res.render('wizardchooseitems', {
+                    credits: character.credits,
+                    mods: docs
+                });
             });
         });
-    });
+    }
 };
 
 exports.wizardSetItems = function( req, res, next) {
     res.redirect('/wizard/choosedetails');
+};
+
+exports.wizardChooseDetails = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
+        
+            res.render('wizardchoosedetails', {
+                nous: character.nous.currentLevel,
+                soma: character.soma.currentLevel
+            });
+        });
+    }
+};
+
+exports.wizardSetDetails = function( req, res, next) {
+    res.redirect('/');
 };

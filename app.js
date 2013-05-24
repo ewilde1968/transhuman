@@ -57,6 +57,8 @@ app.get('/wizard/choosemods', User.secure, routes.wizardChooseMods);
 app.post('/wizard/choosemods', User.secure, Character.setMods, routes.wizardSetMods);
 app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
 app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
+app.get('/wizard/choosedetails', User.secure, routes.wizardChooseDetails);
+app.post('/wizard/choosedetails', User.secure, Character.setDetails, routes.wizardSetDetails);
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);

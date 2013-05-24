@@ -16,17 +16,26 @@ var CharacterSchema = new Schema( {
     name:       {type: String, index: true},
     humanity:   Number,
     credits:    Number,
-    nous:       { currentLevel:Number, maxLevel:Number},
-    soma:       { currentLevel:Number, maxLevel:Number},
+    nous:       { currentLevel:Number, maxLevel:Number, desc:String},
+    soma:       { currentLevel:Number, maxLevel:Number, desc:String},
     racialType: ObjectId,   // Basic
     profession: { name:String, desc:String, level:Number, specialty:String},
     mods:       Array,      // Array of Mods
     history:    Array,      // array of History
     belongings: Array,      // array of Belonging
-    homeland:   ObjectId,   // Homeland
+    homeland:   { type: ObjectId, index: true},   // Homeland
     owner:      { type: ObjectId, index: true}    // User
 });
 
+
+CharacterSchema.statics.getByOwnerId = function( ownerID, callback) {
+    Character.find( {owner: ownerID},
+                    'name profession',
+                    function( err, characters) {
+                        if(err) return next(err);
+                        callback( characters);
+                    });
+};
 
 CharacterSchema.statics.createCharacter = function( req, res, next) {
     // first, delete the existing new character
@@ -155,6 +164,21 @@ CharacterSchema.statics.setItems = function( req, res, next) {
                 });
             } else
                 next();
+        });
+    });
+};
+
+CharacterSchema.statics.setDetails = function( req, res, next) {
+    Character.findById( req.session.newCharacter, function(err, character) {
+        if(err) return next(err);
+        
+        character.soma.desc = req.body.soma;
+        character.nous.desc = req.body.nous;
+        character.name = req.body.characterName;
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
         });
     });
 };

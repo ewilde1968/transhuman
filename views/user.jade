@@ -5,4 +5,7 @@ block content
     a(href="/logout") Logout
     h1 Character Pool
       a(href="/wizard/choosehomeland") +
-    
+  #charPool
+    ul.charMenu
+      each character in characters
+        li: <a href="/character/#{character._id}">#{character.name}</a>

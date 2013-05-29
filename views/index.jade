@@ -1,21 +1,26 @@
 extends layout
 
 block content
-  p Welcome new visitor!
-    
-  form( action="/login", method="POST")
-    fieldset
-      legend Log in
-      p
-        lable Email
-        if( signupEmail)
-          input( name="user[email]", type="text", value=signupEmail)
-        else
-          input( name="user[email]", type="text")
-      p
-        label Password
-        input( name="user[password]", type="password")
-      p
-        button Submit
-    p No account?
-    a( href="/signup") Signup
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      p Sign In
+    #contentArea
+      .dataEntry
+        form( action="/login", method="POST")
+          fieldset
+            p
+              lable Email
+              if( signupEmail)
+                input( name="user[email]", type="text", value=signupEmail)
+              else
+                input( name="user[email]", type="text")
+            p
+              label Password
+              input( name="user[password]", type="password")
+            p
+              button Sign In
+        #newAccount
+          p No account? 
+            a( href="/signup")
+              button Signup

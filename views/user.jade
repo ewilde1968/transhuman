@@ -1,11 +1,15 @@
 extends layout
 
 block content
-  #toolBar
-    a(href="/logout") Logout
-    h1 Character Pool
-      a(href="/wizard/choosehomeland") +
-  #charPool
-    ul.charMenu
-      each character in characters
-        li: <a href="/character/#{character._id}">#{character.name}</a>
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a(href="/logout")
+        button.leftNavButton Logout
+      p Character Pool
+      a(href="/wizard/choosehomeland")
+        button.rightNavButton New
+    #contentArea
+      ul.listItems
+        each character in characters
+          li.listItem: <a href="/character/#{character._id}"><strong>#{character.name}</strong></a>

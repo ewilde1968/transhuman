@@ -1,11 +1,13 @@
 body {
   font: 2em Arial, "Lucida Grande", Helvetica, sans-serif;
+  color:#382f1b;
   overflow: hidden;
 }
 
-a {
-  color: #00B7FF;
-}
+a:link {color:#ab0006;}      /* unvisited link */
+a:visited {color:#e8c26f;}  /* visited link */
+a:hover {color:#e8c26f;}  /* mouse over link */
+a:active {color:#e8c26f;}  /* selected link */
 
 .expensiveMod {
   color: #CCCCCC;
@@ -126,9 +128,10 @@ a {
     .listItems li:active { color:#e8c26f; background: #303738}
     
     .dataEntry {
+        height: auto;
 		background: rgb(137, 159, 161);
 		border: 1px solid rgb(146, 188, 255);
-		opacity: 0.79;
+		opacity: 0.85;
 		border-top-left-radius: 10px;
 		border-top-right-radius: 10px;
         border-bottom-left-radius: 10px;
@@ -137,6 +140,18 @@ a {
     
     fieldset {
         border-style:none;
+        font-size: 0.8em;
+        padding: 0.2em;
+    }
+    
+    input[type=text] {
+        font-size: 1em;
+        border: 1px solid;
+    }
+    
+    input[type=password] {
+        font-size: 1em;
+        border: 1px solid;
     }
     
     #contentArea {
@@ -147,5 +162,56 @@ a {
         left: 8%;
         padding:0;
         overflow-y:auto;
+    }
+    
+    #contentArea button {
+		height: 2em;
+		width: auto;
+        border-top: 1px solid #382f1b;
+        background: #ff0000;
+        background: -webkit-gradient(linear, left top, left bottom, from(#e8c26f), to(#ff0000));
+        background: -webkit-linear-gradient(top, #e8c26f, #ff0000);
+        background: -moz-linear-gradient(top, #e8c26f, #ff0000);
+        background: -ms-linear-gradient(top, #e8c26f, #ff0000);
+        background: -o-linear-gradient(top, #e8c26f, #ff0000);
+        padding: 5px 10px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+        -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+        box-shadow: rgba(0,0,0,1) 0 1px 0;
+        text-shadow: rgba(0,0,0,.4) 0 1px 0;
+        color: #303738;
+        font-size: 0.5em;
+        font-family: Arial, 'Lucida Grande', Helvetica, Sans-Serif;
+        text-decoration: none;
+        vertical-align: middle;
+    }
+    #contentArea button:hover {
+        border-top-color: #ab0006;
+        background: #ab0006;
+        color: #000000;
+    }
+    #contentArea button:active {
+        border-top-color: #380004;
+        background: #380004;
+        color: #e8c26f;
+    }
+    
+    #signInButton {
+        position: relative;
+        left: 18em;
+        top: -1em;
+    }
+    #newAccount {
+        width:100%;
+        height:2em;
+    }
+    #newAccount>a {
+        position:relative;
+        left:40%;
+        top: 1em;
+        font-size: 0.7em;
     }
 }

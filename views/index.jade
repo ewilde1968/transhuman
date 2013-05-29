@@ -6,21 +6,19 @@ block content
     #navBar
       p Sign In
     #contentArea
-      .dataEntry
+      div.dataEntry
         form( action="/login", method="POST")
           fieldset
             p
-              lable Email
+              label Email: 
               if( signupEmail)
-                input( name="user[email]", type="text", value=signupEmail)
+                input( name="user[email]", type="text", size="17", value=signupEmail)
               else
-                input( name="user[email]", type="text")
+                input( name="user[email]", type="text", size="17")
             p
-              label Password
-              input( name="user[password]", type="password")
+              label Password: 
+              input( name="user[password]", type="password", size="12")
             p
-              button Sign In
+              button#signInButton Sign In
         #newAccount
-          p No account? 
-            a( href="/signup")
-              button Signup
+            a( href="/signup") Need an account?

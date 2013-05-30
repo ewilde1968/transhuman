@@ -129,12 +129,17 @@ HomelandSchema.statics.initializeDB = function() {
         if( !doc) {
             // no current Homelands exist, initialize
             HomelandSchema.defaultData.forEach( function(homeland) {
-                // rewrite the profession type with the professions array
-                homeland.profs = Profession.getAvailableProfessions( homeland.profs);
+                try {
+                    // rewrite the profession type with the professions array
+                    homeland.profs = Profession.getAvailableProfessions( homeland.profs);
 
-                var h = new Homeland( homeland).save( function(err) {
-                    if(err) return next(err);
-                });
+                    var h = new Homeland( homeland).save( function(err) {
+                        if(err) return next(err);
+                    });
+                } catch(tErr) {
+                    tErr += ' in homeland ' + homeland.name;
+                    throw tErr;
+                }
             });
         }
     });

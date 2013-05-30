@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#doneButton(href="/")
+        button.leftNavButton Cancel
+      p #{character.name}
+      a#editButton(href="/")
+        button.rightNavButton Cancel
+    #contentArea
+      div.dataEntry
+        #mainMenu
+          ul.listItems
+            li.listItem(id="homeland"): label Homeland
+              span #{homeland.name} + '/' + #{homeland.world}
+            li.listItem(id="race"): label Race
+              span Human
+            li.listItem(id="soma"): label Soma
+              span '(' + #{character.soma.desc} + '): ' + #{character.soma.currentLevel} + '/' + #{character.soma.maxLevel}
+            li.listItem(id="nous"): label Nous
+              span '(' + #{character.nous.desc} + '): ' + #{character.nous.currentLevel} + '/' + #{character.nous.maxLevel}
+            li.listItem(id="profession"): label Profession
+              span #{character.profession.name}
+            li.listItem(id="humanity"): label Humanity
+              span #{character.humanity}
+
+  script
+    $(document).ready( function() {
+    });

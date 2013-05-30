@@ -70,13 +70,13 @@ var popTypes = [
 
 
 ProfessionSchema.statics.getAvailableProfessions = function(populationType) {
-    for(var i=0;i<ProfessionSchema.defaultData.length;i++) {
+    for(var i=0;i<popTypes.length;i++) {
         if( populationType == popTypes[i].populationType) {
             return popTypes[i].professions;
         }
     }
 
-    throw 'ProfessionSchema:getAvailableProfessions populationType out of range';
+    throw 'ProfessionSchema:getAvailableProfessions populationType out of range:' + populationType;
 };
 
 ProfessionSchema.statics.getProfessionDescription = function(name) {

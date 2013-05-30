@@ -147,5 +147,28 @@ exports.wizardChooseDetails = function( req, res, next) {
 };
 
 exports.wizardSetDetails = function( req, res, next) {
-    res.redirect('/');
+    // clean up the newCharacter object and direct to its homepage
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        var charPage = '/character/' + req.session.newCharacter;
+        req.session.newCharacter = null;    // don't remove from database, its done
+        
+        res.redirect(charPage);
+    }
+};
+
+exports.character = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        Homeland.findById( character.homeland, function(err,homeland) {
+            if(err) return next(err);
+            
+            res.render('character', {
+                character: character,
+                homeland: homeland
+            });
+        });
+    });
 };

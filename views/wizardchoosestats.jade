@@ -1,28 +1,31 @@
 extends layout
 
 block content
-  p
-    | What is the balance of Soma and Nous?
-    | The more extreme the higher your humanity.
-
-    form(action="/wizard/choosestats", method="POST")
-      fieldset
-        legend Choose Stats
-        p
-          #score
-            p 5/5
-          input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
-          #statNames
-          p#somaLabel Soma
-          p#nousLabel Nous
-        p
-          button Next
-  p
-    | Humanity measures how much of your mortal coil
-    | remains after cybernetic or genetic augmentation.
-    #humanityScore
-      p 5
-    input(type="range", name="humanity", min="1", max="9", value="5", readonly="readonly", id="humanitySlider")
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href="/wizard/cancel")
+        button.leftNavButton Cancel
+      p Statistics
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | What is the balance of Soma and Nous?
+          | The more extreme the higher your humanity.
+        form(action="/wizard/choosestats", method="POST")
+          fieldset
+            div.rangeInput
+              h1#score(class="centered") 5/5
+              input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
+              p.leftLabel Nous
+              p.rightLabel Soma
+            br
+            p#humanityExplanation
+              | Humanity measures how much of your mortal coil
+              | remains after cybernetic or genetic augmentation.
+              h1#humanityScore(class="centered") 5
+            p
+              button.rightForm Next
 
   script
     $(document).ready( function() {
@@ -33,11 +36,11 @@ block content
             var v = (s>n)?s:n;
             
             $('#humanitySlider').val(v);
-            $('#humanityScore').replaceWith("<div id='humanityScore'><p>" + v + "</p></div>");
+            $('#humanityScore').replaceWith("<h1 id='humanityScore' class='centered'>" + v + "</h1>");
 
             // set stat score
-            var str = s.toString() + '/' + n.toString();
-            $('#score').replaceWith("<div id='score'><p>" + str + "</p><div>");
+            var str = n.toString() + '/' + s.toString();
+            $('#score').replaceWith("<h1 id='score' class='centered'>" + str + "</h1>");
         }
         
         $('#soma').change(function() {updateHumanity();});

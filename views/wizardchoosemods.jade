@@ -4,42 +4,53 @@ block content
   script
     var modDict = {};
 
-  p
-    | Genetic modifications and technological augmentations
-    | provide superhuman powers.
-
-    form(action="/wizard/choosemods", method="POST")
-      fieldset
-        legend Choose Mods
-        p#humanity Humanity #{humanity}
-        p#credits Credits #{credits}
-        #mainMenu
-          input#result(name='result', type="text", hidden="hidden")
-          each modType in mods
-            p #{modType[0].type}
-            ul.modMenu
-              each mod in modType
-                li.modItem: label #{mod.name}
-                script
-                  var newObj = {lock:0,
-                                selected:false,
-                                name:"#{mod.name}",
-                                prohibited:[],
-                                humanCost:#{mod.humanCost},
-                                creditCost:#{mod.creditCost}
-                                };
-                each pObj in mod.prohibited
-                  script
-                    newObj.prohibited.push("#{pObj}");
-                script
-                  modDict["#{mod.name}"] = newObj;
-        p
-          button#next Next
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href="/wizard/cancel")
+        button.leftNavButton Cancel
+      p Modifications
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | Genetic modifications and technological augmentations
+          | provide superhuman powers.
+        form(action="/wizard/choosemods", method="POST")
+          fieldset
+            p#humanTot Humanity #{humanity}
+            p#credTot Credits #{credits}
+            br
+            #mainMenu
+              input#result(name='result', type="text", hidden="hidden")
+              each modType in mods
+                h1.centered #{modType[0].type}
+                  ul.listItems
+                    each mod in modType
+                      li.listItem(id="#{mod.name}"): label #{mod.name}
+                        script
+                          var newObj = {lock:0,
+                                  selected:false,
+                                  name:"#{mod.name}",
+                                  prohibited:[],
+                                  humanCost:#{mod.humanCost},
+                                  creditCost:#{mod.creditCost}
+                                  };
+                          modDict["#{mod.name}"] = newObj;
+                        each pObj in mod.prohibited
+                          script
+                            newObj.prohibited.push("#{pObj}");
+            p
+              button.rightForm Next
 
   script
     $(document).ready( function() {
         var hum = #{humanity};
         var cr = #{credits};
+        
+        var getModDictEntry = function(obj) {
+            var mStr = obj.attr("id");
+            return modDict[mStr];
+        }
     
         var checkEligibility = function(m) {
             if( m.humanCost > hum || m.creditCost > cr)
@@ -48,10 +59,10 @@ block content
         };
 
         // initialize each item
-        $(".modItem").each( function() {
-            var m = modDict[$(this).text()];
+        $(".listItem").each( function() {
+            var m = getModDictEntry($(this));
             if( !checkEligibility(m))
-              $(this).addClass('expensiveMod');
+              $(this).addClass('tooExpesiveItem');
         });
 
         var select = function(o, jqModItem) {
@@ -59,30 +70,32 @@ block content
             if( o.lock < 1 && o.humanCost <= hum && o.creditCost <= cr) {
                 // not locked, let's do it
                 o.selected = true;
-                jqModItem.addClass('selectedMod');
+                jqModItem.addClass('selectedItem');
 
                 // update humanity and credits
                 hum -= o.humanCost;
-                $('#humanity').html('Humanity ' + hum);
+                hum = Math.round(hum*100)/100;
+                $('#humanTot').html('Humanity ' + hum);
                 cr -= o.creditCost;
-                $('#credits').html('Credits ' + cr);
+                cr = Math.round(cr*100)/100;
+                $('#credTot').html('Credits ' + cr);
 
                 // apply changes to the rest of the items
-                $(".modItem").each( function() {
+                $(".listItem").each( function() {
                     if( $(this).text() != o.name) {
-                        var o2 = modDict[$(this).text()];
+                        var o2 = getModDictEntry($(this));
                         if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
                             // its on the prohib list
-                            if( $(this).hasClass('selectedMod'))
-                                throw 'modItem:onClick selected item already has prohibited item selected';
+                            if( $(this).hasClass('selectedItem'))
+                                throw 'listItem:onClick selected item already has prohibited item selected';
 
                             o2.lock++;
                             if( !o2.selected)
-                                $(this).addClass('prohibitedMod');
+                                $(this).addClass('prohibitedItem');
                         }
                     
                         if( !checkEligibility(o2) && !o2.selected)
-                            $(this).addClass('expensiveMod');
+                            $(this).addClass('tooExpensiveItem');
                     }
                 });
             }
@@ -91,33 +104,35 @@ block content
         var deselect = function(o, jqModItem) {
             // not locked, let's do it
             o.selected = false;
-            jqModItem.removeClass('selectedMod');
+            jqModItem.removeClass('selectedItem');
 
             // update humanity and credits
             hum += o.humanCost;
-            $('#humanity').html('Humanity ' + hum);
+            hum = Math.round(hum*100)/100;
+            $('#humanTot').html('Humanity ' + hum);
             cr += o.creditCost;
-            $('#credits').html('Credits ' + cr);
+            cr = Math.round(cr*100)/100;
+            $('#credTot').html('Credits ' + cr);
 
             // apply changes to the rest of the items
-            $(".modItem").each( function() {
+            $(".listItem").each( function() {
                 if( $(this).text() != o.name) {
-                    var o2 = modDict[$(this).text()];
+                    var o2 = getModDictEntry($(this));
                     if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
                         // its on the prohibited list
                         o2.lock--;
                         if( 0 == o2.lock)
-                            $(this).removeClass('prohibitedMod');
+                            $(this).removeClass('prohibitedItem');
                     }
                     
                     if( checkEligibility(o2))
-                        $(this).removeClass('expensiveMod');
+                        $(this).removeClass('tooExpensiveItem');
                 }
             });
         };
         
-        $(".modItem").click( function() {
-            var o = modDict[$(this).text()];
+        $(".listItem").click( function() {
+            var o = getModDictEntry($(this));
 
             if( o.selected)
               deselect(o, $(this));
@@ -128,8 +143,8 @@ block content
         $('#next').click( function() {
             var result = '';
             var virginStr = false;
-            $(".modItem").each( function() {
-                var o = modDict[$(this).text()];
+            $(".listItem").each( function() {
+                var o = getModDictEntry($(this));
                 if( o.selected) {
                     if( !virginStr) {
                         virginStr = true;

@@ -9,22 +9,6 @@ a:visited {color:#e8c26f;}  /* visited link */
 a:hover {color:#e8c26f;}  /* mouse over link */
 a:active {color:#e8c26f;}  /* selected link */
 
-.expensiveMod {
-  color: #CCCCCC;
-}
-.expensiveItem {
-  color: #CCCCCC;
-}
-.prohibitedMod {
-  color: #FF3300;
-}
-.selectedMod {
-  color: #FFB700;
-}
-.selectedItem {
-  color: #FFB700;
-}
-
 @media only screen {
 	.containerDiv {
 		height: 100%;
@@ -101,12 +85,12 @@ a:active {color:#e8c26f;}  /* selected link */
 
     .listItems {
         list-style: none;
+		background: rgb(137, 159, 161);
         padding: 0;
     }
     .listItems li {
 		position: static;
 		height: 1.5em;
-		background: rgb(137, 159, 161);
 		border: 1px solid rgb(146, 188, 255);
 		opacity: 0.79;
         line-height:1.5em;
@@ -124,8 +108,16 @@ a:active {color:#e8c26f;}  /* selected link */
         text-decoration:none;
         color:#382f1b;
     }
+    .listItems li label {
+        padding-left: 0.4em;
+        text-decoration:none;
+        color:#382f1b;
+    }
     .listItems li:hover { color:#e8c26f; background: #475354}
     .listItems li:active { color:#e8c26f; background: #303738}
+    .tooExpensiveItem { color:#ab0006; background: #ab0006}
+    .prohibitedItem { color:#ab0006; background: #ab0006}
+    .selectedItem { color:#ab0006; background: #e8c26f}
     
     .dataEntry {
         height: auto;
@@ -286,5 +278,19 @@ a:active {color:#e8c26f;}  /* selected link */
     
     #humanityExplanation {
         font-size: 0.8em;
+    }
+
+    #humanTot {
+        font-size: 0.8em;
+        float: left;
+        margin: 0;
+    }
+    #credTot {
+        font-size: 0.8em;
+        float: right;
+        margin: 0;
+    }
+    #mainMenu {
+        font-size:0.7em;
     }
 }

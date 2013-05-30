@@ -1,16 +1,27 @@
 extends layout
 
 block content
-  form(action="/wizard/choosedetails", method="POST")
-    fieldset
-      legend Choose details
-      p
-        input(name="characterName", type="text", value="Name")
-      p
-        label Nous #{nous}
-        input(name="nous", type="text", value="Descriptive Word")
-      p
-        label Soma #{soma}
-        input(name="soma", type="text", value="Descriptive Word")
-      p
-        button Next
+  #contentDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a(href="/")
+        button.leftNavButton Cancel
+      p Details
+    #contentArea
+      div.dataEntry
+        form(action="/wizard/choosedetails", method="POST")
+          fieldset
+            p
+              label(for="characterName") Name:
+              div.textInput
+                input(name="characterName", type="text", value="Name")
+            p
+              label(for="nous") Nous: (#{nous})
+              div.textInput
+                input(name="nous", type="text", size="17", value="Descriptive Word")
+            p
+              label(for="soma") Soma: (#{soma})
+              div.textInput
+                input(name="soma", type="text", size="16", value="Descriptive Word")
+            p
+              button.rightForm Done

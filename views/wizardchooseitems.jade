@@ -4,33 +4,42 @@ block content
   script
     var itemDict = {};
 
-  p
-    | Genetic modifications and technological augmentations
-    | provide superhuman powers.
-
-    form(action="/wizard/chooseitems", method="POST")
-      fieldset
-        legend Choose Items
-        p#credits Credits #{credits}
-        #mainMenu
-          input#result(name='result', type="text", hidden="hidden")
-          each itemType in mods
-            p #{itemType[0].category}
-            ul.itemMenu
-              each itemObj in itemType
-                li.itemItem: label #{itemObj.name}
-                script
-                  var newObj = {selected:false,
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href="/wizard/cancel")
+        button.leftNavButton Cancel
+      p Items
+    #contentArea
+      div.dataEntry
+        form(action="/wizard/chooseitems", method="POST")
+          fieldset
+            p#credTot Credits #{credits}
+            br
+            #mainMenu
+              input#result(name='result', type="text", hidden="hidden")
+              each itemType in mods
+                h1.centered #{itemType[0].category}
+                  ul.listItems
+                    each itemObj in itemType
+                      li.listItem(id="#{itemObj.name}"): label #{itemObj.name}
+                        script
+                          var newObj = {selected:false,
                                 name:"#{itemObj.name}",
                                 cost:#{itemObj.cost}
                                 };
-                  itemDict["#{itemObj.name}"] = newObj;
-        p
-          button#next Next
+                          itemDict["#{itemObj.name}"] = newObj;
+            p
+              button.rightForm(id="next") Next
 
   script
     $(document).ready( function() {
         var cr = #{credits};
+    
+        var getItemDictEntry = function(obj) {
+            var mStr = obj.attr("id");
+            return itemDict[mStr];
+        }
     
         var checkEligibility = function(m) {
             if( m.cost > cr)
@@ -39,10 +48,10 @@ block content
         };
 
         // initialize each item
-        $(".itemItem").each( function() {
-            var i = itemDict[$(this).text()];
+        $(".listItem").each( function() {
+            var i = getItemDictEntry($(this));
             if( !checkEligibility(i))
-              $(this).addClass('expensiveItem');
+              $(this).addClass('tooExpensiveItem');
         });
 
         var select = function(o, jqItemItem) {
@@ -53,15 +62,16 @@ block content
 
                 // update credits
                 cr -= o.cost;
-                $('#credits').html('Credits ' + cr);
+                cr = Math.round(cr*100)/100;
+                $('#credTot').html('Credits ' + cr);
 
                 // apply changes to the rest of the items
-                $(".itemItem").each( function() {
+                $(".listItem").each( function() {
                     if( $(this).text() != o.name) {
-                        var o2 = itemDict[$(this).text()];
+                        var o2 = getItemDictEntry($(this));
                     
                         if( !checkEligibility(o2) && !o2.selected)
-                            $(this).addClass('expensiveItem');
+                            $(this).addClass('tooExpensiveItem');
                     }
                 });
             }
@@ -73,21 +83,21 @@ block content
 
             // update credits
             cr += o.cost;
-            $('#credits').html('Credits ' + cr);
+            $('#credTot').html('Credits ' + cr);
 
             // apply changes to the rest of the items
-            $(".itemItem").each( function() {
+            $(".listItem").each( function() {
                 if( $(this).text() != o.name) {
-                    var o2 = itemDict[$(this).text()];
+                    var o2 = getItemDictEntry($(this));
                     
                     if( checkEligibility(o2))
-                        $(this).removeClass('expensiveItem');
+                        $(this).removeClass('tooExpensiveItem');
                 }
             });
         };
         
-        $(".itemItem").click( function() {
-            var o = itemDict[$(this).text()];
+        $(".listItem").click( function() {
+            var o = getItemDictEntry($(this));
 
             if( o.selected)
               deselect(o, $(this));
@@ -98,8 +108,8 @@ block content
         $('#next').click( function() {
             var result = '';
             var virginStr = false;
-            $(".itemItem").each( function() {
-                var o = itemDict[$(this).text()];
+            $(".listItem").each( function() {
+                var o = getItemDictEntry($(this));
                 if( o.selected) {
                     if( !virginStr) {
                         virginStr = true;

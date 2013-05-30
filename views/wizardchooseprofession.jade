@@ -1,16 +1,28 @@
 extends layout
 
 block content
-  form(action="/wizard/chooseprofession", method="POST")
-    fieldset
-      legend Choose Profession
-      p
-        label(for="prof") Profession
-        select(name="prof", id="prof")
-          each profession in professions
-            option(name=profession.name) #{profession}
-      p
-        label Specialty
-        input(name="specialty", type="text")
-      p
-        button Next
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href="/")
+        button.leftNavButton Cancel
+      p Profession
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | Choose the profession and specialization of your character. This
+          | determines at what skills the character is proficient.
+        form(action="/wizard/chooseprofession", method="POST")
+          fieldset
+            p
+              label(for="prof") Profession:
+              div.styledSelect
+                select(name="prof", id="prof")
+                  each profession in professions
+                    option(name=profession.name) #{profession}
+            p
+              label(for="specialty") Specialty:
+              div.textInput
+                input(name="specialty", type="text", size="16")
+            p
+              button.rightForm Next

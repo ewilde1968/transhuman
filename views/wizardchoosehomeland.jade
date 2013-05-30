@@ -1,21 +1,29 @@
 extends layout
 
 block content
-  p
-    | Choose the location of your character's birth. Birth location determines
-    | possible genetic and cybernetic modification available.
-
-    form(action="/wizard/choosehomeland", method="POST")
-      fieldset
-        legend Choose Homeland
-        p
-          label(for="world") World
-          select(name="world", id="world")
-        p
-          label(for="locale") Locale
-          select(name="locale", id="locale")
-        p
-          button Next
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href="/")
+        button.leftNavButton Cancel
+      p Homeland
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | Choose the location of your character's birth. Birth location determines
+          | possible genetic and cybernetic modification available.
+        form(action="/wizard/choosehomeland", method="POST")
+          fieldset
+            p
+              label(for="world") World:
+              div.styledSelect
+                select(name="world", id="world")
+            p
+              label(for="locale") Locale: 
+              div.styledSelect
+                select(name="locale", id="locale")
+            p
+              button.rightForm Next
 
   script
     $(document).ready( function() {

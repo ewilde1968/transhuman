@@ -39,8 +39,9 @@ CharacterSchema.statics.getByOwnerId = function( ownerID, callback) {
 
 CharacterSchema.statics.createCharacter = function( req, res, next) {
     // first, delete the existing new character
-    if( req.session.newCharacter)
+    if( req.session.newCharacter) {
         Character.remove( {_id:req.session.newCharacter});
+    }
 
     var newCharacter = new Character({owner: req.session.loggedIn});
     newCharacter.save( function(err) {
@@ -53,6 +54,17 @@ CharacterSchema.statics.createCharacter = function( req, res, next) {
     });
 
     req.session.newCharacter = newCharacter._id;
+};
+
+CharacterSchema.statics.cancelCharacter = function( req, res, next) {
+    // first, delete the existing new character
+    if( req.session.newCharacter)
+        Character.remove( {_id:req.session.newCharacter}, function(err) {
+            req.session.newCharacter = null;
+            if( err)
+                return next(err);
+            next();
+            });
 };
 
 CharacterSchema.statics.setHomeland = function( req, res, next) {

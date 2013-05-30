@@ -47,6 +47,7 @@ app.get('/signup', routes.signup);
 app.post('/signup', User.createAccount, routes.createdAccount);
 app.get('/logout', routes.logout);
 app.get('/user/:id', routes.user);
+app.get('/wizard/cancel', Character.cancelCharacter, function(q,r,n) {r.redirect('/');});
 app.get('/wizard/choosehomeland', User.secure, Character.createCharacter, routes.wizardChooseHomeland);
 app.post('/wizard/choosehomeland', User.secure, Character.setHomeland, routes.wizardSetHomeland);
 app.get('/wizard/chooseprofession', User.secure, routes.wizardChooseProfession);

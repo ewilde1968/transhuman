@@ -1,23 +1,32 @@
 extends layout
 
 block content
-  form( action="/signup", method="POST")
-    fieldset
-      legend Sign Up
-      p
-        label First
-        input( name="user[first]", type="text")
-      p
-        label Last
-        input( name="user[last]", type="text")
-      p
-        label Email
-        input( name="user[email]", type="text")
-      p
-        label Password
-        input( name="user[password]", type="password")
-      p
-        button Submit
-      p
-        a(href="/") Cancel
+  #contentDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a(href="/")
+        button.leftNavButton Cancel
+      p Sign Up
+    #contentArea
+      div.dataEntry
+        form( action="/signup", method="POST")
+          fieldset
+            p
+              label First:
+              div.textInput
+                input( name="user[first]", type="text")
+            p
+              label Last:
+              div.textInput
+                input( name="user[last]", type="text")
+            p
+              label Email:
+              div.textInput
+                input( name="user[email]", type="text")
+            p
+              label Password:
+              div.textInput
+                input( name="user[password]", type="password", size="14")
+            p
+              button.rightForm Submit
         

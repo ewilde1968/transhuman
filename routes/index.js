@@ -173,6 +173,20 @@ exports.character = function( req, res, next) {
     });
 };
 
+exports.name = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('name', {
+                character: character
+        });
+    });
+};
+
+exports.changeName = function( req, res, next) {
+    res.redirect( '/character/' + req.params.id);
+};
+
 exports.homeland = function( req, res, next) {
     Character.findById(req.params.id, function(err,character) {
         if(err) return next(err);

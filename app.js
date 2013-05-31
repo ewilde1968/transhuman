@@ -60,12 +60,16 @@ app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
 app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
 app.get('/wizard/choosedetails', User.secure, routes.wizardChooseDetails);
 app.post('/wizard/choosedetails', User.secure, Character.setDetails, routes.wizardSetDetails);
+app.get('/character/:id/name', User.secure, routes.name);
+app.post('/character/:id/name', User.secure, Character.changeName, routes.changeName);
 app.get('/character/:id/homeland', User.secure, routes.homeland);
 app.get('/character/:id/race', User.secure, routes.race);
 app.get('/character/:id/soma', User.secure, routes.soma);
 app.post('/character/:id/soma', User.secure, Character.changeSoma, routes.soma);
 app.get('/character/:id/nous', User.secure, routes.nous);
 app.post('/character/:id/nous', User.secure, Character.changeNous, routes.nous);
+//app.get('/character/:id/profession', User.secure, routes.profession);
+//app.post('/character/:id/profession', User.secure, Character.changeProfession, routes.profession);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

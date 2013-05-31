@@ -196,6 +196,19 @@ CharacterSchema.statics.setDetails = function( req, res, next) {
     });
 };
 
+CharacterSchema.statics.changeName = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+        
+        character.name = req.body.nameTE;
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
+
 CharacterSchema.statics.changeSoma = function( req, res, next) {
     Character.findById( req.params.id, function(err, character) {
         if(err) return next(err);
@@ -210,6 +223,7 @@ CharacterSchema.statics.changeSoma = function( req, res, next) {
         });
     });
 };
+
 CharacterSchema.statics.changeNous = function( req, res, next) {
     Character.findById( req.params.id, function(err, character) {
         if(err) return next(err);

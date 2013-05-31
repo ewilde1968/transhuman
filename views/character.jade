@@ -7,7 +7,8 @@ block content
       a#doneButton(href="/")
         button.leftNavButton Cancel
       p #{character.name}
-      a#editButton(href="/")
+      redirectRoot = '/character/' + character._id + '/name'
+      a#editButton(href=redirectRoot)
         button.rightNavButton Edit
     #contentArea
       ul.optionList

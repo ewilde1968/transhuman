@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      button.leftNavButton(id="doneB") Done
+      p Details
+    #contentArea
+      div.dataEntry
+        redirectRoot = '/character/' + character._id + '/name'
+        form#nameForm(action=redirectRoot, method="POST")
+          fieldset
+            p
+              div.textInput
+                input(name="nameTE", type="text", size="31", required="required", value="#{character.name}")
+
+  script
+    $(document).ready( function() {
+        var postURL = '/character/' + '#{character._id}' + '/name';
+
+        $('#doneB').click( function() {
+            var data = { name: $('input[name="nameTE"]').val() };
+            //$.post( postURL, data);
+            $('#nameForm').submit();
+        });
+    });

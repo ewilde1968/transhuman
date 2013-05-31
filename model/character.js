@@ -18,7 +18,7 @@ var CharacterSchema = new Schema( {
     credits:    Number,
     nous:       { currentLevel:Number, maxLevel:Number, desc:String},
     soma:       { currentLevel:Number, maxLevel:Number, desc:String},
-    racialType: ObjectId,   // Basic
+    race: String,
     profession: { name:String, desc:String, level:Number, specialty:String},
     mods:       Array,      // Array of Mods
     history:    Array,      // array of History
@@ -43,7 +43,8 @@ CharacterSchema.statics.createCharacter = function( req, res, next) {
         Character.remove( {_id:req.session.newCharacter});
     }
 
-    var newCharacter = new Character({owner: req.session.loggedIn});
+    var newCharacter = new Character({owner: req.session.loggedIn,
+                                      race: 'Human'});
     newCharacter.save( function(err) {
         if( err) {
             req.session.newCharacter = null;

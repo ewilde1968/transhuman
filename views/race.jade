@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      redirectRoot = '/character/' + character._id
+      a#doneButton(href=redirectRoot)
+        button.leftNavButton Done
+      p #{character.race}
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | What is a human?
+        form(action="/wizard/choosehomeland", method="POST")
+          fieldset
+            p
+              label(for="world") World:
+              div.styledSelect
+                select(name="world", id="world")
+            p
+              label(for="locale") Locale: 
+              div.styledSelect
+                select(name="locale", id="locale")
+            p#legalString
+              | #{homeland.race[character.race]}
+
+  script
+    $(document).ready( function() {
+        function setLegalString() {
+            var selVal = $('#locale').selectedIndex;
+            var str = data[selVal].race[#{character.race}];
+            $('#legalString').text(str);
+        }
+        
+        function updateLocales() {
+            $("#world option:selected").each(function() {
+                // only one should be here
+                $('#locale').empty();
+                socket.emit('locales', this.value, function(data) {
+                    for( i=0;i<data.length;i++) {
+                        opt = $("<option></option>")
+                        .attr("value",data[i].name)
+                        .text(data[i].name)
+                        .attr("selected",data[i].name=='#{homeland.name}');
+                        $('#locale').append(opt);
+                    }
+                    setLegalString();
+                });
+            });
+        }
+        
+        var socket = io.connect('http://localhost');
+        socket.on('connected', function () {
+            socket.emit('worlds', function (data) {
+                for( var i=0;i<data.length;i++) {
+                    var opt = $("<option></option>")
+                        .attr("value",data[i].name)
+                        .text(data[i].name)
+                        .attr("selected",data[i].name=='#{homeland.world}');
+                    $('#world').append(opt);
+                }
+
+                updateLocales();
+            });
+        });
+        
+        $('#world').change(function() {updateLocales();});
+        $('#locale').change(function() {setLegalString();});
+    });

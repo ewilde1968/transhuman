@@ -398,4 +398,7 @@ a:active {color:#e8c26f;}  /* selected link */
     #mainMenu {
         font-size:0.7em;
     }
+    #legalString {
+        font-size: 0.7em;
+    }
 }

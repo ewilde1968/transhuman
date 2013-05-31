@@ -187,3 +187,18 @@ exports.homeland = function( req, res, next) {
         });
     });
 };
+
+exports.race = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        Homeland.findById( character.homeland, function(err,homeland) {
+            if(err) return next(err);
+            
+            res.render('race', {
+                character: character,
+                homeland: homeland
+            });
+        });
+    });
+};

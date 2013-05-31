@@ -14,7 +14,8 @@ var HomelandSchema = new Schema( {
     world:      { type: String, index: true},   // World by name
     techLevel:  { biology: Number, compSci: Number, nanoTech: Number},      // TechLevel
     profs:      Array,      // array of Professions
-    culture:    Array,      // array of CulturalStat (meme, controls, legals)
+    culture:    Array,      // array of CulturalStat (meme, controls)
+    race:       Object      // dictionary of races with their legal status
 });
 
 HomelandSchema.defaultData = [
@@ -27,7 +28,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Quebec South Pole Research',
@@ -38,7 +44,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'China Orbital Station',
@@ -49,7 +60,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'European Orbital Station',
@@ -60,7 +76,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'US',
@@ -71,7 +92,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Europe',
@@ -82,7 +108,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'China',
@@ -93,7 +124,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Virgin Interplanetary Spaceport',
@@ -104,7 +140,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'High China',
@@ -115,7 +156,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Bigelow L4 Estates',
@@ -126,7 +172,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'US Naval Depot',
@@ -137,7 +188,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Outzone Zion',
@@ -145,10 +201,15 @@ HomelandSchema.defaultData = [
         world: 'Lagrange V',           // default data uses string, lookup ID at init time
         profs: 'Extraterrestrial Hamlet',
         techLevel: { biology: 9, compSci: 8, nanoTech: 8},
-        culture: [ { name: 'Hyperevolution', level: 6 },
-                   { name: 'Post-Labor', level: 3 },
-                   { name: 'Humanism', level: 5 }
-                 ]
+        culture: [ { name: 'Hyperevolution', level: 9 },
+                   { name: 'Post-Labor', level: 7 },
+                   { name: 'Humanism', level: 2 }
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Plymouth Rock',
@@ -159,7 +220,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Limited agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'European Heavy Hydrogen',
@@ -170,7 +236,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'Shackleton Crater',
@@ -181,7 +252,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'PRC Naval Depot, Phobos',
@@ -192,7 +268,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     },
     {
         name: 'New Beijing',
@@ -203,7 +284,12 @@ HomelandSchema.defaultData = [
         culture: [ { name: 'Hyperevolution', level: 6 },
                    { name: 'Post-Labor', level: 3 },
                    { name: 'Humanism', level: 5 }
-                 ]
+                 ],
+        race: { Human: 'Independent agency',
+                Cybershell: 'Property',
+                Biogen: 'Independent agency',
+                Uplift: 'Limited agency'
+              }
     }
 ];
 

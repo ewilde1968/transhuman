@@ -202,3 +202,27 @@ exports.race = function( req, res, next) {
         });
     });
 };
+
+exports.soma = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('stat', {
+                character: character,
+                stat: 'soma',
+                statStr: 'Soma'
+        });
+    });
+};
+
+exports.nous = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('stat', {
+                character: character,
+                stat: 'nous',
+                statStr: 'Nous'
+        });
+    });
+};

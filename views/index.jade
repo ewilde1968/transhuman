@@ -13,13 +13,13 @@ block content
               label Email:
               div.textInput
                 if( signupEmail)
-                  input( name="user[email]", type="text", value=signupEmail)
+                  input( name="user[email]", type="text", required="required", value=signupEmail)
                 else
-                  input( name="user[email]", type="text")
+                  input( name="user[email]", type="text", required="required")
             p
               label Password: 
               div.textInput
-                input( name="user[password]", type="password", size="15")
+                input( name="user[password]", type="password", size="15", required="required")
             p
               button.rightForm Sign In
         #newAccount

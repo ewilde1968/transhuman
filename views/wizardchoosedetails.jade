@@ -14,14 +14,14 @@ block content
             p
               label(for="characterName") Name:
               div.textInput
-                input(name="characterName", type="text", value="Name")
+                input(name="characterName", type="text", required="required")
             p
               label(for="nous") Nous: (#{nous})
               div.textInput
-                input(name="nous", type="text", size="17", value="Descriptive Word")
+                input(name="nous", type="text", size="17", required="required", placeholder="Descriptive Word")
             p
               label(for="soma") Soma: (#{soma})
               div.textInput
-                input(name="soma", type="text", size="16", value="Descriptive Word")
+                input(name="soma", type="text", size="16", required="required", placeholder="Descriptive Word")
             p
               button.rightForm Done

@@ -53,7 +53,7 @@ a:active {color:#e8c26f;}  /* selected link */
 		margin: 12px auto 0;
 	}
 
-    #navBar>a>button {
+    #navBar button {
 		float: left;
 		height: 2em;
 		width: auto;
@@ -264,6 +264,15 @@ a:active {color:#e8c26f;}  /* selected link */
     .textInput input {
         font-size: 0.8em;
         border: 1px solid;
+    }
+    
+    .numberInput {
+        line-height: 1em;
+    }
+    .numberInput input{
+        font-size: 0.8em;
+        border: 1px solid;
+        width: 3em;
     }
     
     .styledSelect {

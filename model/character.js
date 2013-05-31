@@ -196,6 +196,34 @@ CharacterSchema.statics.setDetails = function( req, res, next) {
     });
 };
 
+CharacterSchema.statics.changeSoma = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+        
+        character.soma.currentLevel = req.body.current;
+        character.soma.maxLevel = req.body.max;
+        character.soma.desc = req.body.desc;
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
+CharacterSchema.statics.changeNous = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+        
+        character.nous.currentLevel = req.body.current;
+        character.nous.maxLevel = req.body.max;
+        character.nous.desc = req.body.desc;
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
 CharacterSchema.methods.getBelonging = function( itemObj) {
     if( this.belongings) {
         this.belongings.forEach( function(elem) {

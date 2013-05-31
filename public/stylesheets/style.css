@@ -15,9 +15,22 @@ a:active {color:#e8c26f;}  /* selected link */
 		width: 100%;
 	}
 
+    #contentArea {
+		position: absolute;
+		top: 3em;
+        bottom: 1em;
+        width: 84%;
+        left: 8%;
+        padding:0;
+        margin: 0;
+        overflow-y:auto;
+    }
+    
     .backImage {
 		width: 100%;
 		position: fixed 0px 0px;
+        margin: 0;
+        padding: 0;
 	}
 
     #navBar {
@@ -119,6 +132,56 @@ a:active {color:#e8c26f;}  /* selected link */
     .prohibitedItem { color:#ab0006; background: #ab0006}
     .selectedItem { color:#ab0006; background: #e8c26f}
     
+    .optionList {
+        position: fixed;
+        top: 3em;
+        left: 5%;
+        right: 5%;
+        margin: 0;
+        list-style: none;
+        padding: 0;
+    }
+    .optionList li {
+		position: static;
+		height: 1.5em;
+		border: 1px solid rgb(146, 188, 255);
+		opacity: 0.9;
+        line-height:1.5em;
+		background: rgb(137, 159, 161);
+    }
+    .optionList li:first-child {
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+    }
+    .optionList li:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .optionList li a,
+    .optionList li a div {
+        margin: 0;
+    }
+    .optionLabel {
+        float: left;
+        padding-left: 0.4em;
+        text-decoration:none;
+        font-size: 0.7em;
+        font-weight:bold;
+        color:#382f1b;
+        margin: 0;
+    }
+    .optionDesc {
+        float: right;
+        padding-right: 0.6em;
+        text-decoration:none;
+        color:#e8c26f;
+        font-size:0.4em;
+        margin: 0;
+    }
+        
+    .optionList li:hover { color:#e8c26f; background: #475354}
+    .optionList li:active { color:#e8c26f; background: #303738}
+
     .dataEntry {
         height: auto;
 		background: rgb(137, 159, 161);
@@ -182,16 +245,6 @@ a:active {color:#e8c26f;}  /* selected link */
         width: 100%;
         border: 0;
         font-size: 0.6em;
-    }
-    
-    #contentArea {
-		position: absolute;
-		top: 3em;
-        bottom: 1em;
-        width: 84%;
-        left: 8%;
-        padding:0;
-        overflow-y:auto;
     }
     
     #contentArea button {

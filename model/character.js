@@ -99,6 +99,10 @@ CharacterSchema.statics.setProfession = function( req, res, next) {
     });
 };
 
+var roundOff = function(x) {
+    return Math.round(x*100)/100;
+};
+
 CharacterSchema.statics.setStats = function( req, res, next) {
     Character.findById( req.session.newCharacter, function(err, character) {
         if(err) return next(err);
@@ -141,6 +145,9 @@ CharacterSchema.statics.setMods = function( req, res, next) {
 
                     // if this is the last element, save the character
                     if( index == arr.length - 1) {
+                        // round off the values
+                        character.humanity = roundOff(character.humanity);
+                        character.credits = roundOff(character.credits);
                         character.save( function(err) {
                             if(err) return next(err);
                             next();

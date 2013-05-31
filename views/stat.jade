@@ -41,10 +41,11 @@ block content
         $('#editButton').click( function() {
           if( $('#editButton').text() == 'Edit') {
             $('input').prop('disabled', false);
-            $('#editButton').text('Done');
+            $('#editButton').text('Save');
           } else {
             $('input').prop('disabled', true);
             $('#editButton').text('Edit');
+
             var data = { current: $('input[name="current"]').val(),
                          max: $('input[name="max"]').val(),
                          desc: $('input[name="desc"]').val()

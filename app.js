@@ -69,7 +69,9 @@ app.post('/character/:id/soma', User.secure, Character.changeSoma, routes.soma);
 app.get('/character/:id/nous', User.secure, routes.nous);
 app.post('/character/:id/nous', User.secure, Character.changeNous, routes.nous);
 app.get('/character/:id/profession', User.secure, routes.profession);
-app.post('/character/:id/profession', User.secure, Character.changeProfession, routes.changeProfession);
+app.post('/character/:id/profession', User.secure, Character.changeProfession);
+app.get('/character/:id/humanity', User.secure, routes.humanity);
+app.post('/character/:id/humanity', User.secure, Character.changeHumanity);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

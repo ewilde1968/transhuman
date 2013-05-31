@@ -251,6 +251,12 @@ exports.profession = function( req, res, next) {
     });
 };
 
-exports.changeProfession = function( req, res, next) {
-    res.redirect( '/character/' + req.params.id);
+exports.humanity = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('humanity', {
+                character: character
+        });
+    });
 };

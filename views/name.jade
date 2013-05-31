@@ -4,8 +4,11 @@ block content
   #containerDiv
     img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
     #navBar
-      button.leftNavButton(id="doneB") Done
+      redirectRoot = '/character/' + character._id
+      a(href=redirectRoot)
+        button.leftNavButton Done
       p Details
+      button.rightNavButton(id="save") Save
     #contentArea
       div.dataEntry
         redirectRoot = '/character/' + character._id + '/name'
@@ -17,7 +20,7 @@ block content
 
   script
     $(document).ready( function() {
-        $('#doneB').click( function() {
+        $('#save').click( function() {
             $('#nameForm').submit();
         });
     });

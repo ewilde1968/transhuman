@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      redirectRoot = '/character/' + character._id
+      a(href=redirectRoot)
+        button.leftNavButton Done
+      p #{character.profession.name}
+      button.rightNavButton(id="editButton") Edit
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | #{character.profession.desc}
+        redirectRoot = '/character/' + character._id + '/profession'
+        form#professionForm(action=redirectRoot, method="POST")
+          fieldset
+            p
+              div.textInput
+                input(name="specialty", type="text", size="31", disabled="true", required="required", value="#{character.profession.specialty}")
+            p
+              label(for="level") Level: 
+              div.numberInput
+                input(name="level", type="number", disabled="true", required="required", min="0", step="1", value="#{character.profession.level}")
+
+  script
+    var postURL = '/character/' + '#{character._id}' + '/profession';
+
+    $(document).ready( function() {
+
+      $('#editButton').click( function() {
+        if( $('#editButton').text() == 'Edit') {
+            $('input').prop('disabled', false);
+            $('#editButton').text('Done');
+        } else {
+            $('input').prop('disabled', true);
+            $('#editButton').text('Edit');
+            var data = { specialty: $('input[name="specialty"]').val(),
+                         level: $('input[name="level"]').val()
+                         };
+            $.post( postURL, data);
+        }
+      });
+    });

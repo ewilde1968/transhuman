@@ -238,6 +238,21 @@ CharacterSchema.statics.changeNous = function( req, res, next) {
         });
     });
 };
+
+CharacterSchema.statics.changeProfession = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+        
+        character.profession.specialty = req.body.specialty;
+        character.profession.level = req.body.level;
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
+
 CharacterSchema.methods.getBelonging = function( itemObj) {
     if( this.belongings) {
         this.belongings.forEach( function(elem) {

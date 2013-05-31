@@ -240,3 +240,17 @@ exports.nous = function( req, res, next) {
         });
     });
 };
+
+exports.profession = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('profession', {
+                character: character
+        });
+    });
+};
+
+exports.changeProfession = function( req, res, next) {
+    res.redirect( '/character/' + req.params.id);
+};

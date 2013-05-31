@@ -68,8 +68,8 @@ app.get('/character/:id/soma', User.secure, routes.soma);
 app.post('/character/:id/soma', User.secure, Character.changeSoma, routes.soma);
 app.get('/character/:id/nous', User.secure, routes.nous);
 app.post('/character/:id/nous', User.secure, Character.changeNous, routes.nous);
-//app.get('/character/:id/profession', User.secure, routes.profession);
-//app.post('/character/:id/profession', User.secure, Character.changeProfession, routes.profession);
+app.get('/character/:id/profession', User.secure, routes.profession);
+app.post('/character/:id/profession', User.secure, Character.changeProfession, routes.changeProfession);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

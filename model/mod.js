@@ -6,7 +6,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
-    TechLevel = require('./techlevel'),
     Mod = require('./mod');
 
 var ModSchema = new Schema( {
@@ -17,7 +16,7 @@ var ModSchema = new Schema( {
     humanCost:  Number,
     prohibited: Array,      // array of Mod
     benefits:   Array,      // array of Benefit
-    techLevel:  [TechLevel],      // TechLevel
+    techLevel:  {biology: Number, compSci: Number, nanoTech: Number},      // TechLevel
 });
 
 ModSchema.defaultData = [

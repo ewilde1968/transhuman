@@ -172,3 +172,18 @@ exports.character = function( req, res, next) {
         });
     });
 };
+
+exports.homeland = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        Homeland.findById( character.homeland, function(err,homeland) {
+            if(err) return next(err);
+            
+            res.render('homeland', {
+                character: character,
+                homeland: homeland
+            });
+        });
+    });
+};

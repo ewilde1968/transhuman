@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      redirectRoot = '/character/' + character._id
+      a#doneButton(href=redirectRoot)
+        button.leftNavButton Done
+      p #{homeland.name}
+    #contentArea
+      div.dataEntry
+        h1.centered #{homeland.world}
+        p.explanatoryHeading
+          | #{homeland.desc}
+      ul.displayList: label Tech Level
+          li
+            a.displayItem(href='#')
+              div
+                p.displayLabel Biotechnology
+                p.displayDesc #{homeland.techLevel.biology}
+          li
+            a.displayItem(href='#')
+              div
+                p.displayLabel Computer Science
+                p.displayDesc #{homeland.techLevel.compSci}
+          li
+            a.displayItem(href='#')
+              div
+                p.displayLabel Nanotechnology
+                p.displayDesc #{homeland.techLevel.nanoTech}
+        ul.displayList: label Memes
+          each hL in homeland.culture
+            li
+              a.displayItem(href='#')
+                div
+                  p.displayLabel #{hL.name}
+                  p.displayDesc #{hL.level}

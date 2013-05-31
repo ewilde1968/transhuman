@@ -10,6 +10,10 @@ block content
       a(href="/wizard/choosehomeland")
         button.rightNavButton New
     #contentArea
-      ul.listItems
+      ul.optionList
         each character in characters
-          li.listItem: <a href="/character/#{character._id}"><strong>#{character.name}</strong></a>
+          li
+            redirectRoot = '/character/' + character._id
+            a.optionItem(href=redirectRoot)
+              div
+                p.optionLabel #{character.name}

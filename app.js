@@ -60,6 +60,7 @@ app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
 app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
 app.get('/wizard/choosedetails', User.secure, routes.wizardChooseDetails);
 app.post('/wizard/choosedetails', User.secure, Character.setDetails, routes.wizardSetDetails);
+app.get('/character/:id/homeland', routes.homeland);
 app.get('/character/:id', routes.character);
 
 var server = http.createServer(app);

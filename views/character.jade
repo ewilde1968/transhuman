@@ -10,40 +10,40 @@ block content
       a#editButton(href="/")
         button.rightNavButton Edit
     #contentArea
-          ul.optionList
-            li
-              redirectRoot = '/character/' + character._id + '/homeland'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Homeland
-                  p.optionDesc #{homeland.name + '/' + homeland.world}
-            li
-              redirectRoot = '/character/' + character._id + '/race'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Race
-                  p.optionDesc Human
-            li
-              redirectRoot = '/character/' + character._id + '/soma'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Soma
-                  p.optionDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
-            li
-              redirectRoot = '/character/' + character._id + '/nous'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Nous
-                  p.optionDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
-            li
-              redirectRoot = '/character/' + character._id + '/profession'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Profession
-                  p.optionDesc #{character.profession.name}
-            li
-              redirectRoot = '/character/' + character._id + '/humanity'
-              a.optionItem(href=redirectRoot)
-                div
-                  p.optionLabel Humanity
-                  p.optionDesc #{character.humanity}
+      ul.optionList
+        li
+          redirectRoot = '/character/' + character._id + '/homeland'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Homeland
+              p.optionDesc #{homeland.name + '/' + homeland.world}
+        li
+          redirectRoot = '/character/' + character._id + '/race'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Race
+              p.optionDesc Human
+        li
+          redirectRoot = '/character/' + character._id + '/soma'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Soma
+              p.optionDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
+        li
+          redirectRoot = '/character/' + character._id + '/nous'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Nous
+              p.optionDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
+        li
+          redirectRoot = '/character/' + character._id + '/profession'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Profession
+              p.optionDesc #{character.profession.name}
+        li
+          redirectRoot = '/character/' + character._id + '/humanity'
+          a.optionItem(href=redirectRoot)
+            div
+              p.optionLabel Humanity
+              p.optionDesc #{character.humanity}

@@ -6,14 +6,13 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
-    Profession = require('./profession'),
-    TechLevel = require('./techlevel');
+    Profession = require('./profession');
 
 var HomelandSchema = new Schema( {
     name:       { type: String, index: true},
     desc:       String,
     world:      { type: String, index: true},   // World by name
-    techLevel:  [TechLevel],      // TechLevel
+    techLevel:  { biology: Number, compSci: Number, nanoTech: Number},      // TechLevel
     profs:      Array,      // array of Professions
     culture:    Array,      // array of CulturalStat (meme, controls, legals)
 });
@@ -23,103 +22,188 @@ HomelandSchema.defaultData = [
         name: 'US Orbital Station',
         desc: 'US Orbital Station',
         world: 'Mercury',           // default data uses string, lookup ID at init time
-        profs: 'Orbital Station'
+        profs: 'Orbital Station',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Quebec South Pole Research',
         desc: 'Quebec South Pole Research',
         world: 'Mercury',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Hamlet'
+        profs: 'Extraterrestrial Hamlet',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'China Orbital Station',
         desc: 'China Orbital Station',
         world: 'Venus',           // default data uses string, lookup ID at init time
-        profs: 'Orbital Station'
+        profs: 'Orbital Station',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'European Orbital Station',
         desc: 'European Orbital Station',
         world: 'Venus',           // default data uses string, lookup ID at init time
-        profs: 'Orbital Station'
+        profs: 'Orbital Station',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'US',
         desc: 'US',
         world: 'Earth',           // default data uses string, lookup ID at init time
-        profs: 'Earth City'
+        profs: 'Earth City',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Europe',
         desc: 'Europe',
         world: 'Earth',           // default data uses string, lookup ID at init time
-        profs: 'Earth City'
+        profs: 'Earth City',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'China',
         desc: 'China',
         world: 'Earth',           // default data uses string, lookup ID at init time
-        profs: 'Earth City'
+        profs: 'Earth City',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Virgin Interplanetary Spaceport',
         desc: 'Virgin Interplanetary Spaceport',
         world: 'Low Earth Orbit',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'High China',
         desc: 'High China',
         world: 'Low Earth Orbit',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Bigelow L4 Estates',
         desc: 'Bigelow L4 Estates',
         world: 'Lagrange IV',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'US Naval Depot',
         desc: 'US Naval Depot',
         world: 'Lagrange IV',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Outzone Zion',
         desc: 'Outzone Zion',
         world: 'Lagrange V',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Hamlet'
+        profs: 'Extraterrestrial Hamlet',
+        techLevel: { biology: 9, compSci: 8, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Plymouth Rock',
-        desc: 'Plymouth Rock',
+        desc: 'Plymouth Rock is a barren asteroid rich in precious minerals. It was hauled to Lagrange V and extensively mined before being abandoned. Settlers wanting a life of freedom from religious persecution have reinforced the existing rock structure and sealed off large sections to contain an atmosphere and extensive hydroponic system.',
         world: 'Lagrange V',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Hamlet'
+        profs: 'Extraterrestrial Hamlet',
+        techLevel: { biology: 8, compSci: 8, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'European Heavy Hydrogen',
         desc: 'European Heavy Hydrogen',
         world: 'Luna',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 8, compSci: 8, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'Shackleton Crater',
         desc: 'Shackleton Crater',
         world: 'Luna',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial City'
+        profs: 'Extraterrestrial City',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 8},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'PRC Naval Depot, Phobos',
         desc: 'PRC Naval Depot, Phobos',
         world: 'Mars',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial Village'
+        profs: 'Extraterrestrial Village',
+        techLevel: { biology: 8, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     },
     {
         name: 'New Beijing',
         desc: 'New Beijing',
         world: 'Mars',           // default data uses string, lookup ID at init time
-        profs: 'Extraterrestrial City'
+        profs: 'Extraterrestrial City',
+        techLevel: { biology: 9, compSci: 9, nanoTech: 9},
+        culture: [ { name: 'Hyperevolution', level: 6 },
+                   { name: 'Post-Labor', level: 3 },
+                   { name: 'Humanism', level: 5 }
+                 ]
     }
 ];
 

@@ -5,8 +5,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId,
-    TechLevel = require('./techlevel');
+    ObjectId = Schema.ObjectId;
 
 var ItemSchema = new Schema( {
     name:       String,
@@ -15,7 +14,7 @@ var ItemSchema = new Schema( {
     sellPrice:  Number,
     dmgPrice:   Number,
     category:   String,
-    techLevel:  [TechLevel],   // TechLevel
+    techLevel:  {biology: Number, compSci: Number, nanoTech: Number},      // TechLevel
     benefits:   Array       // array of Benefit
 });
 

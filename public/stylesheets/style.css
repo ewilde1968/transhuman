@@ -178,9 +178,61 @@ a:active {color:#e8c26f;}  /* selected link */
         font-size:0.4em;
         margin: 0;
     }
-        
     .optionList li:hover { color:#e8c26f; background: #475354}
     .optionList li:active { color:#e8c26f; background: #303738}
+
+    .displayList {
+        margin: 0;
+        left: 5%;
+        right: 5%;
+        list-style: none;
+        padding: 0;
+    }
+    .displayList label {
+        color: #e8c26f;
+        font-weight: bold;
+        text-align:center;
+        width: 100%;
+    }
+    .displayList li {
+		position: static;
+		height: 1.5em;
+		border: 1px solid rgb(146, 188, 255);
+		opacity: 0.9;
+        line-height:1.5em;
+		background: rgb(137, 159, 161);
+    }
+    .displayList li:first-child {
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
+    }
+    .displayList li:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .displayList li a,
+    .displayList li a div {
+        margin: 0;
+    }
+    .displayLabel {
+        float: left;
+        padding-left: 0.4em;
+        text-decoration:none;
+        font-size: 0.7em;
+        font-weight:bold;
+        color:#382f1b;
+        margin: 0;
+    }
+    .displayDesc {
+        float: right;
+        padding-right: 0.6em;
+        text-decoration:none;
+        color:#e8c26f;
+        font-size:0.4em;
+        margin: 0;
+    }
+    .displayList li:hover { color:#e8c26f; background: #475354}
+    .displayList li:active { color:#e8c26f; background: #303738}
 
     .dataEntry {
         height: auto;

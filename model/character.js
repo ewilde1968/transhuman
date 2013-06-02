@@ -40,11 +40,12 @@ CharacterSchema.statics.getByOwnerId = function( ownerID, callback) {
 CharacterSchema.statics.createCharacter = function( req, res, next) {
     // first, delete the existing new character
     if( req.session.newCharacter) {
-        Character.remove( {_id:req.session.newCharacter});
+        Character.remove( {_id:req.session.newCharacter}).exec();
     }
 
     var newCharacter = new Character({owner: req.session.loggedIn,
-                                      race: 'Human'});
+                                      race: 'Human',
+                                      name: 'unnamed'});
     newCharacter.save( function(err) {
         if( err) {
             req.session.newCharacter = null;

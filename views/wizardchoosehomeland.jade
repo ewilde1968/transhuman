@@ -14,6 +14,9 @@ block content
           | possible genetic and cybernetic modification available.
         form(action="/wizard/choosehomeland", method="POST")
           fieldset
+            a#detailsLink(href='#')
+              img(src="/images/Alarm-Info-icon.png")
+            br
             p
               label(for="world") World:
               div.styledSelect
@@ -59,4 +62,10 @@ block content
         });
         
         $('#world').change(function() {updateLocales();});
+        $('#detailsLink').click( function() {
+            var detailURL = '/wizard/choosehomeland/'
+                            + $('#world option:selected').text()
+                            + '/' + $('#locale option:selected').text();
+            $(this).attr('href', detailURL);
+        });
     });

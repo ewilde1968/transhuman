@@ -53,6 +53,21 @@ exports.wizardChooseHomeland = function( req, res, next) {
                                         defaultHomeland:"'US'"});
 };
 
+exports.wizardChooseHomelandDetail = function( req, res, next) {
+    Character.findById(req.session.newCharacter, function(err,character) {
+        if(err) return next(err);
+        
+        Homeland.findByName( req.params.world, req.params.homeland, function(homeland) {
+            var url = '/wizard/choosehomeland';
+            res.render('homeland', {
+                character: character,
+                homeland: homeland,
+                doneURL: url
+            });
+        });
+    });
+};
+
 exports.wizardSetHomeland = function( req, res, next) {
     res.redirect('/wizard/chooseprofession');
 };
@@ -196,7 +211,8 @@ exports.homeland = function( req, res, next) {
             
             res.render('homeland', {
                 character: character,
-                homeland: homeland
+                homeland: homeland,
+                doneURL: '/character/' + req.params.id
             });
         });
     });

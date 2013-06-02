@@ -410,4 +410,6 @@ a:active {color:#e8c26f;}  /* selected link */
     #legalString {
         font-size: 0.7em;
     }
-}
+    #detailsLink img {
+        float: right;
+    }

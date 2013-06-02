@@ -322,5 +322,13 @@ HomelandSchema.statics.getArrayOfWorld = function(world, callback) {
     });
 };
 
+HomelandSchema.statics.findByName = function(world, homeland, callback) {
+    Homeland.findOne( {world:world,name:homeland}, function(err, result) {
+        if(err) return next(err);
+        
+        callback( result);
+    });
+};
+
 var Homeland = mongoose.model('Homeland', HomelandSchema);
 module.exports = Homeland;

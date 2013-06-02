@@ -57,6 +57,7 @@ app.get('/wizard/choosestats', User.secure, routes.wizardChooseStats);
 app.post('/wizard/choosestats', User.secure, Character.setStats, routes.wizardSetStats);
 app.get('/wizard/choosemods', User.secure, routes.wizardChooseMods);
 app.post('/wizard/choosemods', User.secure, Character.setMods, routes.wizardSetMods);
+app.get('/wizard/choosemods/:mod', User.secure, routes.wizardChooseModsDetail);
 app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
 app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
 app.get('/wizard/choosedetails', User.secure, routes.wizardChooseDetails);

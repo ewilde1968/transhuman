@@ -11,40 +11,40 @@ block content
       a#editButton(href=redirectRoot)
         button.rightNavButton Edit
     #contentArea
-      ul.optionList
+      ul.displayList
         li
           redirectRoot = '/character/' + character._id + '/homeland'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Homeland
-              p.optionDesc #{homeland.name + '/' + homeland.world}
+              p.displayLabel Homeland
+              p.displayDesc #{homeland.name + '/' + homeland.world}
         li
           redirectRoot = '/character/' + character._id + '/race'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Race
-              p.optionDesc Human
+              p.displayLabel Race
+              p.displayDesc Human
         li
           redirectRoot = '/character/' + character._id + '/soma'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Soma
-              p.optionDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
+              p.displayLabel Soma
+              p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
         li
           redirectRoot = '/character/' + character._id + '/nous'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Nous
-              p.optionDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
+              p.displayLabel Nous
+              p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
         li
           redirectRoot = '/character/' + character._id + '/profession'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Profession
-              p.optionDesc #{character.profession.name}
+              p.displayLabel Profession
+              p.displayDesc #{character.profession.name}
         li
           redirectRoot = '/character/' + character._id + '/humanity'
-          a.optionItem(href=redirectRoot)
+          a.displayItem(href=redirectRoot)
             div
-              p.optionLabel Humanity
-              p.optionDesc #{character.humanity}
+              p.displayLabel Humanity
+              p.displayDesc #{character.humanity}

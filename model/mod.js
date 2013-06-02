@@ -124,5 +124,13 @@ ModSchema.statics.generateListByType = function(callback) {
     });
 };
 
+ModSchema.statics.findByName = function(modName, callback) {
+    Mod.findOne( {name: modName}, function(err,result) {
+        if( err) return next(err);
+        
+        callback( result);
+    });
+};
+
 var Mod = mongoose.model('Mod', ModSchema);
 module.exports = Mod;

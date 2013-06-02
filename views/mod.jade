@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#doneButton(href=doneURL)
+        button.leftNavButton Done
+      p #{mod.name}
+      if owned
+        button#buyButton(class="rightNavButton") Sell
+      else
+        button#buyButton(class="rightNavButton") Buy
+    #contentArea
+      div.dataEntry
+        p.explanatoryHeading
+          | #{mod.desc}
+      ul.displayList: label Cost
+          li
+            a.displayItem(href='#')
+              div
+                p.displayLabel Humanity
+                p.displayDesc #{mod.humanCost}
+          li
+            a.displayItem(href='#')
+              div
+                p.displayLabel Credits
+                p.displayDesc #{mod.creditCost}
+        ul.displayList: label Benefits
+            li
+              a.displayItem(href='#')
+                div
+                  p.displayLabel Bogus
+                  p.displayDesc Bogosity
+
+  script
+    $(document).ready( function() {
+        if( !#{eligible})
+            $('#buyButton').attr('disabled',true);
+            
+        $('#buyButton').click( function() {
+        });
+    });
+    

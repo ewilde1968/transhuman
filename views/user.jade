@@ -10,10 +10,10 @@ block content
       a(href="/wizard/choosehomeland")
         button.rightNavButton New
     #contentArea
-      ul.optionList
+      ul.displayList
         each character in characters
           li
             redirectRoot = '/character/' + character._id
-            a.optionItem(href=redirectRoot)
+            a.displayItem(href=redirectRoot)
               div
-                p.optionLabel #{character.name}
+                p.displayLabel #{character.name}

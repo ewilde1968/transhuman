@@ -17,16 +17,22 @@ block content
           | provide superhuman powers.
         form(action="/wizard/choosemods", method="POST")
           fieldset
-            p#humanTot Humanity #{humanity}
-            p#credTot Credits #{credits}
+            p#humanTot Humanity #{character.humanity}
+            p#credTot Credits #{character.credits}
             br
             #mainMenu
               input#result(name='result', type="text", hidden="hidden")
               each modType in mods
                 h1.centered #{modType[0].type}
-                  ul.listItems
+                  ul.optionList
                     each mod in modType
-                      li.listItem(id="#{mod.name}"): label #{mod.name}
+                      li.optionItem(id="#{mod.name}")
+                        detailsURL = '/wizard/choosemods/' + mod.name
+                        a(href=detailsURL)
+                          div
+                            p.optionLabel #{mod.name}
+                            descStr = 'Hum ' + mod.humanCost + ' / Cr ' + mod.creditCost
+                            p.optionDesc #{descStr}
                         script
                           var newObj = {lock:0,
                                   selected:false,
@@ -44,106 +50,56 @@ block content
 
   script
     $(document).ready( function() {
-        var hum = #{humanity};
-        var cr = #{credits};
+        var cMods = #{character.mods};
         
         var getModDictEntry = function(obj) {
             var mStr = obj.attr("id");
             return modDict[mStr];
         }
-    
-        var checkEligibility = function(m) {
-            if( m.humanCost > hum || m.creditCost > cr)
+
+        var isOwned = function(m) {
+            for( var i=0; i<cMods.length;i++) {
+              if( m.name == cMods[i].name)
+                return true;
+            }
+            
+            return false;
+        };
+        
+        var checkCost = function(m) {
+            if( m.humanCost > #{character.humanity} || m.creditCost > #{character.credits})
                 return false;
             return true;
         };
+        
+        var checkProhibited = function(m) {
+            for( var i=0; i<cMods.length;i++) {
+              for( var j=0; j<cMods[i].prohibited.length;j++) {
+                  if( m.name == cMods[i].prohibited[j])
+                    return true;
+              }
+            }
+            
+            return false;
+        };
 
         // initialize each item
-        $(".listItem").each( function() {
+        $(".optionItem").each( function() {
             var m = getModDictEntry($(this));
-            if( !checkEligibility(m))
-              $(this).addClass('tooExpesiveItem');
-        });
-
-        var select = function(o, jqModItem) {
-            // check to see if the item is not locked and affordable
-            if( o.lock < 1 && o.humanCost <= hum && o.creditCost <= cr) {
-                // not locked, let's do it
-                o.selected = true;
-                jqModItem.addClass('selectedItem');
-
-                // update humanity and credits
-                hum -= o.humanCost;
-                hum = Math.round(hum*100)/100;
-                $('#humanTot').html('Humanity ' + hum);
-                cr -= o.creditCost;
-                cr = Math.round(cr*100)/100;
-                $('#credTot').html('Credits ' + cr);
-
-                // apply changes to the rest of the items
-                $(".listItem").each( function() {
-                    if( $(this).text() != o.name) {
-                        var o2 = getModDictEntry($(this));
-                        if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
-                            // its on the prohib list
-                            if( $(this).hasClass('selectedItem'))
-                                throw 'listItem:onClick selected item already has prohibited item selected';
-
-                            o2.lock++;
-                            if( !o2.selected)
-                                $(this).addClass('prohibitedItem');
-                        }
-                    
-                        if( !checkEligibility(o2) && !o2.selected)
-                            $(this).addClass('tooExpensiveItem');
-                    }
-                });
+            if( isOwned(m))
+              $(this).addClass('selectedItem');
+            else {
+              if( !checkCost(m))
+                $(this).addClass('tooExpesiveItem');
+              if( checkProhibited(m))
+                $(this).addClass('prohibitedItem');
             }
-        };
-        
-        var deselect = function(o, jqModItem) {
-            // not locked, let's do it
-            o.selected = false;
-            jqModItem.removeClass('selectedItem');
-
-            // update humanity and credits
-            hum += o.humanCost;
-            hum = Math.round(hum*100)/100;
-            $('#humanTot').html('Humanity ' + hum);
-            cr += o.creditCost;
-            cr = Math.round(cr*100)/100;
-            $('#credTot').html('Credits ' + cr);
-
-            // apply changes to the rest of the items
-            $(".listItem").each( function() {
-                if( $(this).text() != o.name) {
-                    var o2 = getModDictEntry($(this));
-                    if( o.prohibited && o.prohibited.indexOf( o2.name) > -1) {
-                        // its on the prohibited list
-                        o2.lock--;
-                        if( 0 == o2.lock)
-                            $(this).removeClass('prohibitedItem');
-                    }
-                    
-                    if( checkEligibility(o2))
-                        $(this).removeClass('tooExpensiveItem');
-                }
-            });
-        };
-        
-        $(".listItem").click( function() {
-            var o = getModDictEntry($(this));
-
-            if( o.selected)
-              deselect(o, $(this));
-            else
-              select(o, $(this));
         });
-        
+
         $('#next').click( function() {
             var result = '';
             var virginStr = false;
-            $(".listItem").each( function() {
+            $(".optionItem").each( function() {
                 var o = getModDictEntry($(this));
                 if( o.selected) {
                     if( !virginStr) {

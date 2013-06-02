@@ -54,18 +54,22 @@ exports.wizardChooseHomeland = function( req, res, next) {
 };
 
 exports.wizardChooseHomelandDetail = function( req, res, next) {
-    Character.findById(req.session.newCharacter, function(err,character) {
-        if(err) return next(err);
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
         
-        Homeland.findByName( req.params.world, req.params.homeland, function(homeland) {
-            var url = '/wizard/choosehomeland';
-            res.render('homeland', {
-                character: character,
-                homeland: homeland,
-                doneURL: url
+            Homeland.findByName( req.params.world, req.params.homeland, function(homeland) {
+                var url = '/wizard/choosehomeland';
+                res.render('homeland', {
+                    character: character,
+                    homeland: homeland,
+                    doneURL: url
+                });
             });
         });
-    });
+    }
 };
 
 exports.wizardSetHomeland = function( req, res, next) {
@@ -112,9 +116,49 @@ exports.wizardChooseMods = function( req, res, next) {
         
             Mod.generateListByType( function(docs) {
                 res.render('wizardchoosemods', {
-                    humanity: character.humanity,
-                    credits: character.credits,
+                    character: character,
                     mods: docs
+                });
+            });
+        });
+    }
+};
+
+exports.wizardChooseModsDetail = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
+        
+            Mod.findByName( req.params.mod, function(mod) {
+                var owned = false;
+                var eligible = false;
+                
+                for( var i=0;i<character.mods.length;i++) {
+                    if( character.mods[i].name == mod.name) {
+                        owned = true;
+                        eligible = true;
+                    } else {
+                        eligible = character.humanity >= mod.humanCost
+                            && character.credits >= mod.creditCost;
+                        if( eligible) {
+                            for( var j=0;j<mod.prohibited.length;j++) {
+                                if( mod.prohibited[j] == mod.name) {
+                                    eligible = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                res.render('mod', {
+                    character: character,
+                    mod: mod,
+                    eligible: eligible,
+                    owned: owned,
+                    doneURL: '/wizard/choosemods'
                 });
             });
         });

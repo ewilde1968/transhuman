@@ -177,8 +177,38 @@ exports.wizardChooseItems = function( req, res, next) {
         
             Item.generateListByType( function(docs) {
                 res.render('wizardchooseitems', {
-                    credits: character.credits,
+                    character: character,
                     mods: docs
+                });
+            });
+        });
+    }
+};
+
+exports.wizardChooseItemsDetail = function( req, res, next) {
+    if( !req.session.newCharacter)
+        res.redirect('/');
+    else {
+        Character.findById(req.session.newCharacter, function(err,character) {
+            if(err) return next(err);
+        
+            Item.findByName( req.params.item, function(item) {
+                var owned = 0;
+                var eligible = character.credits >= item.cost;
+                
+                for( var i=0;i<character.belongings.length;i++) {
+                    if( character.belongings[i].item.name == item.name) {
+                        owned = character.belongings[i].amount;
+                        eligible = true;
+                    }
+                }
+
+                res.render('item', {
+                    character: character,
+                    item: item,
+                    eligible: eligible,
+                    owned: owned,
+                    doneURL: '/wizard/chooseitems'
                 });
             });
         });
@@ -356,6 +386,38 @@ exports.modDetail = function( req, res, next) {
                     eligible: eligible,
                     owned: owned,
                     doneURL: '/character/' + character._id + '/mods'
+                });
+            });
+        });
+
+};
+
+exports.setItemById = function( req, res, next) {
+    // posted an item sell or buy action, go to doneURL
+    res.redirect(req.body.doneURL);
+};
+
+exports.itemDetail = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+            if(err) return next(err);
+        
+            Item.findByName( req.params.itemname, function(item) {
+                var owned = false;
+                var eligible = character.credits >= item.cost;
+                
+                for( var i=0;i<character.belongings.length;i++) {
+                    if( character.belongings[i].item.name == item.name) {
+                        owned = character.belongings[i].amount;
+                        eligible = true;
+                    }
+                }
+
+                res.render('item', {
+                    character: character,
+                    item: item,
+                    eligible: eligible,
+                    owned: owned,
+                    doneURL: '/character/' + character._id + '/items'
                 });
             });
         });

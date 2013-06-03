@@ -7,6 +7,7 @@ block content
       a#cancelButton(href="/wizard/cancel")
         button.leftNavButton Cancel
       p Homeland
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         p.explanatoryHeading
@@ -25,8 +26,6 @@ block content
               label(for="locale") Locale: 
               div.styledSelect
                 select(name="locale", id="locale")
-            p
-              button.rightForm Next
 
   script
     $(document).ready( function() {
@@ -67,5 +66,8 @@ block content
                             + $('#world option:selected').text()
                             + '/' + $('#locale option:selected').text();
             $(this).attr('href', detailURL);
+        });
+        $('#nextButton').click( function() {
+            $('form').submit();
         });
     });

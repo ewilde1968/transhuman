@@ -12,6 +12,7 @@ block content
       a#cancelButton(href="/wizard/cancel")
         button.leftNavButton Cancel
       p Modifications
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         p.explanatoryHeading
@@ -42,11 +43,6 @@ block content
                               creditCost:#{mod.creditCost}
                               };
                           modDict["#{mod.name}"] = newObj;
-                      each pObj in mod.prohibited
-                        script
-                            newObj.prohibited.push("#{pObj}");
-            p
-              button.rightForm(id="next") Next
 
   each modObj in character.mods
     script
@@ -86,5 +82,9 @@ block content
               if( checkProhibited(m))
                 $(this).addClass('prohibitedItem');
             }
+        });
+
+        $('#nextButton').click( function() {
+            $('form').submit();
         });
     });

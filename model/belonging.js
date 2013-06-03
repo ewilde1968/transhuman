@@ -15,8 +15,8 @@ var BelongingSchema = new Schema( {
     item:       Object    // Item
 });
 
-BelongingSchema.statics.create = function(itemObj) {
-    var b = new Belonging({item:itemObj, amount:1, damaged:false, carried:false});
+BelongingSchema.statics.create = function(itemObj, amt) {
+    var b = new Belonging({item:itemObj, amount:amt, damaged:false, carried:false});
     return b;
 };
 

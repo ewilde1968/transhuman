@@ -7,6 +7,7 @@ block content
       a(href="/")
         button.leftNavButton Cancel
       p Details
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         form(action="/wizard/choosedetails", method="POST")
@@ -23,5 +24,10 @@ block content
               label(for="soma") Soma: (#{soma})
               div.textInput
                 input(name="soma", type="text", size="16", required="required", placeholder="Descriptive Word")
-            p
-              button.rightForm Done
+
+  script
+    $(document).ready( function() {
+        $('#nextButton').click( function() {
+            $('form').submit();
+        });
+    });

@@ -59,7 +59,8 @@ app.get('/wizard/choosemods', User.secure, routes.wizardChooseMods);
 app.post('/wizard/choosemods', User.secure, routes.wizardSetMods);
 app.get('/wizard/choosemods/:mod', User.secure, routes.wizardChooseModsDetail);
 app.get('/wizard/chooseitems', User.secure, routes.wizardChooseItems);
-app.post('/wizard/chooseitems', User.secure, Character.setItems, routes.wizardSetItems);
+app.post('/wizard/chooseitems', User.secure, routes.wizardSetItems);
+app.get('/wizard/chooseitems/:item', User.secure, routes.wizardChooseItemsDetail);
 app.get('/wizard/choosedetails', User.secure, routes.wizardChooseDetails);
 app.post('/wizard/choosedetails', User.secure, Character.setDetails, routes.wizardSetDetails);
 app.get('/character/:id/name', User.secure, routes.name);
@@ -76,6 +77,8 @@ app.get('/character/:id/humanity', User.secure, routes.humanity);
 app.post('/character/:id/humanity', User.secure, Character.changeHumanity);
 app.get('/character/:id/mod/:modname', User.secure, routes.modDetail);
 app.post('/character/:id/mod/:modid', User.secure, Character.setModById, routes.setModById);
+app.get('/character/:id/item/:itemname', User.secure, routes.itemDetail);
+app.post('/character/:id/item/:itemid', User.secure, Character.setItemById, routes.setItemById);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

@@ -165,30 +165,43 @@ CharacterSchema.statics.setModById = function( req, res, next) {
     });
 };
 
-CharacterSchema.statics.setItems = function( req, res, next) {
-    Character.findById( req.session.newCharacter, function(err, character) {
+CharacterSchema.statics.setItemById = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
         if(err) return next(err);
         
-        // reconstruct the mod objects and save the ids
-        req.body.result.split(',').forEach( function(elem, index, arr) {
-            if( elem.length) {
-                // get the mod by name and add it to the character
-                Item.findOne({name:elem}, function(err,itemObj) {
-                    if(err) return next(err);
-                
-                    character.addBelonging( itemObj);
-                    character.credits -= itemObj.cost;
+        Item.findById( req.params.itemid, function(err, item) {
+            if(err) return next(err);
+        
+            if( 'sell' == req.body.transaction) {
+                for( var i = 0; i < character.belongings.length; i++) {
+                    if( character.belongings[i].item.name == item.name) {
+                        var amountSold = character.belongings[i].amount - req.body.amount;
 
-                    // if this is the last element, save the character
-                    if( index == arr.length - 1) {
-                        character.save( function(err) {
-                            if(err) return next(err);
-                            next();
-                        });
+                        character.belongings[i].amount = req.body.amount;
+                        character.credits = Math.round(( character.credits + item.cost*amountSold)*100)/100;
+
+                        if( 0 == character.belongings[i].amount)
+                            character.belongings.splice( i, 1);
                     }
-                });
-            } else
+                }
+            } else {
+                var amountBought = req.body.amount;
+                for( var i = 0; i < character.belongings.length; i++) {
+                    if( character.belongings[i].item.name == item.name) {
+                        amountBought = req.body.amount - character.belongings[i].amount;
+                        character.belongings[i].amount = req.body.amount;
+                    }
+                }
+                if( amountBought == req.body.amount)
+                    character.addBelonging( item, amountBought);
+
+                character.credits = Math.round(( character.credits - item.cost*amountBought)*100)/100;
+            }
+
+            character.save( function(err) {
+                if(err) return next(err);
                 next();
+            });
         });
     });
 };
@@ -289,10 +302,10 @@ CharacterSchema.methods.getBelonging = function( itemObj) {
     return null;
 }
 
-CharacterSchema.methods.addBelonging = function(itemObj) {
+CharacterSchema.methods.addBelonging = function(itemObj, amount) {
     var b = this.getBelonging(itemObj);
     if( null == b) {
-        b = Belonging.create( itemObj);
+        b = Belonging.create( itemObj, amount);
         if( !this.belongings)
             this.belongings = new Array();
         this.belongings.push( b);

@@ -83,6 +83,14 @@ ItemSchema.statics.generateListByType = function(callback) {
     });
 };
 
+ItemSchema.statics.findByName = function(itemName, callback) {
+    Item.findOne( { name: itemName }, function(err, item) {
+        if( err) return next(err);
+        
+        callback( item);
+    });
+};
+
 ItemSchema.methods.isEqual = function(itemObj) {
     if( (this._id == itemObj._id) ||
         (this.name == itemObj.name)

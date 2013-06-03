@@ -3,6 +3,7 @@ extends layout
 block content
   script
     var itemDict = {};
+    var ownedDict = {};
 
   #containerDiv
     img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
@@ -10,116 +11,58 @@ block content
       a#cancelButton(href="/wizard/cancel")
         button.leftNavButton Cancel
       p Items
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         form(action="/wizard/chooseitems", method="POST")
           fieldset
-            p#credTot Credits #{credits}
+            p#credTot Credits #{character.credits}
             br
-            #mainMenu
-              input#result(name='result', type="text", hidden="hidden")
-              each itemType in mods
-                h1.centered #{itemType[0].category}
-                  ul.listItems
-                    each itemObj in itemType
-                      li.listItem(id="#{itemObj.name}"): label #{itemObj.name}
-                        script
+            each itemType in mods
+              h1.centered #{itemType[0].category}
+                ul.optionList
+                  each itemObj in itemType
+                    li.optionItem(id="#{itemObj.name}")
+                      detailsURL = '/wizard/chooseitems/' + itemObj.name
+                      a(href=detailsURL)
+                        div
+                          p.optionLabel #{itemObj.name}
+                          descStr = 'Cr ' + itemObj.cost
+                          p.optionDesc #{descStr}
+                      script
                           var newObj = {selected:false,
-                                name:"#{itemObj.name}",
-                                cost:#{itemObj.cost}
-                                };
+                              name:"#{itemObj.name}",
+                              cost:#{itemObj.cost}
+                              };
                           itemDict["#{itemObj.name}"] = newObj;
-            p
-              button.rightForm(id="next") Next
+
+  each itemObj in character.belongings
+    script
+      ownedDict[ '#{itemObj.item.name}'] = '#{itemObj.item.name}';
 
   script
     $(document).ready( function() {
-        var cr = #{credits};
-    
         var getItemDictEntry = function(obj) {
             var mStr = obj.attr("id");
             return itemDict[mStr];
         }
     
         var checkEligibility = function(m) {
-            if( m.cost > cr)
+            if( m.cost > #{character.credits})
                 return false;
             return true;
         };
 
         // initialize each item
-        $(".listItem").each( function() {
+        $(".optionItem").each( function() {
             var i = getItemDictEntry($(this));
-            if( !checkEligibility(i))
+            if( ownedDict[i.name])
+              $(this).addClass('selectedItem');
+            else if( !checkEligibility(i))
               $(this).addClass('tooExpensiveItem');
         });
 
-        var select = function(o, jqItemItem) {
-            // check to see if the item is not locked and affordable
-            if( o.cost <= cr) {
-                o.selected = true;
-                jqItemItem.addClass('selectedItem');
-
-                // update credits
-                cr -= o.cost;
-                cr = Math.round(cr*100)/100;
-                $('#credTot').html('Credits ' + cr);
-
-                // apply changes to the rest of the items
-                $(".listItem").each( function() {
-                    if( $(this).text() != o.name) {
-                        var o2 = getItemDictEntry($(this));
-                    
-                        if( !checkEligibility(o2) && !o2.selected)
-                            $(this).addClass('tooExpensiveItem');
-                    }
-                });
-            }
-        };
-        
-        var deselect = function(o, jqItemItem) {
-            o.selected = false;
-            jqItemItem.removeClass('selectedItem');
-
-            // update credits
-            cr += o.cost;
-            $('#credTot').html('Credits ' + cr);
-
-            // apply changes to the rest of the items
-            $(".listItem").each( function() {
-                if( $(this).text() != o.name) {
-                    var o2 = getItemDictEntry($(this));
-                    
-                    if( checkEligibility(o2))
-                        $(this).removeClass('tooExpensiveItem');
-                }
-            });
-        };
-        
-        $(".listItem").click( function() {
-            var o = getItemDictEntry($(this));
-
-            if( o.selected)
-              deselect(o, $(this));
-            else
-              select(o, $(this));
-        });
-        
-        $('#next').click( function() {
-            var result = '';
-            var virginStr = false;
-            $(".listItem").each( function() {
-                var o = getItemDictEntry($(this));
-                if( o.selected) {
-                    if( !virginStr) {
-                        virginStr = true;
-                    } else {
-                        result += ',';
-                    }
-                    result += o.name;
-                }
-            });
-            
-            $('#result').attr('value',result);
+        $('#nextButton').click( function() {
+            $('form').submit();
         });
     });

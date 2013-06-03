@@ -7,6 +7,7 @@ block content
       a#cancelButton(href="/wizard/cancel")
         button.leftNavButton Cancel
       p Statistics
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         p.explanatoryHeading
@@ -24,8 +25,6 @@ block content
               | Humanity measures how much of your mortal coil
               | remains after cybernetic or genetic augmentation.
               h1#humanityScore(class="centered") 5
-            p
-              button.rightForm Next
 
   script
     $(document).ready( function() {
@@ -44,4 +43,7 @@ block content
         }
         
         $('#soma').change(function() {updateHumanity();});
+        $('#nextButton').click( function() {
+            $('form').submit();
+        });
     });

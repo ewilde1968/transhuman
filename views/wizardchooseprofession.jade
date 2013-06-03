@@ -7,6 +7,7 @@ block content
       a#cancelButton(href="/wizard/cancel")
         button.leftNavButton Cancel
       p Profession
+      button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         p.explanatoryHeading
@@ -24,5 +25,10 @@ block content
               label(for="specialty") Specialty:
               div.textInput
                 input(name="specialty", type="text", size="16")
-            p
-              button.rightForm Next
+
+  script
+    $(document).ready( function() {
+        $('#nextButton').click( function() {
+            $('form').submit();
+        });
+    });

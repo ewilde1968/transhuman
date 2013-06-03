@@ -3,6 +3,8 @@ extends layout
 block content
   script
     var modDict = {};
+    var ownedDict = {};
+    var prohibitedDict = {};
 
   #containerDiv
     img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
@@ -20,52 +22,46 @@ block content
             p#humanTot Humanity #{character.humanity}
             p#credTot Credits #{character.credits}
             br
-            #mainMenu
-              input#result(name='result', type="text", hidden="hidden")
-              each modType in mods
-                h1.centered #{modType[0].type}
-                  ul.optionList
-                    each mod in modType
-                      li.optionItem(id="#{mod.name}")
-                        detailsURL = '/wizard/choosemods/' + mod.name
-                        a(href=detailsURL)
-                          div
-                            p.optionLabel #{mod.name}
-                            descStr = 'Hum ' + mod.humanCost + ' / Cr ' + mod.creditCost
-                            p.optionDesc #{descStr}
-                        script
+            each modType in mods
+              h1.centered #{modType[0].type}
+                ul.optionList
+                  each mod in modType
+                    li.optionItem(id="#{mod.name}")
+                      detailsURL = '/wizard/choosemods/' + mod.name
+                      a(href=detailsURL)
+                        div
+                          p.optionLabel #{mod.name}
+                          descStr = 'Hum ' + mod.humanCost + ' / Cr ' + mod.creditCost
+                          p.optionDesc #{descStr}
+                      script
                           var newObj = {lock:0,
-                                  selected:false,
-                                  name:"#{mod.name}",
-                                  prohibited:[],
-                                  humanCost:#{mod.humanCost},
-                                  creditCost:#{mod.creditCost}
-                                  };
+                              selected:false,
+                              name:"#{mod.name}",
+                              prohibited:[],
+                              humanCost:#{mod.humanCost},
+                              creditCost:#{mod.creditCost}
+                              };
                           modDict["#{mod.name}"] = newObj;
-                        each pObj in mod.prohibited
-                          script
+                      each pObj in mod.prohibited
+                        script
                             newObj.prohibited.push("#{pObj}");
             p
               button.rightForm(id="next") Next
 
+  each modObj in character.mods
+    script
+      ownedDict[ '#{modObj.name}'] = '#{modObj.name}';
+    each prohibitedName in modObj.prohibited
+      script
+        prohibitedDict[ '#{prohibitedName}'] = true;
+
   script
     $(document).ready( function() {
-        var cMods = #{character.mods};
-        
         var getModDictEntry = function(obj) {
             var mStr = obj.attr("id");
             return modDict[mStr];
-        }
-
-        var isOwned = function(m) {
-            for( var i=0; i<cMods.length;i++) {
-              if( m.name == cMods[i].name)
-                return true;
-            }
-            
-            return false;
         };
-        
+
         var checkCost = function(m) {
             if( m.humanCost > #{character.humanity} || m.creditCost > #{character.credits})
                 return false;
@@ -73,12 +69,8 @@ block content
         };
         
         var checkProhibited = function(m) {
-            for( var i=0; i<cMods.length;i++) {
-              for( var j=0; j<cMods[i].prohibited.length;j++) {
-                  if( m.name == cMods[i].prohibited[j])
-                    return true;
-              }
-            }
+            if( prohibitedDict[ m.name])
+              return true;
             
             return false;
         };
@@ -86,31 +78,13 @@ block content
         // initialize each item
         $(".optionItem").each( function() {
             var m = getModDictEntry($(this));
-            if( isOwned(m))
+            if( ownedDict[m.name] != null)
               $(this).addClass('selectedItem');
             else {
               if( !checkCost(m))
-                $(this).addClass('tooExpesiveItem');
+                $(this).addClass('tooExpensiveItem');
               if( checkProhibited(m))
                 $(this).addClass('prohibitedItem');
             }
-        });
-
-        $('#next').click( function() {
-            var result = '';
-            var virginStr = false;
-            $(".optionItem").each( function() {
-                var o = getModDictEntry($(this));
-                if( o.selected) {
-                    if( !virginStr) {
-                        virginStr = true;
-                    } else {
-                        result += ',';
-                    }
-                    result += o.name;
-                }
-            });
-            
-            $('#result').attr('value',result);
         });
     });

@@ -126,37 +126,41 @@ CharacterSchema.statics.setStats = function( req, res, next) {
     });
 };
 
-CharacterSchema.statics.setMods = function( req, res, next) {
-    Character.findById( req.session.newCharacter, function(err, character) {
+CharacterSchema.statics.setModById = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
         if(err) return next(err);
         
-        // reconstruct the mod objects and save the ids
-        req.body.result.split(',').forEach( function(elem, index, arr) {
-            // get the mod by name and add it to the character
-            if( elem.length) {
-                Mod.findOne({name:elem}, function(err,mod) {
-                    if(err) return next(err);
-                    if( !character.mods)
-                        character.mods = new Array();
-                    character.mods.push(mod);   // push the whole object
-                
-                    // reduce the humanity and credits appropriately
-                    character.humanity -= mod.humanCost;
-                    character.credits -= mod.creditCost;
+        Mod.findById( req.params.modid, function(err, mod) {
+            if(err) return next(err);
+        
+            if( 'sell' == req.body.transaction) {
+                for( var i = 0; i < character.mods.length; i++) {
+                    if( character.mods[i].name == mod.name) {
+                        character.mods.splice( i, 1);
 
-                    // if this is the last element, save the character
-                    if( index == arr.length - 1) {
-                        // round off the values
-                        character.humanity = roundOff(character.humanity);
-                        character.credits = roundOff(character.credits);
-                        character.save( function(err) {
-                            if(err) return next(err);
-                            next();
-                        });
+                        // add the humanity and credits to the character's total
+                        character.humanity = Math.round(( character.humanity + mod.humanCost)*100)/100;
+                        character.credits = Math.round(( character.credits + mod.creditCost)*100)/100;
                     }
-                });
-            } else
+                }
+            } else {
+                for( var i = 0; i < character.mods.length; i++) {
+                    if( character.mods[i].name == mod.name) {
+                        next();
+                        return; // already have this mod, stop
+                    }
+                }
+                character.mods.push(mod);
+
+                // subtract the humanity and credits to the character's total
+                character.humanity = Math.round(( character.humanity - mod.humanCost)*100)/100;
+                character.credits = Math.round(( character.credits - mod.creditCost)*100)/100;
+            }
+
+            character.save( function(err) {
+                if(err) return next(err);
                 next();
+            });
         });
     });
 };

@@ -32,13 +32,22 @@ block content
                 div
                   p.displayLabel Bogus
                   p.displayDesc Bogosity
+        formURL = '/character/' + character._id + '/mod/' + mod._id
+        form(action=formURL, method="POST", hidden="hidden")
+          if owned
+            input(type="text", hidden="hidden", name="transaction", value="sell")
+          else
+            input(type="text", hidden="hidden", name="transaction", value="buy")
+          input(type="text", hidden="hidden", name="doneURL", value=doneURL)
 
   script
     $(document).ready( function() {
         if( !#{eligible})
-            $('#buyButton').attr('disabled',true);
+            $('#buyButton').attr('disabled','disabled');
             
         $('#buyButton').click( function() {
+            if( #{eligible})
+                $('form').submit();
         });
     });
     

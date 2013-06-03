@@ -133,15 +133,14 @@ exports.wizardChooseModsDetail = function( req, res, next) {
         
             Mod.findByName( req.params.mod, function(mod) {
                 var owned = false;
-                var eligible = false;
+                var eligible = character.humanity >= mod.humanCost
+                            && character.credits >= mod.creditCost;
                 
                 for( var i=0;i<character.mods.length;i++) {
                     if( character.mods[i].name == mod.name) {
                         owned = true;
                         eligible = true;
                     } else {
-                        eligible = character.humanity >= mod.humanCost
-                            && character.credits >= mod.creditCost;
                         if( eligible) {
                             for( var j=0;j<mod.prohibited.length;j++) {
                                 if( mod.prohibited[j] == mod.name) {
@@ -319,4 +318,46 @@ exports.humanity = function( req, res, next) {
                 character: character
         });
     });
+};
+
+exports.setModById = function( req, res, next) {
+    // posted a mod sell or buy action, go to doneURL
+    res.redirect(req.body.doneURL);
+};
+
+exports.modDetail = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+            if(err) return next(err);
+        
+            Mod.findByName( req.params.modname, function(mod) {
+                var owned = false;
+                var eligible = character.humanity >= mod.humanCost
+                            && character.credits >= mod.creditCost;
+                
+                for( var i=0;i<character.mods.length;i++) {
+                    if( character.mods[i].name == mod.name) {
+                        owned = true;
+                        eligible = true;
+                    } else {
+                        if( eligible) {
+                            for( var j=0;j<mod.prohibited.length;j++) {
+                                if( mod.prohibited[j] == mod.name) {
+                                    eligible = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                res.render('mod', {
+                    character: character,
+                    mod: mod,
+                    eligible: eligible,
+                    owned: owned,
+                    doneURL: '/character/' + character._id + '/mods'
+                });
+            });
+        });
+
 };

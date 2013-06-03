@@ -156,13 +156,13 @@ a:active {color:#e8c26f;}  /* selected link */
         list-style: none;
         padding: 0;
         margin-bottom: 0.5em;
+		background: rgb(137, 159, 161);
     }
     .optionList li {
 		position: static;
 		height: 2em;
         line-height:2em;
 		border: 1px solid rgb(146, 188, 255);
-		background: rgb(137, 159, 161);
     }
     .optionList li:first-child {
 		border-top-left-radius: 10px;
@@ -180,7 +180,7 @@ a:active {color:#e8c26f;}  /* selected link */
         float: left;
         padding-left: 0.4em;
         text-decoration:none;
-        font-size: 1em;
+        font-size: 0.8em;
         font-weight:bold;
         color:#382f1b;
         margin: 0;
@@ -190,7 +190,7 @@ a:active {color:#e8c26f;}  /* selected link */
         padding-right: 0.6em;
         text-decoration:none;
         color:#e8c26f;
-        font-size:0.6em;
+        font-size:0.5em;
         margin: 0;
     }
     .optionList li:hover { color:#e8c26f; background: #475354}

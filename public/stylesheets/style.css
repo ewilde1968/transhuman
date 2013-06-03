@@ -89,6 +89,10 @@ a:active {color:#e8c26f;}  /* selected link */
         border-top-color: #303738;
         background: #303738;
     }
+	#navBar>button:disabled {
+        border-top-color: #303738;
+        background: #303738;
+    }
     .leftNavButton {
         left: 3%;
     }

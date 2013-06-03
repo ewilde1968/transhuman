@@ -137,13 +137,14 @@ exports.wizardChooseModsDetail = function( req, res, next) {
                             && character.credits >= mod.creditCost;
                 
                 for( var i=0;i<character.mods.length;i++) {
-                    if( character.mods[i].name == mod.name) {
+                    var cMod = character.mods[i];
+                    if( cMod.name == mod.name) {
                         owned = true;
                         eligible = true;
                     } else {
                         if( eligible) {
-                            for( var j=0;j<mod.prohibited.length;j++) {
-                                if( mod.prohibited[j] == mod.name) {
+                            for( var j=0;j<cMod.prohibited.length;j++) {
+                                if( cMod.prohibited[j] == mod.name) {
                                     eligible = false;
                                     break;
                                 }

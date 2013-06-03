@@ -19,22 +19,21 @@ block content
             p#credTot Credits #{character.credits}
             br
             each itemType in mods
-              h1.centered #{itemType[0].category}
-                ul.optionList
-                  each itemObj in itemType
-                    li.optionItem(id="#{itemObj.name}")
-                      detailsURL = '/wizard/chooseitems/' + itemObj.name
-                      a(href=detailsURL)
-                        div
-                          p.optionLabel #{itemObj.name}
-                          descStr = 'Cr ' + itemObj.cost
-                          p.optionDesc #{descStr}
-                      script
-                          var newObj = {selected:false,
-                              name:"#{itemObj.name}",
-                              cost:#{itemObj.cost}
-                              };
-                          itemDict["#{itemObj.name}"] = newObj;
+              ul.optionList: label #{itemType[0].category}
+                each itemObj in itemType
+                  li.optionItem(id="#{itemObj.name}")
+                    detailsURL = '/wizard/chooseitems/' + itemObj.name
+                    a(href=detailsURL)
+                      div
+                        p.optionLabel #{itemObj.name}
+                        descStr = 'Cr ' + itemObj.cost
+                        p.optionDesc #{descStr}
+                    script
+                        var newObj = {selected:false,
+                            name:"#{itemObj.name}",
+                            cost:#{itemObj.cost}
+                            };
+                        itemDict["#{itemObj.name}"] = newObj;
 
   each itemObj in character.belongings
     script

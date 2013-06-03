@@ -158,6 +158,11 @@ a:active {color:#e8c26f;}  /* selected link */
         margin-bottom: 0.5em;
 		background: rgb(137, 159, 161);
     }
+    .optionList label {
+        font-weight: bold;
+        text-align:center;
+        width: 100%;
+    }
     .optionList li {
 		position: static;
 		height: 2em;

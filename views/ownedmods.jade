@@ -1,11 +1,6 @@
 extends layout
 
 block content
-  script
-    var modDict = {};
-    var ownedDict = {};
-    var prohibitedDict = {};
-
   #containerDiv
     img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
     #navBar
@@ -29,7 +24,3 @@ block content
               a(href=detailsURL)
                 div
                   p.optionLabel #{mod.name}
-
-  script
-    $(document).ready( function() {
-    });

@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  script
+    var itemDict = {};
+    var ownedDict = {};
+
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      a#cancelButton(href=cancelURL)
+        if formURL
+          button.leftNavButton Cancel
+        else
+          button.leftNavButton Done
+      p Items
+      if formURL
+        button#nextButton(class="rightNavButton") Next
+    #contentArea
+      div.dataEntry
+        form(action=formURL, method="POST")
+          fieldset
+            p#credTot Credits #{character.credits}
+            br
+            each itemType in mods
+              ul.optionList: label #{itemType[0].category}
+                each itemObj in itemType
+                  li.optionItem(id="#{itemObj.name}")
+                    if( formURL)
+                      detailsURL = formURL + '/' + itemObj.name
+                    else
+                      detailsURL = '/character/' + character._id + '/item/' + itemObj.name
+                    a(href=detailsURL)
+                      div
+                        p.optionLabel #{itemObj.name}
+                        descStr = 'Cr ' + itemObj.cost
+                        p.optionDesc #{descStr}
+                    script
+                        var newObj = {selected:false,
+                            name:"#{itemObj.name}",
+                            cost:#{itemObj.cost}
+                            };
+                        itemDict["#{itemObj.name}"] = newObj;
+
+  each itemObj in character.belongings
+    script
+      ownedDict[ '#{itemObj.item.name}'] = '#{itemObj.item.name}';
+
+  script
+    $(document).ready( function() {
+        var getItemDictEntry = function(obj) {
+            var mStr = obj.attr("id");
+            return itemDict[mStr];
+        }
+    
+        var checkEligibility = function(m) {
+            if( m.cost > #{character.credits})
+                return false;
+            return true;
+        };
+
+        // initialize each item
+        $(".optionItem").each( function() {
+            var i = getItemDictEntry($(this));
+            if( ownedDict[i.name])
+              $(this).addClass('selectedItem');
+            else if( !checkEligibility(i))
+              $(this).addClass('tooExpensiveItem');
+        });
+
+        $('#nextButton').click( function() {
+            $('form').submit();
+        });
+    });

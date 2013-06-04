@@ -179,9 +179,11 @@ exports.wizardChooseItems = function( req, res, next) {
             if(err) return next(err);
         
             Item.generateListByType( function(docs) {
-                res.render('wizardchooseitems', {
+                res.render('items', {
                     character: character,
-                    mods: docs
+                    mods: docs,
+                    cancelURL: '/wizard/cancel',
+                    formURL: '/wizard/chooseitems'
                 });
             });
         });
@@ -422,6 +424,17 @@ exports.buyMods = function( req, res, next) {
     });
 };
 
+exports.items = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        var ownedItems = character.getItemsByType(); 
+        res.render('owneditems', {
+            character: character,
+            ownedItems: ownedItems
+        });
+    });
+};
 
 exports.setItemById = function( req, res, next) {
     // posted an item sell or buy action, go to doneURL
@@ -453,4 +466,19 @@ exports.itemDetail = function( req, res, next) {
             });
         });
 
+};
+
+exports.buyItems = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        Item.generateListByType( function(docs) {
+            res.render('items', {
+                character: character,
+                mods: docs,
+                cancelURL: '/character/' + character._id + '/items',
+                formURL: null
+            });
+        });
+    });
 };

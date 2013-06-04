@@ -339,5 +339,30 @@ CharacterSchema.methods.getModsByType = function() {
     return result;
 };
 
+CharacterSchema.methods.getItemsByType = function() {
+    var result = new Array();
+
+    // iterate through all the owned mods, creating new type dicts
+    for( var i = 0; i < this.belongings.length; i++) {
+        var belongingObj = this.belongings[i];
+        
+        var found = false;
+        for( var j=0;j<result.length;j++) {
+            if( result[j][0].type == belongingObj.item.category) {
+                found = true;
+                result[j].push( belongingObj);
+                break;
+            }
+        }
+        if( !found) {
+            var newArray = new Array();
+            newArray.push( belongingObj);
+            result.push( newArray);
+        }
+    }
+    
+    return result;
+};
+
 var Character = mongoose.model('Character', CharacterSchema);
 module.exports = Character;

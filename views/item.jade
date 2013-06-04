@@ -32,9 +32,14 @@ block content
             br
             div.dataEntry
               div.rangeInput
-                h1#amountLabel(class="centered") Number Owned: #{owned}
-                maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
-                input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value=owned)
+                if owned
+                  h1#amountLabel(class="centered") Number Owned: #{owned}
+                  maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
+                  input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value=owned)
+                else
+                  h1#amountLabel(class="centered") Number Owned: 0
+                  maxAmount = Math.floor(character.credits/item.cost)
+                  input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value=0)
                 p.leftLabel 0
                 p.rightLabel #{maxAmount}
 

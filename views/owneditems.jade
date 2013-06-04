@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      destURL = '/character/' + character._id
+      a#cancelButton(href=destURL)
+        button.leftNavButton Done
+      p Items
+      destURL = '/character/' + character._id + '/buyitems'
+      a#buyButton(href=destURL)
+        button.rightNavButton Buy
+    #contentArea
+      .dataDisplay
+        p#credTot Credits #{character.credits}
+        br
+      each itemType in ownedItems
+        ul.displayList: label #{itemType[0].item.category}
+          each belongingObj in itemType
+            li.displayItem(id="#{belongingObj.item.name}")
+              detailsURL = '/character/' + character._id + '/item/' + belongingObj.item.name
+              a(href=detailsURL)
+                div
+                  p.displayLabel #{belongingObj.item.name}
+                  p.displayDesc #{belongingObj.amount}

@@ -48,3 +48,20 @@ block content
             div
               p.displayLabel Humanity
               p.displayDesc #{character.humanity}
+      br
+      ul.displayList
+        li
+          redirectRoot = '/character/' + character._id + '/mods'
+          a.displayItem(href=redirectRoot)
+            div
+              p.displayLabel Modifications
+        li
+          redirectRoot = '/character/' + character._id + '/items'
+          a.displayItem(href=redirectRoot)
+            div
+              p.displayLabel Belongings
+        li
+          redirectRoot = '/character/' + character._id + '/histories'
+          a.displayItem(href=redirectRoot)
+            div
+              p.displayLabel History

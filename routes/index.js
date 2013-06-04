@@ -115,9 +115,11 @@ exports.wizardChooseMods = function( req, res, next) {
             if(err) return next(err);
         
             Mod.generateListByType( function(docs) {
-                res.render('wizardchoosemods', {
+                res.render('mods', {
                     character: character,
-                    mods: docs
+                    mods: docs,
+                    cancelURL: '/wizard/cancel',
+                    formURL:  '/wizard/choosemods'
                 });
             });
         });
@@ -336,7 +338,7 @@ exports.profession = function( req, res, next) {
         if(err) return next(err);
         
         res.render('profession', {
-                character: character
+            character: character
         });
     });
 };
@@ -346,7 +348,19 @@ exports.humanity = function( req, res, next) {
         if(err) return next(err);
         
         res.render('humanity', {
-                character: character
+            character: character
+        });
+    });
+};
+
+exports.mods = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        var ownedMods = character.getModsByType(); 
+        res.render('ownedmods', {
+            character: character,
+            ownedMods: ownedMods
         });
     });
 };
@@ -392,6 +406,22 @@ exports.modDetail = function( req, res, next) {
         });
 
 };
+
+exports.buyMods = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        Mod.generateListByType( function(docs) {
+            res.render('mods', {
+                character: character,
+                mods: docs,
+                cancelURL: '/character/' + character._id + '/mods',
+                formURL:  null
+            });
+        });
+    });
+};
+
 
 exports.setItemById = function( req, res, next) {
     // posted an item sell or buy action, go to doneURL

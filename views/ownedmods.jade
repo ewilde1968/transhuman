@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  script
+    var modDict = {};
+    var ownedDict = {};
+    var prohibitedDict = {};
+
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      destURL = '/character/' + character._id
+      a#cancelButton(href=destURL)
+        button.leftNavButton Done
+      p Modifications
+      destURL = '/character/' + character._id + '/buymods'
+      a#buyButton(href=destURL)
+        button.rightNavButton Buy
+    #contentArea
+      .dataDisplay
+        p#humanTot Humanity #{character.humanity}
+        p#credTot Credits #{character.credits}
+        br
+      each modType in ownedMods
+        ul.displayList: label #{modType[0].type}
+          each mod in modType
+            li.displayItem(id="#{mod.name}")
+              detailsURL = '/character/' + character._id + '/mod/' + mod.name
+              a(href=detailsURL)
+                div
+                  p.optionLabel #{mod.name}
+
+  script
+    $(document).ready( function() {
+    });

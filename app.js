@@ -75,10 +75,15 @@ app.get('/character/:id/profession', User.secure, routes.profession);
 app.post('/character/:id/profession', User.secure, Character.changeProfession);
 app.get('/character/:id/humanity', User.secure, routes.humanity);
 app.post('/character/:id/humanity', User.secure, Character.changeHumanity);
+app.get('/character/:id/mods', User.secure, routes.mods);
+app.get('/character/:id/buymods', User.secure, routes.buyMods);
 app.get('/character/:id/mod/:modname', User.secure, routes.modDetail);
 app.post('/character/:id/mod/:modid', User.secure, Character.setModById, routes.setModById);
+app.get('/character/:id/items', User.secure);
 app.get('/character/:id/item/:itemname', User.secure, routes.itemDetail);
 app.post('/character/:id/item/:itemid', User.secure, Character.setItemById, routes.setItemById);
+app.get('/character/:id/histories', User.secure);
+app.post('/character/:id/history/:historyid', User.secure);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

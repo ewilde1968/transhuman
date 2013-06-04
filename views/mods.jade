@@ -9,16 +9,20 @@ block content
   #containerDiv
     img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
     #navBar
-      a#cancelButton(href="/wizard/cancel")
-        button.leftNavButton Cancel
+      a#cancelButton(href=cancelURL)
+        if formURL
+          button.leftNavButton Cancel
+        else
+          button.leftNavButton Done
       p Modifications
-      button#nextButton(class="rightNavButton") Next
+      if formURL
+        button#nextButton(class="rightNavButton") Next
     #contentArea
       div.dataEntry
         p.explanatoryHeading
           | Genetic modifications and technological augmentations
           | provide superhuman powers.
-        form(action="/wizard/choosemods", method="POST")
+        form(action=formURL, method="POST")
           fieldset
             p#humanTot Humanity #{character.humanity}
             p#credTot Credits #{character.credits}
@@ -27,7 +31,10 @@ block content
               ul.optionList: label #{modType[0].type}
                 each mod in modType
                   li.optionItem(id="#{mod.name}")
-                    detailsURL = '/wizard/choosemods/' + mod.name
+                    if( formURL)
+                      detailsURL = formURL + '/' + mod.name
+                    else
+                      detailsURL = '/character/' + character._id + '/mod/' + mod.name
                     a(href=detailsURL)
                       div
                         p.optionLabel #{mod.name}

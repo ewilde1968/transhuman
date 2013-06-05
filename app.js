@@ -83,8 +83,11 @@ app.get('/character/:id/items', User.secure, routes.items);
 app.get('/character/:id/buyitems', User.secure, routes.buyItems);
 app.get('/character/:id/item/:itemname', User.secure, routes.itemDetail);
 app.post('/character/:id/item/:itemid', User.secure, Character.setItemById, routes.setItemById);
-app.get('/character/:id/histories', User.secure);
-app.post('/character/:id/history/:historyid', User.secure);
+app.get('/character/:id/histories', User.secure, routes.histories);
+app.get('/character/:id/history', User.secure, routes.history);
+app.post('/character/:id/history', User.secure, Character.setHistory, routes.setHistory);
+app.get('/character/:id/history/:historyname', User.secure, routes.history);
+app.post('/character/:id/history/:historyname', User.secure, Character.setHistory, routes.setHistory);
 app.get('/character/:id', User.secure, routes.character);
 
 var server = http.createServer(app);

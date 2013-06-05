@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  #containerDiv
+    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
+    #navBar
+      redirectRoot = '/character/' + character._id + '/histories'
+      a(href=redirectRoot)
+        button.leftNavButton Done
+      p History
+      button.rightNavButton(id="save") Save
+    #contentArea
+      div.dataEntry
+        if history
+          redirectRoot = '/character/' + character._id + '/history/' + history.name
+        else
+          redirectRoot = '/character/' + character._id + '/history'
+        form#historyForm(action=redirectRoot, method="POST")
+          fieldset
+            p
+              div.textInput
+                if history
+                  input(name="nameTE", type="text", size="31", required="required", value="#{history.name}")
+                else
+                  input(name="nameTE", type="text", size="31", required="required", placeholder="Short descrition.")
+              div.textInput
+                if history
+                  input(name="dateTE", type="date", size="31", required="required", value="#{history.datetime}")
+                else
+                  input(name="dateTE", type="date", size="31", required="required", placeholder="Date")
+        if history
+          textarea(name="descTA", rows="10", form="historyForm", placeholder="Detailed description.") #{history.desc}
+        else
+          textarea(name="descTA", rows="10", form="historyForm", placeholder="Detailed description.")
+
+  script
+    $(document).ready( function() {
+        $('#save').click( function() {
+            $('form').submit();
+        });
+    });

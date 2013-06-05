@@ -21,7 +21,7 @@ var CharacterSchema = new Schema( {
     race: String,
     profession: { name:String, desc:String, level:Number, specialty:String},
     mods:       Array,      // Array of Mods
-    history:    Array,      // array of History
+    history:    Array,      // array of { name, desc, date }
     belongings: Array,      // array of Belonging
     homeland:   { type: ObjectId, index: true},   // Homeland
     owner:      { type: ObjectId, index: true}    // User
@@ -291,6 +291,34 @@ CharacterSchema.statics.changeHumanity = function( req, res, next) {
     });
 };
 
+
+CharacterSchema.statics.setHistory = function( req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+
+        var history = { name: req.body.nameTE,
+                        desc: req.body.descTA,
+                        datetime: req.body.dateTE };
+        var found = false;
+        for( var index = 0; index < character.history.length; index++) {
+            if( character.history[index].name == req.params.historyname) {
+                found = true;
+                break;
+            }
+        }
+
+        if( !found)
+            character.history.push( history);
+        else
+            character.history.splice( index, 1, history);
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
+
 CharacterSchema.methods.getBelonging = function( itemObj) {
     if( this.belongings) {
         this.belongings.forEach( function(elem) {
@@ -362,6 +390,17 @@ CharacterSchema.methods.getItemsByType = function() {
     }
     
     return result;
+};
+
+CharacterSchema.methods.getHistory = function( historyname) {
+    if( historyname && this.history) {
+        for( var i = 0; i < this.history.length; i++) {
+            if( this.history[i].name == historyname)
+                return this.history[i];
+        }
+    }
+    
+    return null;
 };
 
 var Character = mongoose.model('Character', CharacterSchema);

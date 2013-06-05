@@ -482,3 +482,28 @@ exports.buyItems = function( req, res, next) {
         });
     });
 };
+
+exports.histories = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('histories', {
+            character: character
+        });
+    });
+};
+
+exports.history = function( req, res, next) {
+    Character.findById(req.params.id, function(err,character) {
+        if(err) return next(err);
+        
+        res.render('history', {
+            character: character,
+            history: character.getHistory( req.params.historyname)
+        });
+    });
+};
+
+exports.setHistory = function( req, res, next) {
+    res.redirect( '/character/' + req.params.id + '/histories');
+};

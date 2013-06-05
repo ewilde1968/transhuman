@@ -120,6 +120,8 @@ a:active {color:#e8c26f;}  /* selected link */
 		opacity: 0.9;
         line-height:1.5em;
 		background: rgb(137, 159, 161);
+        overflow:hidden;
+        word-break: break-all;
     }
     .displayList li:first-child {
 		border-top-left-radius: 10px;

@@ -336,7 +336,44 @@ a:active {color:#e8c26f;}  /* selected link */
         font-size: 0.6em;
         margin-left: 0.5em;
     }
+
+    .rangeInput {
+        margin-left:0.5em;
+        margin-right:0.5em;
+        height: 4em;
+    }
+    .rangeInput input {
+        width: 100%;
+        -webkit-appearance: none !important;
+        -webkit-border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px #333;
+        background-color: #999;
+        display: block;
+        height: 1em;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+    }
+    .rangeInput .leftLabel {
+        float: left;
+        font-size: 0.7em;
+        margin: 0em;
+    }
+    .rangeInput .rightLabel {
+        float: right;
+        font-size: 0.7em;
+        margin: 0;
+    }
     
+    input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none !important;
+        -webkit-border-radius: 10px;
+        background-color: #AAA;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#EEE), to(#AAA));
+        border: 1px solid #999;
+        height: 44px;
+        width: 44px;
+    }    
+
     #newAccount {
         width:100%;
         height:2em;
@@ -353,25 +390,6 @@ a:active {color:#e8c26f;}  /* selected link */
         margin: 0;
         font-weight: bold;
         font-size: 1em;
-    }
-    
-    .rangeInput {
-        margin-left:0.5em;
-        margin-right:0.5em;
-        height:3.5em;
-    }
-    .rangeInput input {
-        width: 100%;
-    }
-    .rangeInput .leftLabel {
-        float: left;
-        font-size: 0.7em;
-        margin: 0;
-    }
-    .rangeInput .rightLabel {
-        float: right;
-        font-size: 0.7em;
-        margin: 0;
     }
     
     #humanityExplanation {

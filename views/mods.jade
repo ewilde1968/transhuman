@@ -6,49 +6,48 @@ block content
     var ownedDict = {};
     var prohibitedDict = {};
 
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#cancelButton(href=cancelURL)
-        if formURL
-          button.leftNavButton Cancel
-        else
-          button.leftNavButton Done
-      p Modifications
+  #navBar
+    p Mods
+    a#cancelButton(href=cancelURL)
       if formURL
-        button#nextButton(class="rightNavButton") Next
-    #contentArea
-      div.dataEntry
-        p.explanatoryHeading
-          | Genetic modifications and technological augmentations
-          | provide superhuman powers.
-        form(action=formURL, method="POST")
-          fieldset
-            p#humanTot Humanity #{character.humanity}
-            p#credTot Credits #{character.credits}
-            br
-            each modType in mods
-              ul.optionList: label #{modType[0].type}
-                each mod in modType
-                  li.optionItem(id="#{mod.name}")
-                    if( formURL)
-                      detailsURL = formURL + '/' + mod.name
-                    else
-                      detailsURL = '/character/' + character._id + '/mod/' + mod.name
-                    a(href=detailsURL)
-                      div
-                        p.optionLabel #{mod.name}
-                        descStr = 'Hum ' + mod.humanCost + ' / Cr ' + mod.creditCost
-                        p.optionDesc #{descStr}
-                    script
-                        var newObj = {lock:0,
-                            selected:false,
-                            name:"#{mod.name}",
-                            prohibited:[],
-                            humanCost:#{mod.humanCost},
-                            creditCost:#{mod.creditCost}
-                            };
-                        modDict["#{mod.name}"] = newObj;
+        button.leftNavButton Cancel
+      else
+        button.leftNavButton Done
+    if formURL
+      a#nextButton
+        button.rightNavButton Next
+  #contentArea
+    div.dataEntry
+      p.explanatoryHeading
+        | Genetic modifications and technological augmentations
+        | provide superhuman powers.
+      form(action=formURL, method="POST")
+        fieldset
+          p#humanTot Humanity #{character.humanity}
+          p#credTot Credits #{character.credits}
+          br
+          each modType in mods
+            ul.optionList: label #{modType[0].type}
+              each mod in modType
+                li.optionItem(id="#{mod.name}")
+                  if( formURL)
+                    detailsURL = formURL + '/' + mod.name
+                  else
+                    detailsURL = '/character/' + character._id + '/mod/' + mod.name
+                  a(href=detailsURL)
+                    div
+                      p.optionLabel #{mod.name}
+                      descStr = mod.humanCost + '/' + mod.creditCost
+                      p.optionDesc #{descStr}
+                  script
+                    var newObj = {lock:0,
+                        selected:false,
+                        name:"#{mod.name}",
+                        prohibited:[],
+                        humanCost:#{mod.humanCost},
+                        creditCost:#{mod.creditCost}
+                        };
+                    modDict["#{mod.name}"] = newObj;
 
   each modObj in character.mods
     script

@@ -1,44 +1,44 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#doneButton(href=doneURL)
-        button.leftNavButton Done
-      p #{mod.name}
-      if owned
-        button#buyButton(class="rightNavButton") Sell
-      else
-        button#buyButton(class="rightNavButton") Buy
-    #contentArea
-      div.dataEntry
-        p.explanatoryHeading
-          | #{mod.desc}
+  #navBar
+    p #{mod.name}
+    a#doneButton(href=doneURL)
+      button.leftNavButton Done
+    if owned
+      a#buyButton
+        button.rightNavButton Sell
+    else
+      a#buyButton
+        button.rightNavButton Buy
+  #contentArea
+    div.dataEntry
+      p.explanatoryHeading
+        | #{mod.desc}
       ul.displayList: label Cost
-          li
-            a.displayItem(href='#')
-              div
-                p.displayLabel Humanity
-                p.displayDesc #{mod.humanCost}
-          li
-            a.displayItem(href='#')
-              div
-                p.displayLabel Credits
-                p.displayDesc #{mod.creditCost}
-        ul.displayList: label Benefits
-            li
-              a.displayItem(href='#')
-                div
-                  p.displayLabel Bogus
-                  p.displayDesc Bogosity
-        formURL = '/character/' + character._id + '/mod/' + mod._id
-        form(action=formURL, method="POST", hidden="hidden")
-          if owned
-            input(type="text", hidden="hidden", name="transaction", value="sell")
-          else
-            input(type="text", hidden="hidden", name="transaction", value="buy")
-          input(type="text", hidden="hidden", name="doneURL", value=doneURL)
+        li
+          a.displayItem(href='#')
+            div
+              p.displayLabel Humanity
+              p.displayDesc #{mod.humanCost}
+        li
+          a.displayItem(href='#')
+            div
+              p.displayLabel Credits
+              p.displayDesc #{mod.creditCost}
+      ul.displayList: label Benefits
+        li
+          a.displayItem(href='#')
+            div
+              p.displayLabel Bogus
+              p.displayDesc Bogosity
+      formURL = '/character/' + character._id + '/mod/' + mod._id
+      form(action=formURL, method="POST", hidden="hidden")
+        if owned
+          input(type="text", hidden="hidden", name="transaction", value="sell")
+        else
+          input(type="text", hidden="hidden", name="transaction", value="buy")
+        input(type="text", hidden="hidden", name="doneURL", value=doneURL)
 
   script
     $(document).ready( function() {

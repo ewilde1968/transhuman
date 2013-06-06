@@ -1,29 +1,25 @@
 extends layout
 
 block content
-  #contentDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a(href="/")
-        button.leftNavButton Cancel
-      p Details
-      button#nextButton(class="rightNavButton") Next
-    #contentArea
-      div.dataEntry
-        form(action="/wizard/choosedetails", method="POST")
-          fieldset
-            p
-              label(for="characterName") Name:
-              div.textInput
-                input(name="characterName", type="text", required="required")
-            p
-              label(for="nous") Nous: (#{nous})
-              div.textInput
-                input(name="nous", type="text", size="17", required="required", placeholder="Descriptive Word")
-            p
-              label(for="soma") Soma: (#{soma})
-              div.textInput
-                input(name="soma", type="text", size="16", required="required", placeholder="Descriptive Word")
+  #navBar
+    p Details
+    a(href="/")
+      button.leftNavButton Cancel
+    a#nextButton
+      button.rightNavButton Next
+  #contentArea
+    div.dataEntry
+      form(action="/wizard/choosedetails", method="POST")
+        fieldset
+          p
+            label(for="characterName") Name:
+            input(name="characterName", type="text", required="required")
+          p
+            label(for="nous") Nous: (#{nous})
+            input(name="nous", type="text", size="17", required="required", placeholder="Descriptive Word")
+          p
+            label(for="soma") Soma: (#{soma})
+            input(name="soma", type="text", size="16", required="required", placeholder="Descriptive Word")
 
   script
     $(document).ready( function() {

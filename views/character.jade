@@ -2,64 +2,64 @@ extends layout
 
 block content
   #navBar
+    p #{character.name}
     a#doneButton(href="/")
       button.leftNavButton Done
-    p #{character.name}
     redirectRoot = '/character/' + character._id + '/name'
     a#editButton(href=redirectRoot)
       button.rightNavButton Edit
   #contentArea
-      ul.displayList
-        li
-          redirectRoot = '/character/' + character._id + '/homeland'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Homeland
-              p.displayDesc #{homeland.name + '/' + homeland.world}
-        li
-          redirectRoot = '/character/' + character._id + '/race'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Race
-              p.displayDesc Human
-        li
-          redirectRoot = '/character/' + character._id + '/soma'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Soma
-              p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
-        li
-          redirectRoot = '/character/' + character._id + '/nous'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Nous
-              p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
-        li
-          redirectRoot = '/character/' + character._id + '/profession'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Profession
-              p.displayDesc #{character.profession.name}
-        li
-          redirectRoot = '/character/' + character._id + '/humanity'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Humanity
-              p.displayDesc #{character.humanity}
-      br
-      ul.displayList
-        li
-          redirectRoot = '/character/' + character._id + '/mods'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Modifications
-        li
-          redirectRoot = '/character/' + character._id + '/items'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel Belongings
-        li
-          redirectRoot = '/character/' + character._id + '/histories'
-          a.displayItem(href=redirectRoot)
-            div
-              p.displayLabel History
+    ul.displayList
+      li
+        redirectRoot = '/character/' + character._id + '/homeland'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Homeland
+            p.displayDesc #{homeland.name}
+      li
+        redirectRoot = '/character/' + character._id + '/race'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Race
+            p.displayDesc Human
+      li
+        redirectRoot = '/character/' + character._id + '/soma'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Soma
+            p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
+      li
+        redirectRoot = '/character/' + character._id + '/nous'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Nous
+            p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
+      li
+        redirectRoot = '/character/' + character._id + '/profession'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Profession
+            p.displayDesc #{character.profession.name}
+      li
+        redirectRoot = '/character/' + character._id + '/humanity'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Humanity
+            p.displayDesc #{character.humanity}
+    br
+    ul.displayList
+      li
+        redirectRoot = '/character/' + character._id + '/mods'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Modifications
+      li
+        redirectRoot = '/character/' + character._id + '/items'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel Belongings
+      li
+        redirectRoot = '/character/' + character._id + '/histories'
+        a.displayItem(href=redirectRoot)
+          div
+            p.displayLabel History

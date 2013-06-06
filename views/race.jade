@@ -1,29 +1,28 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      redirectRoot = '/character/' + character._id
-      a#doneButton(href=redirectRoot)
-        button.leftNavButton Done
-      p #{character.race}
-    #contentArea
-      div.dataEntry
-        p.explanatoryHeading
-          | What is a human?
-        form(action="/wizard/choosehomeland", method="POST")
-          fieldset
-            p
-              label(for="world") World:
-              div.styledSelect
-                select(name="world", id="world")
-            p
-              label(for="locale") Locale: 
-              div.styledSelect
-                select(name="locale", id="locale")
-            p#legalString
-              | #{homeland.race[character.race]}
+  #navBar
+    p #{character.race}
+    redirectRoot = '/character/' + character._id
+    a#doneButton(href=redirectRoot)
+      button.leftNavButton Done
+  #contentArea
+    .dataEntry
+      p.explanatoryHeading
+        | What is a human?
+      form(action="/wizard/choosehomeland", method="POST")
+        fieldset
+          p
+            label(for="world") World:
+            select(name="world", id="world")
+          p
+            label(for="locale") Locale: 
+            select(name="locale", id="locale")
+    br
+    h2.centered Legal Status
+    .dataDisplay
+      p#legalString
+        | #{homeland.race[character.race]}
 
   script
     $(document).ready( function() {
@@ -50,7 +49,8 @@ block content
             });
         }
         
-        var socket = io.connect('http://localhost');
+        var socket = io.connect('http://10.0.1.10');
+        //var socket = io.connect('http://localhost');
         socket.on('connected', function () {
             socket.emit('worlds', function (data) {
                 for( var i=0;i<data.length;i++) {

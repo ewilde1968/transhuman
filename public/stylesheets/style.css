@@ -66,6 +66,12 @@ salmon: #F2B6A0 rgb(242,182,160)
         font-size: 1.3em;
         border: 1px solid;
     }
+    input[type='number'] {
+        line-height: 1.5em;
+        font-size: 1.3em;
+        border: 1px solid;
+        width: 3em;
+    }
 
     a {
         font-size: 1.5em;
@@ -123,6 +129,14 @@ salmon: #F2B6A0 rgb(242,182,160)
         padding: 0 0.5em;
         font-size: 0.7em;
     }
+    .leftNavButton {
+        position: absolute;
+        left: 2px;
+    }
+    .rightNavButton {
+        position: absolute;
+		right: 0;
+    }
 
     #contentArea {
         padding:0;
@@ -143,15 +157,6 @@ salmon: #F2B6A0 rgb(242,182,160)
         border-bottom-right-radius: 10px;
     }
 
-    .leftNavButton {
-        position: absolute;
-        left: 2px;
-    }
-    .rightNavButton {
-        position: absolute;
-		right: 0;
-    }
-
     .displayList {
         left: 5%;
         right: 5%;
@@ -159,18 +164,17 @@ salmon: #F2B6A0 rgb(242,182,160)
         padding: 0;
     }
     .displayList label {
-        color: rgb(242,182,160);
         font-weight: bold;
         text-align:center;
+        font-size: 1em;
         width: 100%;
     }
     .displayList li {
-		height: 1.5em;
-		background: rgba(99,191,174,0.3);
+		background: rgba(242,182,160,0.5);
 		border: 1px solid rgb(65,119,166);
-        line-height:1.5em;
         overflow:hidden;
         word-break: break-all;
+        height: 3.5em;
     }
     .displayList li:first-child {
 		border-top-left-radius: 10px;
@@ -183,9 +187,9 @@ salmon: #F2B6A0 rgb(242,182,160)
     .displayLabel {
         float: left;
         padding-left: 0.4em;
-        font-size: 0.7em;
+        font-size: 1em;
         font-weight:bold;
-        line-height: 1.5em;
+        line-height: 2.4em;
         color:#000000;
         margin: 0;
     }
@@ -193,8 +197,8 @@ salmon: #F2B6A0 rgb(242,182,160)
         float: right;
         padding-right: 0.6em;
         color: rgb(65,119,166);
-        font-size:0.4em;
-        line-height: 2.7em;
+        font-size: 0.7em;
+        line-height: 3.3em;
         margin: 0;
     }
     .displayList li:hover { color:rgb(242,182,160); background: rgb(65,119,166)}
@@ -260,6 +264,7 @@ salmon: #F2B6A0 rgb(242,182,160)
         font-weight: bold;
         text-align: center;
         width: 100%;
+        margin-bottom: 0.3em;
     }
     .rangeInput input {
         width: 100%;
@@ -305,14 +310,8 @@ salmon: #F2B6A0 rgb(242,182,160)
         border-bottom-right-radius: 10px;
         padding:0.3em;
     }
-    
-    .numberInput {
-        line-height: 1em;
-    }
-    .numberInput input{
-        font-size: 0.8em;
-        border: 1px solid;
-        width: 3em;
+
+    #legalString {
     }
     
     textarea {
@@ -339,9 +338,6 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
     #mainMenu {
         font-size:0.7em;
-    }
-    #legalString {
-        font-size: 0.7em;
     }
 
     #detailsLink img {

@@ -1,50 +1,46 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      redirectRoot = '/character/' + character._id
-      a#doneButton(href=redirectRoot)
-        button.leftNavButton Done
-      p #{statStr}
-      button.rightNavButton(id="editButton") Edit
-    #contentArea
-      div.dataEntry
-        if stat == 'soma'
-          p.explanatoryHeading
-            | All things body, including any fighting, running, balance,
-            | endurance, stamina or other talents and skills.
-        else
-          p.explanatoryHeading
-            | All things mind, including any persuasion, investigation, education,
-            | computer use or other talents and skills.
-        redirectRoot = '/character/' + character._id + '/' + stat
-        form#statForm(action=redirectRoot, method="POST")
-          fieldset
-            p
-              label(for="current") Current: 
-              div.numberInput
-                input(name="current", type="number", disabled="true", required="required", min="0", max="#{character[stat].maxLevel}", step="1", value="#{character[stat].currentLevel}")
-            p
-              label(for="max") Maximum: 
-              div.numberInput
-                input(name="max", type="number", disabled="true", required="required", min="1", step="1", value="#{character[stat].maxLevel}")
-            p
-              div.textInput
-                input(name="desc", type="text", size="31", disabled="true", required="required", value="#{character[stat].desc}")
+  #navBar
+    p #{statStr}
+    redirectRoot = '/character/' + character._id
+    a#doneButton(href=redirectRoot)
+      button.leftNavButton Done
+    a#editButton(href='#')
+      button.rightNavButton Edit
+  #contentArea
+    div.dataEntry
+      if stat == 'soma'
+        p.explanatoryHeading
+          | All things body, including any fighting, running, balance,
+          | endurance, stamina or other talents and skills.
+      else
+        p.explanatoryHeading
+          | All things mind, including any persuasion, investigation, education,
+          | computer use or other talents and skills.
+      redirectRoot = '/character/' + character._id + '/' + stat
+      form#statForm(action=redirectRoot, method="POST")
+        fieldset
+          p
+            label(for="current") Current: 
+            input(name="current", type="number", disabled="true", required="required", min="0", max="#{character[stat].maxLevel}", step="1", value="#{character[stat].currentLevel}")
+          p
+            label(for="max") Maximum: 
+            input(name="max", type="number", disabled="true", required="required", min="1", step="1", value="#{character[stat].maxLevel}")
+          p
+            input(name="desc", type="text", size="21", disabled="true", required="required", value="#{character[stat].desc}")
 
   script
     $(document).ready( function() {
         var postURL = '/character/' + '#{character._id}' + '/' + '#{stat}';
 
-        $('#editButton').click( function() {
-          if( $('#editButton').text() == 'Edit') {
+        $('#editButton button').click( function() {
+          if( $('#editButton button').text() == 'Edit') {
             $('input').prop('disabled', false);
-            $('#editButton').text('Save');
+            $('#editButton button').text('Save');
           } else {
             $('input').prop('disabled', true);
-            $('#editButton').text('Edit');
+            $('#editButton button').text('Edit');
 
             var data = { current: $('input[name="current"]').val(),
                          max: $('input[name="max"]').val(),

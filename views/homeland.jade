@@ -10,26 +10,26 @@ block content
       h1.centered #{homeland.name}
       p.explanatoryHeading
         | #{homeland.desc}
-      ul.displayList: label Tech Level
-          li
-            a.displayItem(href='#')
-              div
-                p.displayLabel Biotechnology
-                p.displayDesc #{homeland.techLevel.biology}
-          li
-            a.displayItem(href='#')
-              div
-                p.displayLabel Computer Science
-                p.displayDesc #{homeland.techLevel.compSci}
-          li
-            a.displayItem(href='#')
-              div
-                p.displayLabel Nanotechnology
-                p.displayDesc #{homeland.techLevel.nanoTech}
-        ul.displayList: label Memes
-          each hL in homeland.culture
-            li
-              a.displayItem(href='#')
-                div
-                  p.displayLabel #{hL.name}
-                  p.displayDesc #{hL.level}
+    ul.displayList: label Tech Level
+      li
+        a.displayItem(href='#')
+          div
+            p.displayLabel Biotechnology
+            p.displayDesc #{homeland.techLevel.biology}
+      li
+        a.displayItem(href='#')
+          div
+            p.displayLabel Computing
+            p.displayDesc #{homeland.techLevel.compSci}
+      li
+        a.displayItem(href='#')
+          div
+            p.displayLabel Nanotech
+            p.displayDesc #{homeland.techLevel.nanoTech}
+    ul.displayList: label Memes
+      each hL in homeland.culture
+        li
+          a.displayItem(href='#')
+            div
+              p.displayLabel #{hL.name}
+              p.displayDesc #{hL.level}

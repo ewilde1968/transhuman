@@ -1,47 +1,43 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#doneButton(href=doneURL)
-        button.leftNavButton Done
-      p #{item.name}
+  #navBar
+    p #{item.name}
+    a#doneButton(href=doneURL)
+      button.leftNavButton Done
       button#buyButton(class="rightNavButton", disabled="disabled") Buy
-    #contentArea
-      div.dataEntry
-        p.explanatoryHeading
-          | #{item.desc}
-      ul.displayList: label Cost
-        li
-          a.displayItem(href='#')
-            div
-              p.displayLabel Credits
-              p.displayDesc #{item.cost}
-      ul.displayList: label Benefits
-        li
-          a.displayItem(href='#')
-            div
-              p.displayLabel Bogus
-              p.displayDesc Bogosity
-      formURL = '/character/' + character._id + '/item/' + item._id
-        form(action=formURL, method="POST")
-          fieldset
-            input(type="text", hidden="hidden", name="transaction", id="transaction", value="buy")
-            input(type="text", hidden="hidden", name="doneURL", value=doneURL)
-            br
-            div.dataEntry
-              div.rangeInput
-                if owned
-                  h1#amountLabel(class="centered") Number Owned: #{owned}
-                  maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
-                  input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value=owned)
-                else
-                  h1#amountLabel(class="centered") Number Owned: 0
-                  maxAmount = Math.floor(character.credits/item.cost)
-                  input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value=0)
-                p.leftLabel 0
-                p.rightLabel #{maxAmount}
+    a#buyButton
+      button.rightNavButton Buy
+  #contentArea
+    div.dataEntry
+      h2.centered #{owned} Owned
+      p.explanatoryHeading
+        | #{item.desc}
+    ul.displayList: label Cost
+      li
+        a.displayItem(href='#')
+          div
+            p.displayLabel Credits
+            p.displayDesc #{item.cost}
+    ul.displayList: label Benefits
+      li
+        a.displayItem(href='#')
+          div
+            p.displayLabel Bogus
+            p.displayDesc Bogosity
+    formURL = '/character/' + character._id + '/item/' + item._id
+      form(action=formURL, method="POST")
+        fieldset
+          input(type="text", hidden="hidden", name="transaction", id="transaction", value="buy")
+          input(type="text", hidden="hidden", name="doneURL", value=doneURL)
+          br
+          div.dataEntry
+            div.rangeInput
+              label#amountLabel(for="amount") #{owned}
+              maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
+              input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value="#{owned}")
+              p.rightLabel #{maxAmount}
+              p.leftLabel 0
 
   script
     $(document).ready( function() {
@@ -61,11 +57,11 @@ block content
                 $('#transaction').val('sell');
             }
             
-            $('#amountLabel').text( 'Number Owned: ' + $(this).val());
+            $('#amountLabel').text( $(this).val());
         });
 
-        $('#buyButton').click( function() {
-            if( #{eligible})
+        $('#buyButton button').click( function() {
+            if( #{eligible} && $('#amountRange').val() != #{owned})
                 $('form').submit();
         });
     });

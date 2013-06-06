@@ -5,42 +5,41 @@ block content
     var itemDict = {};
     var ownedDict = {};
 
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#cancelButton(href=cancelURL)
-        if formURL
-          button.leftNavButton Cancel
-        else
-          button.leftNavButton Done
-      p Items
+  #navBar
+    p Items
+    a#cancelButton(href=cancelURL)
       if formURL
-        button#nextButton(class="rightNavButton") Next
-    #contentArea
-      div.dataEntry
-        form(action=formURL, method="POST")
-          fieldset
-            p#credTot Credits #{character.credits}
-            br
-            each itemType in mods
-              ul.optionList: label #{itemType[0].category}
-                each itemObj in itemType
-                  li.optionItem(id="#{itemObj.name}")
-                    if( formURL)
-                      detailsURL = formURL + '/' + itemObj.name
-                    else
-                      detailsURL = '/character/' + character._id + '/item/' + itemObj.name
-                    a(href=detailsURL)
-                      div
-                        p.optionLabel #{itemObj.name}
-                        descStr = 'Cr ' + itemObj.cost
-                        p.optionDesc #{descStr}
-                    script
-                        var newObj = {selected:false,
-                            name:"#{itemObj.name}",
-                            cost:#{itemObj.cost}
-                            };
-                        itemDict["#{itemObj.name}"] = newObj;
+        button.leftNavButton Cancel
+      else
+        button.leftNavButton Done
+    if formURL
+      a#nextButton
+        button.rightNavButton Next
+  #contentArea
+    div.dataEntry
+      form(action=formURL, method="POST")
+        fieldset
+          p#credTot Credits #{character.credits}
+          br
+          each itemType in mods
+            ul.optionList: label #{itemType[0].category}
+              each itemObj in itemType
+                li.optionItem(id="#{itemObj.name}")
+                  if( formURL)
+                    detailsURL = formURL + '/' + itemObj.name
+                  else
+                    detailsURL = '/character/' + character._id + '/item/' + itemObj.name
+                  a(href=detailsURL)
+                    div
+                      p.optionLabel #{itemObj.name}
+                      descStr = 'Cr ' + itemObj.cost
+                      p.optionDesc #{descStr}
+                  script
+                    var newObj = {selected:false,
+                        name:"#{itemObj.name}",
+                        cost:#{itemObj.cost}
+                        };
+                    itemDict["#{itemObj.name}"] = newObj;
 
   each itemObj in character.belongings
     script

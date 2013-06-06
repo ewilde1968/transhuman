@@ -1,20 +1,16 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a(href="/logout")
-        button.leftNavButton Logout
-      p Character Pool
-      a(href="/wizard/choosehomeland")
-        button.rightNavButton New
-    #contentArea
-      ul.displayList
-        each character in characters
-          li
-            redirectRoot = '/character/' + character._id
-            a.displayItem(href=redirectRoot)
-              div
-                p.displayLabel #{character.name}
-                p.displayDesc #{character.profession.name}
+  #navBar
+    p Characters
+    a(href="/wizard/choosehomeland")
+      button.rightNavButton New
+  #contentArea
+    ul.displayList
+      each character in characters
+        li
+          redirectRoot = '/character/' + character._id
+          a.displayItem(href=redirectRoot)
+            div
+              p.displayLabel #{character.name}
+              p.displayDesc #{character.profession.name}

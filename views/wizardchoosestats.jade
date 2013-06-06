@@ -1,30 +1,29 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#cancelButton(href="/wizard/cancel")
-        button.leftNavButton Cancel
-      p Statistics
-      button#nextButton(class="rightNavButton") Next
-    #contentArea
-      div.dataEntry
+  #navBar
+    p Statistics
+    a#cancelButton(href="/wizard/cancel")
+      button.leftNavButton Cancel
+    a#nextButton
+      button.rightNavButton Next
+  #contentArea
+    div.dataEntry
+      p.explanatoryHeading
+        | What is the balance of Soma and Nous?
+        | The more extreme the higher your humanity.
+      form(action="/wizard/choosestats", method="POST")
+        fieldset
+          div.rangeInput
+            h1#score(class="centered") 5/5
+            input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
+            p.leftLabel Nous
+            p.rightLabel Soma
+        br
         p.explanatoryHeading
-          | What is the balance of Soma and Nous?
-          | The more extreme the higher your humanity.
-        form(action="/wizard/choosestats", method="POST")
-          fieldset
-            div.rangeInput
-              h1#score(class="centered") 5/5
-              input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
-              p.leftLabel Nous
-              p.rightLabel Soma
-            br
-            p#humanityExplanation
-              | Humanity measures how much of your mortal coil
-              | remains after cybernetic or genetic augmentation.
-              h1#humanityScore(class="centered") 5
+          | Humanity measures how much of your mortal coil
+          | remains after cybernetic or genetic augmentation.
+        h1#humanityScore(class="centered") 5
 
   script
     $(document).ready( function() {

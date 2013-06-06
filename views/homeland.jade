@@ -1,17 +1,15 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#doneButton(href=doneURL)
-        button.leftNavButton Done
-      p #{homeland.name}
-    #contentArea
-      div.dataEntry
-        h1.centered #{homeland.world}
-        p.explanatoryHeading
-          | #{homeland.desc}
+  #navBar
+    p #{homeland.world}
+    a#doneButton(href=doneURL)
+      button.leftNavButton Done
+  #contentArea
+    div.dataEntry
+      h1.centered #{homeland.name}
+      p.explanatoryHeading
+        | #{homeland.desc}
       ul.displayList: label Tech Level
           li
             a.displayItem(href='#')

@@ -1,31 +1,27 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#cancelButton(href="/wizard/cancel")
-        button.leftNavButton Cancel
-      p Homeland
-      button#nextButton(class="rightNavButton") Next
-    #contentArea
-      div.dataEntry
-        p.explanatoryHeading
-          | Choose the location of your character's birth. Birth location determines
-          | possible genetic and cybernetic modification available.
-        form(action="/wizard/choosehomeland", method="POST")
-          fieldset
-            a#detailsLink(href='#')
-              img(src="/images/Alarm-Info-icon.png")
-            br
-            p
-              label(for="world") World:
-              div.styledSelect
-                select(name="world", id="world")
-            p
-              label(for="locale") Locale: 
-              div.styledSelect
-                select(name="locale", id="locale")
+  #navBar
+    p Homeland
+    a#cancelButton(href="/wizard/cancel")
+      button.leftNavButton Cancel
+    a#nextButton
+      button.rightNavButton Next
+  #contentArea
+    div.dataEntry
+      p.explanatoryHeading
+        | Choose the location of your character's birth. Birth location determines
+        | possible genetic and cybernetic modification available.
+      form(action="/wizard/choosehomeland", method="POST")
+        fieldset
+          a#detailsLink(href='#')
+            img(src="/images/Alarm-Info-icon.png")
+          p
+            label(for="world") World
+            select(name="world", id="world")
+          p
+            label(for="locale") Locale
+            select(name="locale", id="locale")
 
   script
     $(document).ready( function() {

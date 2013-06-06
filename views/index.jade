@@ -1,26 +1,22 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      p Sign In
-    #contentArea
-      div.dataEntry
-        form( action="/login", method="POST")
-          fieldset
-            p
-              label Email:
-              div.textInput
-                if( signupEmail)
-                  input( name="user[email]", type="text", required="required", value=signupEmail)
-                else
-                  input( name="user[email]", type="text", required="required")
-            p
-              label Password: 
-              div.textInput
-                input( name="user[password]", type="password", size="15", required="required")
-            p
-              button.rightForm Sign In
-        #newAccount
+  #navBar
+    p Sign In
+  #contentArea
+    .dataEntry
+      form( action="/login", method="POST")
+        fieldset
+          p
+            label(for="user[email]") Email
+            if( signupEmail)
+              input( name="user[email]", type="email", required="required", size="22", value=signupEmail)
+            else
+              input( name="user[email]", type="email", required="required", size="22", placeholder="username@domain.com")
+          p
+            label(for="user[password]") Password
+            input( name="user[password]", type="password", size="15", required="required")
+          p
+            button.rightForm Sign In
+          #newAccount
             a( href="/signup") Need an account?

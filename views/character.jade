@@ -1,16 +1,14 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      a#doneButton(href="/")
-        button.leftNavButton Done
-      p #{character.name}
-      redirectRoot = '/character/' + character._id + '/name'
-      a#editButton(href=redirectRoot)
-        button.rightNavButton Edit
-    #contentArea
+  #navBar
+    a#doneButton(href="/")
+      button.leftNavButton Done
+    p #{character.name}
+    redirectRoot = '/character/' + character._id + '/name'
+    a#editButton(href=redirectRoot)
+      button.rightNavButton Edit
+  #contentArea
       ul.displayList
         li
           redirectRoot = '/character/' + character._id + '/homeland'

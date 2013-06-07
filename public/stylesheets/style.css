@@ -337,6 +337,13 @@ salmon: #F2B6A0 rgb(242,182,160)
         padding-right: 2px;
     }
     
+    .pageIndicator {
+        position: fixed;
+        left: 138px;
+        bottom: 10px;
+		opacity: 0.7;
+    }
+    
     #detailsLink img {
         float: right;
     }

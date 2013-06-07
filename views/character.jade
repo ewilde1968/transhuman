@@ -50,6 +50,8 @@ block content
     redirectRoot = '/character/' + character._id + '/mods'
     form(action=redirectRoot, method="GET")
 
+    img.pageIndicator(src='/images/page1.png')
+
   script
     $(document).ready( function() {
         var hammer = $("#contentArea").hammer();

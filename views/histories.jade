@@ -2,9 +2,8 @@ extends layout
 
 block content
   #navBar
-    destURL = '/character/' + character._id
     p History
-    a#cancelButton(href=destURL)
+    a#cancelButton(href='/')
       button.leftNavButton Done
     destURL = '/character/' + character._id + '/history'
     a#buyButton(href=destURL)
@@ -20,6 +19,8 @@ block content
               p.displayDesc #{history.datetime}
     rightRoot = '/character/' + character._id + '/items'
     form#swipeRightForm(action=rightRoot, method="GET")
+
+    img.pageIndicator(src='/images/page4.png')
 
   script
     $(document).ready( function() {

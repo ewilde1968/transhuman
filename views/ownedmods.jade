@@ -3,8 +3,7 @@ extends layout
 block content
   #navBar
     p Modifications
-    destURL = '/character/' + character._id
-    a#cancelButton(href=destURL)
+    a#cancelButton(href='/')
       button.leftNavButton Done
     destURL = '/character/' + character._id + '/buymods'
     a#buyButton(href=destURL)
@@ -26,6 +25,8 @@ block content
     form#swipeLeftForm(action=leftRoot, method="GET")
     rightRoot = '/character/' + character._id
     form#swipeRightForm(action=rightRoot, method="GET")
+
+    img.pageIndicator(src='/images/page2.png')
     
   script
     $(document).ready( function() {

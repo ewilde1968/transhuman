@@ -2,9 +2,8 @@ extends layout
 
 block content
   #navBar
-    destURL = '/character/' + character._id
     p Items
-    a#cancelButton(href=destURL)
+    a#cancelButton(href='/')
       button.leftNavButton Done
     destURL = '/character/' + character._id + '/buyitems'
     a#buyButton(href=destURL)
@@ -26,7 +25,9 @@ block content
     form#swipeLeftForm(action=leftRoot, method="GET")
     rightRoot = '/character/' + character._id + '/mods'
     form#swipeRightForm(action=rightRoot, method="GET")
-    
+
+    img.pageIndicator(src='/images/page3.png')
+
   script
     $(document).ready( function() {
         var hammer = $("#contentArea").hammer();

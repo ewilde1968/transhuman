@@ -6,30 +6,30 @@ block content
     a#doneButton(href=doneURL)
       button.leftNavButton Done
   #contentArea
-    div.dataEntry
+    .dataDisplay
       h1.centered #{homeland.name}
       p.explanatoryHeading
         | #{homeland.desc}
-    ul.displayList: label Tech Level
-      li
-        a.displayItem(href='#')
+    ul.optionList: label Tech Level
+      li.optionItem
+        a(href='#')
           div
-            p.displayLabel Biotechnology
-            p.displayDesc #{homeland.techLevel.biology}
-      li
-        a.displayItem(href='#')
+            p.optionLabel Biotechnology
+            p.optionDesc #{homeland.techLevel.biology}
+      li.optionItem
+        a(href='#')
           div
-            p.displayLabel Computing
-            p.displayDesc #{homeland.techLevel.compSci}
-      li
-        a.displayItem(href='#')
+            p.optionLabel Computing
+            p.optionDesc #{homeland.techLevel.compSci}
+      li.optionItem
+        a(href='#')
           div
-            p.displayLabel Nanotech
-            p.displayDesc #{homeland.techLevel.nanoTech}
-    ul.displayList: label Memes
+            p.optionLabel Nanotech
+            p.optionDesc #{homeland.techLevel.nanoTech}
+    ul.optionList: label Memes
       each hL in homeland.culture
-        li
-          a.displayItem(href='#')
+        li.optionItem
+          a(href='#')
             div
-              p.displayLabel #{hL.name}
-              p.displayDesc #{hL.level}
+              p.optionLabel #{hL.name}
+              p.optionDesc #{hL.level}

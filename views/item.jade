@@ -1,43 +1,47 @@
 extends layout
 
 block content
+  if !owned
+    owned = 0
+
   #navBar
     p #{item.name}
     a#doneButton(href=doneURL)
       button.leftNavButton Done
       button#buyButton(class="rightNavButton", disabled="disabled") Buy
     a#buyButton
-      button.rightNavButton Buy
+      button.rightNavButton(disabled="disabled") Buy
   #contentArea
-    div.dataEntry
-      h2.centered #{owned} Owned
+    .dataDisplay
+      p#amountOwned #{owned} Owned
       p.explanatoryHeading
         | #{item.desc}
-    ul.displayList: label Cost
-      li
-        a.displayItem(href='#')
+    ul.optionList: label Cost
+      li.optionItem
+        a(href='#')
           div
-            p.displayLabel Credits
-            p.displayDesc #{item.cost}
-    ul.displayList: label Benefits
-      li
-        a.displayItem(href='#')
+            p.optionLabel Credits
+            p.optionDesc #{item.cost}
+    ul.optionList: label Benefits
+      li.optionItem
+        a(href='#')
           div
-            p.displayLabel Bogus
-            p.displayDesc Bogosity
+            p.optionLabel Bogus
+            p.optionDesc Bogosity
     formURL = '/character/' + character._id + '/item/' + item._id
       form(action=formURL, method="POST")
         fieldset
           input(type="text", hidden="hidden", name="transaction", id="transaction", value="buy")
           input(type="text", hidden="hidden", name="doneURL", value=doneURL)
           br
-          div.dataEntry
-            div.rangeInput
+          .dataEntry
+            .rangeInput
               label#amountLabel(for="amount") #{owned}
               maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
               input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value="#{owned}")
-              p.rightLabel #{maxAmount}
-              p.leftLabel 0
+              .rangeLabels
+                p.minLabel 0
+                p.maxLabel #{maxAmount}
 
   script
     $(document).ready( function() {
@@ -46,13 +50,13 @@ block content
 
         $('#amountRange').change( function() {
             if( $(this).val() > #{owned} && #{eligible}) {
-                $('#buyButton').removeAttr('disabled')
+                $('#buyButton button').removeAttr('disabled')
                     .text('Buy');
                 $('#transaction').val('buy');
             } else if( $(this).val() == #{owned}) {
-                $('#buyButton').attr('disabled','disabled');
+                $('#buyButton button').attr('disabled','disabled');
             } else {
-                $('#buyButton').removeAttr('disabled')
+                $('#buyButton button').removeAttr('disabled')
                     .text('Sell');
                 $('#transaction').val('sell');
             }

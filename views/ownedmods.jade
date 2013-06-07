@@ -1,26 +1,40 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      destURL = '/character/' + character._id
-      a#cancelButton(href=destURL)
-        button.leftNavButton Done
-      p Modifications
-      destURL = '/character/' + character._id + '/buymods'
-      a#buyButton(href=destURL)
-        button.rightNavButton Buy
-    #contentArea
-      .dataDisplay
-        p#humanTot Humanity #{character.humanity}
-        p#credTot Credits #{character.credits}
-        br
-      each modType in ownedMods
-        ul.displayList: label #{modType[0].type}
-          each mod in modType
-            li.displayItem(id="#{mod.name}")
-              detailsURL = '/character/' + character._id + '/mod/' + mod.name
-              a(href=detailsURL)
-                div
-                  p.optionLabel #{mod.name}
+  #navBar
+    p Modifications
+    destURL = '/character/' + character._id
+    a#cancelButton(href=destURL)
+      button.leftNavButton Done
+    destURL = '/character/' + character._id + '/buymods'
+    a#buyButton(href=destURL)
+      button.rightNavButton New
+  #contentArea
+    .dataDisplay
+      .splitP
+        p.leftP Humanity #{character.humanity}
+        p.rightP Credits #{character.credits}
+    each modType in ownedMods
+      ul.optionList: label #{modType[0].type}
+        each mod in modType
+          li.optionItem(id="#{mod.name}")
+            detailsURL = '/character/' + character._id + '/mod/' + mod.name
+            a(href=detailsURL)
+              div
+                p.optionLabel #{mod.name}
+    leftRoot = '/character/' + character._id + '/items'
+    form#swipeLeftForm(action=leftRoot, method="GET")
+    rightRoot = '/character/' + character._id
+    form#swipeRightForm(action=rightRoot, method="GET")
+    
+  script
+    $(document).ready( function() {
+        var hammer = $("#contentArea").hammer();
+        
+        hammer.on( 'swipeleft', function() {
+            $('#swipeLeftForm').submit();
+        });
+        hammer.on( 'swiperight', function() {
+            $('#swipeRightForm').submit();
+        });
+    });

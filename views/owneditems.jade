@@ -1,26 +1,40 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      destURL = '/character/' + character._id
-      a#cancelButton(href=destURL)
-        button.leftNavButton Done
-      p Items
-      destURL = '/character/' + character._id + '/buyitems'
-      a#buyButton(href=destURL)
-        button.rightNavButton Buy
-    #contentArea
-      .dataDisplay
-        p#credTot Credits #{character.credits}
-        br
-      each itemType in ownedItems
-        ul.displayList: label #{itemType[0].item.category}
-          each belongingObj in itemType
-            li.displayItem(id="#{belongingObj.item.name}")
-              detailsURL = '/character/' + character._id + '/item/' + belongingObj.item.name
-              a(href=detailsURL)
-                div
-                  p.displayLabel #{belongingObj.item.name}
-                  p.displayDesc #{belongingObj.amount}
+  #navBar
+    destURL = '/character/' + character._id
+    p Items
+    a#cancelButton(href=destURL)
+      button.leftNavButton Done
+    destURL = '/character/' + character._id + '/buyitems'
+    a#buyButton(href=destURL)
+      button.rightNavButton New
+  #contentArea
+    .dataDisplay
+      .splitP
+        p.rightP Credits #{character.credits}
+    each itemType in ownedItems
+      ul.optionList: label #{itemType[0].item.category}
+        each belongingObj in itemType
+          li.optionItem(id="#{belongingObj.item.name}")
+            detailsURL = '/character/' + character._id + '/item/' + belongingObj.item.name
+            a(href=detailsURL)
+              div
+                p.optionLabel #{belongingObj.item.name}
+                p.optionDesc #{belongingObj.amount}
+    leftRoot = '/character/' + character._id + '/histories'
+    form#swipeLeftForm(action=leftRoot, method="GET")
+    rightRoot = '/character/' + character._id + '/mods'
+    form#swipeRightForm(action=rightRoot, method="GET")
+    
+  script
+    $(document).ready( function() {
+        var hammer = $("#contentArea").hammer();
+        
+        hammer.on( 'swipeleft', function() {
+            $('#swipeLeftForm').submit();
+        });
+        hammer.on( 'swiperight', function() {
+            $('#swipeRightForm').submit();
+        });
+    });

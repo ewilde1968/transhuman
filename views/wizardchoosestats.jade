@@ -14,12 +14,12 @@ block content
         | The more extreme the higher your humanity.
       form(action="/wizard/choosestats", method="POST")
         fieldset
-          div.rangeInput
-            h1#score(class="centered") 5/5
+          .rangeInput
+            label#score(for="soma") 5/5
             input(type="range", name="soma", min="1", max="9", step="1", value="5", id="soma")
-            p.leftLabel Nous
-            p.rightLabel Soma
-        br
+            .rangeLabels
+              p.minLabel Nous
+              p.maxLabel Soma
         p.explanatoryHeading
           | Humanity measures how much of your mortal coil
           | remains after cybernetic or genetic augmentation.
@@ -34,11 +34,11 @@ block content
             var v = (s>n)?s:n;
             
             $('#humanitySlider').val(v);
-            $('#humanityScore').replaceWith("<h1 id='humanityScore' class='centered'>" + v + "</h1>");
+            $('#humanityScore').text(v);
 
             // set stat score
             var str = n.toString() + '/' + s.toString();
-            $('#score').replaceWith("<h1 id='score' class='centered'>" + str + "</h1>");
+            $('#score').text( str)
         }
         
         $('#soma').change(function() {updateHumanity();});

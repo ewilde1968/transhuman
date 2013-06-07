@@ -16,11 +16,11 @@ block content
       a#nextButton
         button.rightNavButton Next
   #contentArea
-    div.dataEntry
-      form(action=formURL, method="POST")
+    .dataDisplay
+      .splitP
+        p.rightP Credits #{character.credits}
+    form(action=formURL, method="POST")
         fieldset
-          p#credTot Credits #{character.credits}
-          br
           each itemType in mods
             ul.optionList: label #{itemType[0].category}
               each itemObj in itemType

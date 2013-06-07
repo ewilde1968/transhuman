@@ -17,15 +17,15 @@ block content
       a#nextButton
         button.rightNavButton Next
   #contentArea
-    div.dataEntry
+    .dataDisplay
       p.explanatoryHeading
         | Genetic modifications and technological augmentations
         | provide superhuman powers.
-      form(action=formURL, method="POST")
+      .splitP
+        p.leftP Humanity #{character.humanity}
+        p.rightP Credits #{character.credits}
+    form(action=formURL, method="POST")
         fieldset
-          p#humanTot Humanity #{character.humanity}
-          p#credTot Credits #{character.credits}
-          br
           each modType in mods
             ul.optionList: label #{modType[0].type}
               each mod in modType

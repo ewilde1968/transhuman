@@ -1,22 +1,35 @@
 extends layout
 
 block content
-  #containerDiv
-    img.backImage(src="/images/transhuman-peacock-dancer.jpg") 
-    #navBar
-      destURL = '/character/' + character._id
-      a#cancelButton(href=destURL)
-        button.leftNavButton Done
-      p History
-      destURL = '/character/' + character._id + '/history'
-      a#buyButton(href=destURL)
-        button.rightNavButton New
-    #contentArea
-      ul.displayList
-        each history in character.history
-          li.displayItem(id="#{history.name}")
-            detailsURL = '/character/' + character._id + '/history/' + history.name
-            a(href=detailsURL)
-              div
-                span.displayLabel #{history.name}
-                p.displayDesc #{history.datetime}
+  #navBar
+    destURL = '/character/' + character._id
+    p History
+    a#cancelButton(href=destURL)
+      button.leftNavButton Done
+    destURL = '/character/' + character._id + '/history'
+    a#buyButton(href=destURL)
+      button.rightNavButton New
+  #contentArea
+    ul.displayList
+      each history in character.history
+        li.displayItem(id="#{history.name}")
+          detailsURL = '/character/' + character._id + '/history/' + history.name
+          a(href=detailsURL)
+            div
+              p.displayLabel #{history.name}
+              p.displayDesc #{history.datetime}
+    rightRoot = '/character/' + character._id + '/items'
+    form#swipeRightForm(action=rightRoot, method="GET")
+
+  script
+    $(document).ready( function() {
+        $('#save').click( function() {
+            $('form').submit();
+        });
+
+        var hammer = $("#contentArea").hammer();
+        
+        hammer.on( 'swiperight', function() {
+            $('#swipeRightForm').submit();
+        });
+    });

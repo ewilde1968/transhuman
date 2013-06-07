@@ -1,7 +1,7 @@
 body {
     overflow: hidden;
     background-image: url('/images/davinci_transhuman_640x1136_blurred.gif');
-    background-size: cover;
+    background-repeat: repeat;
     font: sans-serif;
 }
 
@@ -121,7 +121,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     #navBar {
 		width: 100%;
         height: 42px;
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		background: -webkit-linear-gradient(270deg,rgba(217,181,137,0.6) 0%,rgba(65,119,166,0.6) 100%);
@@ -184,6 +184,7 @@ salmon: #F2B6A0 rgb(242,182,160)
         right: 5%;
         list-style: none;
         padding: 0;
+        margin: 0;
     }
     .displayList li {
 		background: rgba(242,182,160,0.5);
@@ -339,8 +340,9 @@ salmon: #F2B6A0 rgb(242,182,160)
     
     .pageIndicator {
         position: fixed;
-        left: 138px;
-        bottom: 10px;
+        left: -webkit-calc(50% - 32px); width: -o-calc(50% - 32px); width: -moz-calc(50% - 32px); width: calc(50% - 32px);
+        bottom: 4px;
+        max-width:64px;
 		opacity: 0.7;
     }
     

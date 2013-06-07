@@ -376,7 +376,8 @@ CharacterSchema.methods.getItemsByType = function() {
         
         var found = false;
         for( var j=0;j<result.length;j++) {
-            if( result[j][0].type == belongingObj.item.category) {
+            var typeArray = result[j];
+            if( typeArray[0].item.category == belongingObj.item.category) {
                 found = true;
                 result[j].push( belongingObj);
                 break;

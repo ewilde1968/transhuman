@@ -13,23 +13,23 @@ block content
     ul.optionList: label Tech Level
       li.optionItem
         a(href='#')
-          div
+          button
             p.optionLabel Biotechnology
             p.optionDesc #{homeland.techLevel.biology}
       li.optionItem
         a(href='#')
-          div
+          button
             p.optionLabel Computing
             p.optionDesc #{homeland.techLevel.compSci}
       li.optionItem
         a(href='#')
-          div
+          button
             p.optionLabel Nanotech
             p.optionDesc #{homeland.techLevel.nanoTech}
     ul.optionList: label Memes
       each hL in homeland.culture
         li.optionItem
           a(href='#')
-            div
+            button
               p.optionLabel #{hL.name}
               p.optionDesc #{hL.level}

@@ -18,7 +18,7 @@ block content
           li.optionItem(id="#{belongingObj.item.name}")
             detailsURL = '/character/' + character._id + '/item/' + belongingObj.item.name
             a(href=detailsURL)
-              div
+              button
                 p.optionLabel #{belongingObj.item.name}
                 p.optionDesc #{belongingObj.amount}
     leftRoot = '/character/' + character._id + '/histories'

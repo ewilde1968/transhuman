@@ -11,7 +11,7 @@ block content
         li
           redirectRoot = '/character/' + character._id
           a.displayItem(href=redirectRoot)
-            div
+            button
               p.displayLabel #{character.name}
               p.displayDesc #{character.profession.name}
               deleteRoot = '/character/' + character._id + '/delete'

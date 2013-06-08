@@ -19,7 +19,7 @@ block content
           li.optionItem(id="#{mod.name}")
             detailsURL = '/character/' + character._id + '/mod/' + mod.name
             a(href=detailsURL)
-              div
+              button
                 p.optionLabel #{mod.name}
     leftRoot = '/character/' + character._id + '/items'
     form#swipeLeftForm(action=leftRoot, method="GET")

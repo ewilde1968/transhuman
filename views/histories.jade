@@ -14,7 +14,7 @@ block content
         li.displayItem(id="#{history.name}")
           detailsURL = '/character/' + character._id + '/history/' + history.name
           a(href=detailsURL)
-            div
+            button
               p.displayLabel #{history.name}
               p.displayDesc #{history.datetime}
     rightRoot = '/character/' + character._id + '/items'

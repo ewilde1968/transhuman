@@ -13,37 +13,37 @@ block content
       li
         redirectRoot = '/character/' + character._id + '/homeland'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Homeland
             p.displayDesc #{homeland.name}
       li
         redirectRoot = '/character/' + character._id + '/race'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Race
             p.displayDesc Human
       li
         redirectRoot = '/character/' + character._id + '/soma'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Soma
             p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
       li
         redirectRoot = '/character/' + character._id + '/nous'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Nous
             p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
       li
         redirectRoot = '/character/' + character._id + '/profession'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Profession
             p.displayDesc #{character.profession.name}
       li
         redirectRoot = '/character/' + character._id + '/humanity'
         a.displayItem(href=redirectRoot)
-          div
+          button
             p.displayLabel Humanity
             p.displayDesc #{character.humanity}
 
@@ -59,8 +59,5 @@ block content
         hammer.on( 'swipeleft', function() {
             $('form').submit();
         });
-
-        $('.enchilada').click( function() {
-            $(this).find('a').click();
-        });
+    });
 });

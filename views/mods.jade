@@ -35,7 +35,7 @@ block content
                   else
                     detailsURL = '/character/' + character._id + '/mod/' + mod.name
                   a(href=detailsURL)
-                    div
+                    button
                       p.optionLabel #{mod.name}
                       descStr = mod.humanCost + '/' + mod.creditCost
                       p.optionDesc #{descStr}

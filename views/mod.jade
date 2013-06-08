@@ -18,18 +18,18 @@ block content
       ul.optionList: label Cost
         li.optionItem
           a(href='#')
-            div
+            button
               p.optionLabel Humanity
               p.optionDesc #{mod.humanCost}
         li.optionItem
           a(href='#')
-            div
+            button
               p.optionLabel Credits
               p.optionDesc #{mod.creditCost}
       ul.optionList: label Benefits
         li.optionItem
           a(href='#')
-            div
+            button
               p.optionLabel Bogus
               p.optionDesc Bogosity
       formURL = '/character/' + character._id + '/mod/' + mod._id

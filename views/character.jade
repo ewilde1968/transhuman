@@ -59,4 +59,8 @@ block content
         hammer.on( 'swipeleft', function() {
             $('form').submit();
         });
-    });
+
+        $('.enchilada').click( function() {
+            $(this).find('a').click();
+        });
+});

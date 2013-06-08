@@ -54,7 +54,7 @@ block content
 
   script
     $(document).ready( function() {
-        var hammer = $("#contentArea").hammer();
+        var hammer = $(document).hammer();
         
         hammer.on( 'swipeleft', function() {
             $('form').submit();

@@ -14,3 +14,29 @@ block content
             div
               p.displayLabel #{character.name}
               p.displayDesc #{character.profession.name}
+              deleteRoot = '/character/' + character._id + '/delete'
+              form(action=deleteRoot, method="POST", hidden='hidden', id=character._id)
+                button.deleteCharButton Delete
+
+  script
+    $(document).ready( function() {
+        var hammer = $("li").hammer();
+        
+        hammer.on( 'swipeleft', function(ev) {
+            ev.stopPropagation();
+            var thisObj = $(this);
+            
+            thisObj.find('form').prop('hidden', false);  // show the Delete button
+            thisObj.find('.displayDesc').prop('hidden', 'hidden');  // hide the description label
+            
+            $(document).one("click", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if( $(e.target).hasClass('deleteCharButton'))
+                    $(e.target).parent('form').submit();
+                
+                thisObj.find('form').prop('hidden', 'hidden');  // hide the Delete button
+                thisObj.find('.displayDesc').prop('hidden', false);  // show the description label
+            });
+        });
+    });

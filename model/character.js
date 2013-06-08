@@ -319,6 +319,12 @@ CharacterSchema.statics.setHistory = function( req, res, next) {
     });
 };
 
+
+CharacterSchema.statics.deleteById = function( req, res, next) {
+    Character.findByIdAndRemove( req.params.id).exec();
+    next();
+};
+
 CharacterSchema.methods.getBelonging = function( itemObj) {
     if( this.belongings) {
         this.belongings.forEach( function(elem) {

@@ -8,10 +8,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
     World = require('./world'),
-    Homeland = require('./homeland'),
     Mod = require('./mod'),
-    Item = require('./item'),
-    User = require('./user');
+    Item = require('./item');
 
 var connected = false;
 function Database () {

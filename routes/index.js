@@ -507,3 +507,7 @@ exports.history = function( req, res, next) {
 exports.setHistory = function( req, res, next) {
     res.redirect( '/character/' + req.params.id + '/histories');
 };
+
+exports.deleteCharacter = function( req, res, next) {
+    res.redirect( '/');
+};

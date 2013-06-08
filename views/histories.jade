@@ -28,7 +28,7 @@ block content
             $('form').submit();
         });
 
-        var hammer = $("#contentArea").hammer();
+        var hammer = $(document).hammer();
         
         hammer.on( 'swiperight', function() {
             $('#swipeRightForm').submit();

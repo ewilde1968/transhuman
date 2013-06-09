@@ -88,6 +88,7 @@ app.get('/character/:id/history', User.secure, routes.history);
 app.post('/character/:id/history', User.secure, Character.setHistory, routes.setHistory);
 app.get('/character/:id/history/:historyname', User.secure, routes.history);
 app.post('/character/:id/history/:historyname', User.secure, Character.setHistory, routes.setHistory);
+app.post('/character/:id/history/:historyname/delete', User.secure, Character.deleteHistory, routes.histories);
 app.get('/character/:id', User.secure, routes.character);
 app.post('/character/:id/delete', User.secure, Character.deleteById, routes.deleteCharacter);
 

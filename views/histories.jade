@@ -11,12 +11,17 @@ block content
   #contentArea
     ul.displayList
       each history in character.history
-        li.displayItem(id="#{history.name}")
+        li
           detailsURL = '/character/' + character._id + '/history/' + history.name
-          a(href=detailsURL)
-            button
+          a.displayItem(href=detailsURL)
+            div(class='swipeButton buttonOff')
+              p.displayLabel #{history.name}
+              button(class='deleteButton') Delete
+            button.rootButton
               p.displayLabel #{history.name}
               p.displayDesc #{history.datetime}
+            deleteRoot = detailsURL + '/delete'
+            form(action=deleteRoot, method="POST")
     rightRoot = '/character/' + character._id + '/items'
     form#swipeRightForm(action=rightRoot, method="GET")
 
@@ -29,8 +34,27 @@ block content
         });
 
         var hammer = $(document).hammer();
-        
         hammer.on( 'swiperight', function() {
             $('#swipeRightForm').submit();
+        });
+
+        var hammerDel = $(".displayItem").hammer();
+        hammerDel.on( 'swipeleft', function(ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            var thisObj = $(this);
+            thisObj.find('.swipeButton').removeClass( 'buttonOff');
+            thisObj.find('.rootButton').addClass( 'buttonOff');
+            
+            $(document).one("click", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if( $(e.target).hasClass('deleteButton'))
+                    thisObj.find('form').submit();
+                
+                thisObj.find('.swipeButton').addClass( 'buttonOff');
+                thisObj.find('.rootButton').removeClass( 'buttonOff');
+            });
         });
     });

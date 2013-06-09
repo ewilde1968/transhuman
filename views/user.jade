@@ -13,12 +13,12 @@ block content
           a.displayItem(href=redirectRoot)
             div(class='swipeButton buttonOff')
               p.displayLabel #{character.name}
-              button(class='deleteCharButton') Delete
+              button(class='deleteButton') Delete
             button.rootButton
               p.displayLabel #{character.name}
               p.displayDesc #{character.profession.name}
             deleteRoot = '/character/' + character._id + '/delete'
-            form(action=deleteRoot, method="POST", id=character._id)
+            form(action=deleteRoot, method="POST")
 
   script
     $(document).ready( function() {
@@ -35,7 +35,7 @@ block content
             $(document).one("click", function(e) {
                 e.stopPropagation();
                 e.preventDefault();
-                if( $(e.target).hasClass('deleteCharButton'))
+                if( $(e.target).hasClass('deleteButton'))
                     thisObj.find('form').submit();
                 
                 thisObj.find('.swipeButton').addClass( 'buttonOff');

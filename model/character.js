@@ -325,6 +325,24 @@ CharacterSchema.statics.deleteById = function( req, res, next) {
     next();
 };
 
+CharacterSchema.statics.deleteHistory = function (req, res, next) {
+    Character.findById( req.params.id, function(err, character) {
+        if(err) return next(err);
+
+        for( var index = 0; index < character.history.length; index++) {
+            if( character.history[index].name == req.params.historyname) {
+                character.history.splice( index, 1);
+                break;
+            }
+        }
+
+        character.save( function(err) {
+            if(err) return next(err);
+            next();
+        });
+    });
+};
+
 CharacterSchema.methods.getBelonging = function( itemObj) {
     if( this.belongings) {
         this.belongings.forEach( function(elem) {

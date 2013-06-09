@@ -32,7 +32,7 @@ block content
             thisObj.find('.swipeButton').removeClass( 'buttonOff');
             thisObj.find('.rootButton').addClass( 'buttonOff');
             
-            $(document).one("click", function(e) {
+            $(document).one("touchend", function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 if( $(e.target).hasClass('deleteButton'))

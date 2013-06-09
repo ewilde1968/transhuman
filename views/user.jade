@@ -11,32 +11,35 @@ block content
         li
           redirectRoot = '/character/' + character._id
           a.displayItem(href=redirectRoot)
-            button
+            div(class='swipeButton buttonOff')
+              p.displayLabel #{character.name}
+              button(class='deleteCharButton') Delete
+            button.rootButton
               p.displayLabel #{character.name}
               p.displayDesc #{character.profession.name}
-              deleteRoot = '/character/' + character._id + '/delete'
-              form(action=deleteRoot, method="POST", hidden='hidden', id=character._id)
-                button.deleteCharButton Delete
+            deleteRoot = '/character/' + character._id + '/delete'
+            form(action=deleteRoot, method="POST", id=character._id)
 
   script
     $(document).ready( function() {
-        var hammer = $("li").hammer();
+        var hammer = $(".displayItem").hammer();
         
         hammer.on( 'swipeleft', function(ev) {
             ev.stopPropagation();
+            ev.preventDefault();
+
             var thisObj = $(this);
-            
-            thisObj.find('form').prop('hidden', false);  // show the Delete button
-            thisObj.find('.displayDesc').prop('hidden', 'hidden');  // hide the description label
+            thisObj.find('.swipeButton').removeClass( 'buttonOff');
+            thisObj.find('.rootButton').addClass( 'buttonOff');
             
             $(document).one("click", function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 if( $(e.target).hasClass('deleteCharButton'))
-                    $(e.target).parent('form').submit();
+                    thisObj.find('form').submit();
                 
-                thisObj.find('form').prop('hidden', 'hidden');  // hide the Delete button
-                thisObj.find('.displayDesc').prop('hidden', false);  // show the description label
+                thisObj.find('.swipeButton').addClass( 'buttonOff');
+                thisObj.find('.rootButton').removeClass( 'buttonOff');
             });
         });
     });

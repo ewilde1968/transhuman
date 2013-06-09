@@ -39,15 +39,6 @@ salmon: #F2B6A0 rgb(242,182,160)
         font-size: 18px;
         vertical-align: middle;
 	}
-	button:hover {
-        border-top-color: #4177a6;
-        background: #4177a6;
-        color: #d9b589;
-    }
-	button:active {
-        border-top-color: #5295cc;
-        background: #5295cc;
-    }
 	button:disabled {
         border-top-color: #5295cc;
         background: #5295cc;
@@ -94,7 +85,6 @@ salmon: #F2B6A0 rgb(242,182,160)
     a:link {color:#4177A6;}      /* unvisited link */
     a:visited {color:#A68953;}  /* visited link */
     a:hover {color:#A68953;}  /* mouse over link */
-    a:active {color:#A68953;}  /* selected link */
 
     fieldset {
         border-style:none;
@@ -190,6 +180,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .displayList li {
 		background: rgba(242,182,160,0.5);
 		border: 1px solid rgb(65,119,166);
+        border-bottom: none;
         overflow:hidden;
         word-break: break-all;
         height: 60px;
@@ -201,6 +192,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .displayList li:last-child {
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
+		border-bottom: 1px solid rgb(65,119,166);
     }
     .displayLabel {
         float: left;
@@ -216,9 +208,6 @@ salmon: #F2B6A0 rgb(242,182,160)
         line-height: 48px;
         margin: 0;
     }
-    .displayList li:hover .displayDesc {color:rgb(166,137,83);}
-    .displayList li:hover { color:rgb(242,182,160); background: rgb(65,119,166)}
-    .displayList li:active { color:rgb(242,182,160); background: rgb(166,137,83)}
     li a button {
         width: 100%;
         height: 60px;
@@ -231,7 +220,6 @@ salmon: #F2B6A0 rgb(242,182,160)
         padding: 6px 10px;
         width: 100%;
         height: 60px;
-        background: transparent;
     }        
 
     .optionList {
@@ -249,6 +237,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .optionItem {
 		background: rgba(242,182,160,0.5);
 		border: 1px solid rgb(65,119,166);
+        border-bottom: none;
         overflow:hidden;
         word-break: break-all;
         height: 60px;
@@ -260,6 +249,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .optionItem:last-child {
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
+		border-bottom: 1px solid rgb(65,119,166);
     }
     .optionLabel {
         float: left;
@@ -274,9 +264,6 @@ salmon: #F2B6A0 rgb(242,182,160)
         line-height: 48px;
         margin: 0;
     }
-    .optionItem:hover .optionDesc {color:rgb(166,137,83);}
-    .optionItem:hover { color:rgb(242,182,160); background: rgb(65,119,166)}
-    .optionItem:active { color:rgb(242,182,160); background: rgb(166,137,83)}
     .tooExpensiveItem {color: rgb(90,33,12); background: rgb(90,33,12)}
     .prohibitedItem { color: rgb(90,33,12); background: rgb(90,33,12)}
     .selectedItem { background: rgb(217,181,137)}

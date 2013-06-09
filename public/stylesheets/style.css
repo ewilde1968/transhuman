@@ -221,6 +221,35 @@ salmon: #F2B6A0 rgb(242,182,160)
         width: 100%;
         height: 60px;
     }        
+    .deleteCharButton {
+        float: right;
+        position: relative;
+        top: 2px;
+        left: -14px;
+        width: 80px;
+        height: 42px;
+        border-top: 1px solid #63bfae;
+        background: #63bfae;
+        background: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
+        background: -webkit-linear-gradient(top, #4177a6, #63bfae);
+        background: -moz-linear-gradient(top, #4177a6, #63bfae);
+        background: -ms-linear-gradient(top, #4177a6, #63bfae);
+        background: -o-linear-gradient(top, #4177a6, #63bfae);
+        padding: 6px 10px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+        -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+        box-shadow: rgba(0,0,0,1) 0 1px 0;
+        text-shadow: rgba(0,0,0,.4) 0 1px 0;
+        color: #000000;
+        font-size: 18px;
+        vertical-align: middle;
+    }
+    .buttonOff {
+        display: none;
+    }
 
     .optionList {
         left: 5%;
@@ -345,34 +374,4 @@ salmon: #F2B6A0 rgb(242,182,160)
     
     #detailsLink img {
         float: right;
-    }
-
-    .deleteCharButton {
-        float: right;
-        position: relative;
-        top: 2px;
-        left: -14px;
-        width: 80px;
-        height: 42px;
-        border-top: 1px solid #63bfae;
-        background: #63bfae;
-        background: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
-        background: -webkit-linear-gradient(top, #4177a6, #63bfae);
-        background: -moz-linear-gradient(top, #4177a6, #63bfae);
-        background: -ms-linear-gradient(top, #4177a6, #63bfae);
-        background: -o-linear-gradient(top, #4177a6, #63bfae);
-        padding: 6px 10px;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-        -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-        -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-        box-shadow: rgba(0,0,0,1) 0 1px 0;
-        text-shadow: rgba(0,0,0,.4) 0 1px 0;
-        color: #000000;
-        font-size: 18px;
-        vertical-align: middle;
-    }
-    .buttonOff {
-        display: none;
     }

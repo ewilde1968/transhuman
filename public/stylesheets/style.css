@@ -279,6 +279,7 @@ salmon: #F2B6A0 rgb(242,182,160)
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
 		border-bottom: 1px solid rgb(65,119,166);
+        margin-bottom: 6px;
     }
     .optionLabel {
         float: left;

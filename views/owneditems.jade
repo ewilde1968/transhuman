@@ -3,7 +3,8 @@ extends layout
 block content
   #navBar
     p Items
-    a#cancelButton(href='/')
+    destURL = '/character/' + character._id
+    a#cancelButton(href=destURL)
       button.leftNavButton Done
     destURL = '/character/' + character._id + '/buyitems'
     a#buyButton(href=destURL)
@@ -25,17 +26,3 @@ block content
     form#swipeLeftForm(action=leftRoot, method="GET")
     rightRoot = '/character/' + character._id + '/mods'
     form#swipeRightForm(action=rightRoot, method="GET")
-
-    img.pageIndicator(src='/images/page3.png')
-
-  script
-    $(document).ready( function() {
-        var hammer = $(document).hammer();
-        
-        hammer.on( 'swipeleft', function() {
-            $('#swipeLeftForm').submit();
-        });
-        hammer.on( 'swiperight', function() {
-            $('#swipeRightForm').submit();
-        });
-    });

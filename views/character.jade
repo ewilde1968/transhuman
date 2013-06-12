@@ -9,55 +9,59 @@ block content
     a#editButton(href=redirectRoot)
       button.rightNavButton Edit
   #contentArea
-    ul.displayList
-      li
+    ul.optionList: label Background
+      li.optionItem
         redirectRoot = '/character/' + character._id + '/homeland'
-        a.displayItem(href=redirectRoot)
+        a(href=redirectRoot)
           button
             p.displayLabel Homeland
             p.displayDesc #{homeland.name}
-      li
+      li.optionItem
         redirectRoot = '/character/' + character._id + '/race'
-        a.displayItem(href=redirectRoot)
+        a(href=redirectRoot)
           button
             p.displayLabel Race
             p.displayDesc Human
-      li
-        redirectRoot = '/character/' + character._id + '/soma'
-        a.displayItem(href=redirectRoot)
-          button
-            p.displayLabel Soma
-            p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
-      li
-        redirectRoot = '/character/' + character._id + '/nous'
-        a.displayItem(href=redirectRoot)
-          button
-            p.displayLabel Nous
-            p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
-      li
+      li.optionItem
         redirectRoot = '/character/' + character._id + '/profession'
-        a.displayItem(href=redirectRoot)
+        a(href=redirectRoot)
           button
             p.displayLabel Profession
             p.displayDesc #{character.profession.name}
-      li
+    ul.optionList: label Statistics
+      li.optionItem
+        redirectRoot = '/character/' + character._id + '/soma'
+        a(href=redirectRoot)
+          button
+            p.displayLabel Soma
+            p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
+      li.optionItem
+        redirectRoot = '/character/' + character._id + '/nous'
+        a(href=redirectRoot)
+          button
+            p.displayLabel Nous
+            p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
+      li.optionItem
         redirectRoot = '/character/' + character._id + '/humanity'
-        a.displayItem(href=redirectRoot)
+        a(href=redirectRoot)
           button
             p.displayLabel Humanity
             p.displayDesc #{character.humanity}
-
-    redirectRoot = '/character/' + character._id + '/mods'
-    form(action=redirectRoot, method="GET")
-
-    img.pageIndicator(src='/images/page1.png')
-
-  script
-    $(document).ready( function() {
-        var hammer = $(document).hammer();
-        
-        hammer.on( 'swipeleft', function() {
-            $('form').submit();
-        });
-    });
-});
+    ul.optionList: label Details
+      li.optionItem
+        redirectRoot = '/character/' + character._id + '/mods'
+        a(href=redirectRoot)
+          button
+            p.displayLabel Mods
+      li.optionItem
+        redirectRoot = '/character/' + character._id + '/items'
+        a(href=redirectRoot)
+          button
+            p.displayLabel Items
+      li.optionItem
+        redirectRoot = '/character/' + character._id + '/histories'
+        a(href=redirectRoot)
+          button
+            p.displayLabel History
+    br
+    

@@ -1,9 +1,11 @@
 extends layout
 
 block content
+  script(src="/javascripts/jquery.hammer.min.js")
   #navBar
     p History
-    a#cancelButton(href='/')
+    destURL = '/character/' + character._id
+    a#cancelButton(href=destURL)
       button.leftNavButton Done
     destURL = '/character/' + character._id + '/history'
     a#buyButton(href=destURL)
@@ -22,10 +24,6 @@ block content
               p.displayDesc #{history.datetime}
             deleteRoot = detailsURL + '/delete'
             form(action=deleteRoot, method="POST")
-    rightRoot = '/character/' + character._id + '/items'
-    form#swipeRightForm(action=rightRoot, method="GET")
-
-    img.pageIndicator(src='/images/page4.png')
 
   script
     $(document).ready( function() {
@@ -33,13 +31,8 @@ block content
             $('form').submit();
         });
 
-        var hammer = $(document).hammer();
-        hammer.on( 'swiperight', function() {
-            $('#swipeRightForm').submit();
-        });
-
-        var hammerDel = $(".displayItem").hammer();
-        hammerDel.on( 'swipeleft', function(ev) {
+        var hammer = $(".displayItem").hammer();
+        hammer.on( 'swipeleft', function(ev) {
             ev.stopPropagation();
             ev.preventDefault();
 

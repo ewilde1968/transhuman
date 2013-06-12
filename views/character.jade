@@ -14,54 +14,53 @@ block content
         redirectRoot = '/character/' + character._id + '/homeland'
         a(href=redirectRoot)
           button
-            p.displayLabel Homeland
-            p.displayDesc #{homeland.name}
+            p.optionLabel Homeland
+            p.optionDesc #{homeland.name}
       li.optionItem
         redirectRoot = '/character/' + character._id + '/race'
         a(href=redirectRoot)
           button
-            p.displayLabel Race
-            p.displayDesc Human
+            p.optionLabel Race
+            p.optionDesc Human
       li.optionItem
         redirectRoot = '/character/' + character._id + '/profession'
         a(href=redirectRoot)
           button
-            p.displayLabel Profession
-            p.displayDesc #{character.profession.name}
-    ul.optionList: label Statistics
+            p.optionLabel Profession
+            p.optionDesc #{character.profession.name}
+    ul.optionList: label Stats
       li.optionItem
         redirectRoot = '/character/' + character._id + '/soma'
         a(href=redirectRoot)
           button
-            p.displayLabel Soma
-            p.displayDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
+            p.optionLabel Soma
+            p.optionDesc #{'(' + character.soma.desc + '): ' + character.soma.currentLevel + '/' + character.soma.maxLevel}
       li.optionItem
         redirectRoot = '/character/' + character._id + '/nous'
         a(href=redirectRoot)
           button
-            p.displayLabel Nous
-            p.displayDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
+            p.optionLabel Nous
+            p.optionDesc #{'(' + character.nous.desc + '): ' + character.nous.currentLevel + '/' + character.nous.maxLevel}
       li.optionItem
         redirectRoot = '/character/' + character._id + '/humanity'
         a(href=redirectRoot)
           button
-            p.displayLabel Humanity
-            p.displayDesc #{character.humanity}
+            p.optionLabel Humanity
+            p.optionDesc #{character.humanity}
     ul.optionList: label Details
       li.optionItem
         redirectRoot = '/character/' + character._id + '/mods'
         a(href=redirectRoot)
           button
-            p.displayLabel Mods
+            p.optionLabel Mods
       li.optionItem
         redirectRoot = '/character/' + character._id + '/items'
         a(href=redirectRoot)
           button
-            p.displayLabel Items
+            p.optionLabel Items
       li.optionItem
         redirectRoot = '/character/' + character._id + '/histories'
         a(href=redirectRoot)
           button
-            p.displayLabel History
-    br
+            p.optionLabel History
     

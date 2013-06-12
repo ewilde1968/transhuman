@@ -1,6 +1,6 @@
 body {
     overflow: hidden;
-    background-image: url('/images/davinci_transhuman_640x1136_blurred.gif');
+    background-image: url('/images/transhumanism2_pixellated.gif');
     background-size: 100%;
     background-repeat: repeat-y;
     font: sans-serif;
@@ -9,24 +9,25 @@ body {
 /*
 
 color values:
-medium blue: #4177A6 rgb(65,119,166)
-sea green: #63BFAE rgb(99,191,174)
-medium brown: #A68953 rgb(166,137,83)
-light brown: #D9B589 rgb(217,181,137)
-salmon: #F2B6A0 rgb(242,182,160)
+gray blue: #A9C6D9 rgb(169,198,217)
+light green: #04D960 rgb(4,217,96)
+emerald: #03A63C rgb(3,166,60)
+dark green: #025920 rgb(2,89,32)
+gray: #CCCCCA rgb(204,204,202)
+invalid red: #590802 rgb(89,8,2)
 
 */
 
 @media only screen {
     button {
         float: left;
-        border-top: 1px solid #63bfae;
-        background: #63bfae;
-        background: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
-        background: -webkit-linear-gradient(top, #4177a6, #63bfae);
-        background: -moz-linear-gradient(top, #4177a6, #63bfae);
-        background: -ms-linear-gradient(top, #4177a6, #63bfae);
-        background: -o-linear-gradient(top, #4177a6, #63bfae);
+        border-top: 1px solid #025920;
+        background: #04d960;
+        background: -webkit-gradient(linear, left top, left bottom, from(#03A63C), to(#04d960));
+        background: -webkit-linear-gradient(top, #03a63c, #04d960);
+        background: -moz-linear-gradient(top, #03a63c, #04d960);
+        background: -ms-linear-gradient(top, #03a63c, #04d960);
+        background: -o-linear-gradient(top, #03a63c, #04d960);
         padding: 6px 10px;
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
@@ -40,8 +41,8 @@ salmon: #F2B6A0 rgb(242,182,160)
         vertical-align: middle;
 	}
 	button:disabled {
-        border-top-color: #5295cc;
-        background: #5295cc;
+        border-top-color: #444444;
+        background: #CCCCCA;
     }
 
     label {
@@ -82,9 +83,9 @@ salmon: #F2B6A0 rgb(242,182,160)
         font-size: 24px;
         line-height: 40px;
     }
-    a:link {color:#4177A6;}      /* unvisited link */
-    a:visited {color:#A68953;}  /* visited link */
-    a:hover {color:#A68953;}  /* mouse over link */
+    a:link {color:#A9C6D9;}      /* unvisited link */
+    a:visited {color:#03A63C;}  /* visited link */
+    a:hover {color:#03A63C;}  /* mouse over link */
 
     fieldset {
         border-style:none;
@@ -96,13 +97,13 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
     
     select {
-        border-top: 1px solid #63bfae;
-        background: #63bfae;
-        background: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
-        background: -webkit-linear-gradient(top, #4177a6, #63bfae);
-        background: -moz-linear-gradient(top, #4177a6, #63bfae);
-        background: -ms-linear-gradient(top, #4177a6, #63bfae);
-        background: -o-linear-gradient(top, #4177a6, #63bfae);
+        border-top: 1px solid #025920;
+        background: #04d960;
+        background: -webkit-gradient(linear, left top, left bottom, from(#03A63C), to(#04d960));
+        background: -webkit-linear-gradient(top, #03a63c, #04d960);
+        background: -moz-linear-gradient(top, #03a63c, #04d960);
+        background: -ms-linear-gradient(top, #03a63c, #04d960);
+        background: -o-linear-gradient(top, #03a63c, #04d960);
         width: 170px;
         font-size: 18px;
         line-height: 30px;
@@ -115,7 +116,7 @@ salmon: #F2B6A0 rgb(242,182,160)
 		position: absolute;
 		top: 0;
 		left: 0;
-		background: -webkit-linear-gradient(270deg,rgba(217,181,137,0.6) 0%,rgba(65,119,166,0.6) 100%);
+		background: -webkit-linear-gradient(270deg,rgba(169,198,217,0.6) 0%,rgba(204,204,202,0.6) 100%);
 	}
 
     #navBar p {
@@ -150,8 +151,8 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
 
     .dataEntry {
-		background: rgba(99,191,174,0.3);
-		border: 1px solid rgb(65,119,166);
+		background: rgba(169,198,217,0.7);
+		border: 1px solid #025920;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
         border-bottom-left-radius: 8px;
@@ -160,9 +161,8 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
 
     .dataDisplay {
-		background: rgb(137, 159, 161);
-		border: 1px solid rgb(65,119,166);
-		opacity: 0.7;
+		background: rgba(169,198,217,0.7);
+		border: 1px solid #025920;
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
         border-bottom-left-radius: 8px;
@@ -178,8 +178,8 @@ salmon: #F2B6A0 rgb(242,182,160)
         margin: 0;
     }
     .displayList li {
-		background: rgba(242,182,160,0.5);
-		border: 1px solid rgb(65,119,166);
+		background: rgba(3,166,60,0.3);
+		border: 1px solid #025920;
         border-bottom: none;
         overflow:hidden;
         word-break: break-all;
@@ -192,7 +192,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .displayList li:last-child {
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-		border-bottom: 1px solid rgb(65,119,166);
+		border-bottom: 1px solid #025920;
     }
     .displayLabel {
         float: left;
@@ -204,8 +204,9 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
     .displayDesc {
         float: right;
-        color: rgb(65,119,166);
         line-height: 48px;
+        color: #000000;
+        font-weight:bold;
         margin: 0;
     }
     li a button {
@@ -228,14 +229,14 @@ salmon: #F2B6A0 rgb(242,182,160)
         left: -14px;
         width: 80px;
         height: 42px;
-        border-top: 1px solid #63bfae;
-        background: #63bfae;
-        background: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
-        background: -webkit-linear-gradient(top, #4177a6, #63bfae);
-        background: -moz-linear-gradient(top, #4177a6, #63bfae);
-        background: -ms-linear-gradient(top, #4177a6, #63bfae);
-        background: -o-linear-gradient(top, #4177a6, #63bfae);
         padding: 6px 10px;
+        border-top: 1px solid #025920;
+        background: #04d960;
+        background: -webkit-gradient(linear, left top, left bottom, from(#03A63C), to(#04d960));
+        background: -webkit-linear-gradient(top, #03a63c, #04d960);
+        background: -moz-linear-gradient(top, #03a63c, #04d960);
+        background: -ms-linear-gradient(top, #03a63c, #04d960);
+        background: -o-linear-gradient(top, #03a63c, #04d960);
         -webkit-border-radius: 8px;
         -moz-border-radius: 8px;
         border-radius: 8px;
@@ -264,8 +265,8 @@ salmon: #F2B6A0 rgb(242,182,160)
         font-size: 24px;
     }
     .optionItem {
-		background: rgba(242,182,160,0.5);
-		border: 1px solid rgb(65,119,166);
+		background: rgba(3,166,60,0.4);
+		border: 1px solid #025920;
         border-bottom: none;
         overflow:hidden;
         word-break: break-all;
@@ -278,7 +279,7 @@ salmon: #F2B6A0 rgb(242,182,160)
     .optionItem:last-child {
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
-		border-bottom: 1px solid rgb(65,119,166);
+		border: 1px solid #025920;
         margin-bottom: 6px;
     }
     .optionLabel {
@@ -290,13 +291,14 @@ salmon: #F2B6A0 rgb(242,182,160)
     }
     .optionDesc {
         float: right;
-        color: rgb(65,119,166);
+        color: #000000;
+        font-weight:bold;
         line-height: 48px;
         margin: 0;
     }
-    .tooExpensiveItem {color: rgb(90,33,12); background: rgb(90,33,12)}
-    .prohibitedItem { color: rgb(90,33,12); background: rgb(90,33,12)}
-    .selectedItem { background: rgb(217,181,137)}
+    .tooExpensiveItem {background: rgba(89,8,2,0.7)}
+    .prohibitedItem { background: rgba(89,8,2,0.7)}
+    .selectedItem { background: rgba(204,204,202,0.7)}
 
     .rangeInput {
         height: 110px;
@@ -313,7 +315,7 @@ salmon: #F2B6A0 rgb(242,182,160)
         -webkit-appearance: none !important;
         -webkit-border-radius: 5px;
         -webkit-box-shadow: inset 0 0 5px #333;
-        background-color: rgb(65,119,166);
+        background-color: #025920;
         height: 12px;
         margin-left: 3%;
     }
@@ -334,9 +336,9 @@ salmon: #F2B6A0 rgb(242,182,160)
         width: 36px;
         -webkit-appearance: none !important;
         -webkit-border-radius: 10px;
-        background-color: #4177a6;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(#4177a6), to(#63bfae));
-        border: 1px solid rgb(65,119,166);
+        background-color: #025920;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#03A63C), to(#04d960));
+        border: 1px solid #025920;
     }
 
     .centered {

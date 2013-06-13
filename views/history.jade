@@ -33,7 +33,47 @@ block content
 
   script
     $(document).ready( function() {
+        function checkdate(i){
+            var validformat=/^\d{4}-\d{2}-\d{2}/; //Basic check for format validity
+            var result = validformat.test(i);
+            if( validformat.test(i)) {
+                //Detailed check for valid date ranges
+                var yearfield=i.split("-")[0];
+                var monthfield=i.split("-")[1];
+                var dayfield=i.split("-")[2];
+                var dayobj = new Date(yearfield, monthfield-1, dayfield);
+
+                if( (dayobj.getMonth()+1==monthfield)&&(dayobj.getDate()==dayfield)&&(dayobj.getFullYear()==yearfield))
+                    return true;
+            }
+            
+            return false;
+        }
+
+        function validateForm() {
+            // validate form
+            var good = true;
+
+            var obj = $('input[name="nameTE"]');
+            var x = obj.val();
+            if( !x || x == "") {
+                good = false;
+                obj.addClass( "inputError");
+            } else
+                obj.removeClass( "inputError");
+
+            obj = $('input[name="dateTE"]');
+            if( !checkdate(obj.val()) ) {
+                good = false;
+                obj.addClass( "inputError");
+            } else
+                obj.removeClass( "inputError");
+
+            return good;
+        }
+
         $('#save').click( function() {
-            $('form').submit();
+            if( validateForm())
+                $('form').submit();
         });
     });

@@ -23,7 +23,23 @@ block content
 
   script
     $(document).ready( function() {
+        function validateForm() {
+            // validate form
+            var good = true;
+
+            var obj = $('input[name="characterName"]');
+            var x = obj.val();
+            if( !x || x == "") {
+                good = false;
+                obj.addClass( 'inputError');
+            } else
+                obj.removeClass( 'inputError');
+
+            return good;
+        }
+
         $('#nextButton').click( function() {
-            $('form').submit();
+            if( validateForm())
+                $('form').submit();
         });
     });

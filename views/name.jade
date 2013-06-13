@@ -21,4 +21,19 @@ block content
         $('#save').click( function() {
             $('form').submit();
         });
+
+        $('form').onsubmit( function() {
+            // validate form
+            var good = true;
+
+            var obj = $('input[name="nameTE"]');
+            var x = obj.val();
+            if( !x or x == "") {
+                good = false;
+                obj.addClass( 'inputError');
+            } else
+                obj.removeClass( 'inputError');
+
+            return good;
+        });
     });

@@ -22,7 +22,3 @@ block content
               button
                 p.optionLabel #{belongingObj.item.name}
                 p.optionDesc #{belongingObj.amount}
-    leftRoot = '/character/' + character._id + '/histories'
-    form#swipeLeftForm(action=leftRoot, method="GET")
-    rightRoot = '/character/' + character._id + '/mods'
-    form#swipeRightForm(action=rightRoot, method="GET")

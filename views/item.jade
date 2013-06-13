@@ -3,6 +3,9 @@ extends layout
 block content
   if !owned
     owned = 0
+    da = 1
+  else
+    da = owned
 
   #navBar
     p #{item.name}
@@ -10,7 +13,10 @@ block content
       button.leftNavButton Done
       button#buyButton(class="rightNavButton", disabled="disabled") Buy
     a#buyButton
-      button.rightNavButton(disabled="disabled") Buy
+      if owned
+        button.rightNavButton(disabled="disabled") Buy
+      else
+        button.rightNavButton Buy
   #contentArea
     .dataDisplay
       p#amountOwned #{owned} Owned
@@ -36,11 +42,11 @@ block content
           br
           .dataEntry
             .rangeInput
-              label#amountLabel(for="amount") #{owned}
+              label#amountLabel(for="amount") #{da}
               maxAmount = Math.floor(( character.credits + item.cost * owned)/item.cost)
-              input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value="#{owned}")
+              input(type="range", name="amount", min="0", max=maxAmount, step="1", id="amountRange", value="#{da}")
               .rangeLabels
-                p.minLabel 0
+                p.minLabel #{da}
                 p.maxLabel #{maxAmount}
 
   script
